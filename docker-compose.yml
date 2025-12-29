@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  mall-mysql:
+    image: mysql:8.0
+    container_name: mall-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123456
+      MYSQL_DATABASE: health_mall_system
+      MYSQL_USER: mall_user
+      MYSQL_PASSWORD: mall_password
+    ports:
+      - "4000:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./Start.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mall-network
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --bind-address=0.0.0.0 --init-connect='SET NAMES utf8mb4'
+
+  mall-redis:
+    image: redis:7-alpine
+    container_name: mall-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - mall-network
+
+  mall-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mall-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mall-mysql:3306/health_mall_system?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: mall_user
+      SPRING_DATASOURCE_PASSWORD: mall_password
+      SPRING_REDIS_HOST: mall-redis
+      SPRING_REDIS_PORT: 6379
+    depends_on:
+      - mall-mysql
+      - mall-redis
+    networks:
+      - mall-network
+
+  mall-nginx:
+    image: nginx:alpine
+    container_name: mall-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./test.html:/var/www/test.html
+    depends_on:
+      - mall-backend
+      - mall-frontend
+    networks:
+      - mall-network
+
+  mall-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mall-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - mall-backend
+    networks:
+      - mall-network
+
+volumes:
+  mysql-data:
+  redis-data:
+
+networks:
+  mall-network:
+    driver: bridge
