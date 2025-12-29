@@ -31,11 +31,15 @@ public class LoginResponse {
         private Integer id;
         private String username;
         private String avatarUrl;
+        private String email;
+        private String phone;
 
         public UserInfo(User user) {
             this.id = user.getId();
             this.username = user.getUsername();
             this.avatarUrl = user.getAvatarUrl();
+            this.email = user.getEmail();
+            this.phone = user.getPhone();
         }
 
         public Integer getId() {
@@ -60,6 +64,22 @@ public class LoginResponse {
 
         public void setAvatarUrl(String avatarUrl) {
             this.avatarUrl = avatarUrl;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
         }
     }
 }
