@@ -3,12 +3,14 @@ package com.healthmall.dto;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.healthmall.entity.Product;
 import com.healthmall.util.JsonToStringDeserializer;
+import java.util.List;
 
 public class MerchantProductRequest {
     private String title;
     private String category;
     private String description;
     private String coverUrl;
+    private List<String> detailImages;
     
     @JsonDeserialize(using = JsonToStringDeserializer.class)
     private String features;
@@ -47,6 +49,14 @@ public class MerchantProductRequest {
 
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
+    }
+
+    public List<String> getDetailImages() {
+        return detailImages;
+    }
+
+    public void setDetailImages(List<String> detailImages) {
+        this.detailImages = detailImages;
     }
 
     public String getFeatures() {

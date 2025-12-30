@@ -3,6 +3,7 @@ package com.healthmall.dto;
 import com.healthmall.entity.Product;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MerchantProductResponse {
     private Integer id;
@@ -11,6 +12,7 @@ public class MerchantProductResponse {
     private String category;
     private String description;
     private String coverUrl;
+    private List<String> detailImages;
     private String features;
     private BigDecimal price;
     private Integer stock;
@@ -65,6 +67,14 @@ public class MerchantProductResponse {
 
     public void setCoverUrl(String coverUrl) {
         this.coverUrl = coverUrl;
+    }
+
+    public List<String> getDetailImages() {
+        return detailImages;
+    }
+
+    public void setDetailImages(List<String> detailImages) {
+        this.detailImages = detailImages;
     }
 
     public String getFeatures() {

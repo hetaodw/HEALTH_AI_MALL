@@ -13,9 +13,15 @@
     <div v-else class="profile-container">
       <div class="profile-header skeuomorphic-card">
         <div class="avatar-container">
-          <div class="avatar skeuomorphic-avatar">
+          <div v-if="userStore.user.avatarUrl" class="avatar-image">
+            <img :src="userStore.user.avatarUrl" :alt="userStore.user.username" class="avatar-img" />
+          </div>
+          <div v-else class="avatar skeuomorphic-avatar">
             {{ userStore.user.username.charAt(0).toUpperCase() }}
           </div>
+          <button @click="showAvatarUpload = true" class="avatar-upload-button skeuomorphic-button">
+            更换头像
+          </button>
         </div>
         <div class="user-info">
           <h2 class="username">{{ userStore.user.username }}</h2>
@@ -166,6 +172,24 @@
         </form>
       </div>
     </div>
+
+    <div v-if="showAvatarUpload" class="modal-overlay" @click="showAvatarUpload = false">
+      <div class="modal skeuomorphic-card" @click.stop>
+        <h3>更换头像</h3>
+        <ImageUpload 
+          v-model="avatarUrl" 
+          type="avatar" 
+          placeholder="上传头像图片" 
+          @upload-success="handleAvatarUploadSuccess"
+          @upload-error="handleAvatarUploadError"
+        />
+        <div class="modal-actions">
+          <button @click="showAvatarUpload = false" class="skeuomorphic-button">
+            取消
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -173,6 +197,8 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
+import ImageUpload from '../components/ImageUpload.vue'
+import api from '../api'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -180,6 +206,7 @@ const userStore = useUserStore()
 const orders = ref([])
 const activeOrderTab = ref('all')
 const showChangePassword = ref(false)
+const showAvatarUpload = ref(false)
 const passwordForm = ref({
   currentPassword: '',
   newPassword: '',
@@ -187,6 +214,7 @@ const passwordForm = ref({
 })
 const passwordError = ref(null)
 const passwordLoading = ref(false)
+const avatarUrl = ref('')
 
 const orderTabs = [
   { label: '全部订单', value: 'all' },
@@ -256,9 +284,28 @@ const handleChangePassword = async () => {
   }
 }
 
+const handleAvatarUploadSuccess = async (url) => {
+  try {
+    avatarUrl.value = url
+    await api.user.updateProfile({ avatarUrl: url })
+    userStore.user.avatarUrl = url
+    alert('头像上传成功')
+    showAvatarUpload.value = false
+  } catch (err) {
+    console.error('Update avatar error:', err)
+    alert('头像更新失败：' + (err.response?.data?.msg || err.message))
+  }
+}
+
+const handleAvatarUploadError = (error) => {
+  console.error('Avatar upload error:', error)
+  alert('头像上传失败：' + error)
+}
+
 onMounted(() => {
   if (userStore.user) {
     orders.value = []
+    avatarUrl.value = userStore.user.avatarUrl || ''
   }
 })
 </script>

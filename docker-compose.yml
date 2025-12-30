@@ -41,6 +41,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: mall_password
       SPRING_REDIS_HOST: mall-redis
       SPRING_REDIS_PORT: 6379
+      FILE_UPLOAD_PATH: /app/uploads
+      FILE_ACCESS_PATH: /static
+    volumes:
+      - upload-data:/app/uploads
     depends_on:
       - mall-mysql
       - mall-redis
@@ -77,6 +81,7 @@ services:
 volumes:
   mysql-data:
   redis-data:
+  upload-data:
 
 networks:
   mall-network:

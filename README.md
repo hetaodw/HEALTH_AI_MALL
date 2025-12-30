@@ -379,7 +379,42 @@ npm run dev
 
 ### 6. 最近更新
 
-#### 6.1 数据库更新
+#### 6.1 图片上传功能实现
+
+**功能概述**:
+实现了完整的图片上传和管理功能，支持用户头像、商品封面图和商品详情图的上传。
+
+**主要特性**:
+1. 前端自动图片处理
+   - 用户头像：自动缩放至最大300x300像素，保持正方形
+   - 商品封面图：自动缩放至最大800x600像素，保持原始比例
+   - 商品详情图：强制16:9宽高比，最大1920x1080像素
+
+2. 后端文件存储
+   - 按图片类型和日期分类存储
+   - 支持jpg、jpeg、png、gif格式
+   - 文件大小限制5MB
+   - 自动生成唯一文件名
+
+3. 数据库集成
+   - 用户表新增avatar_url字段存储头像URL
+   - 商品表新增cover_url字段存储封面图URL
+   - 商品详情图表存储多张详情图URL
+   - 支持事务操作确保数据一致性
+
+4. Nginx配置优化
+   - 配置/v1/static路径代理静态资源
+   - 支持缓存控制提高访问速度
+   - 正确处理后端context-path
+
+**相关文件**:
+- [FileUploadService.java](file:///d:/bs25-2/backend/src/main/java/com/healthmall/service/FileUploadService.java) - 文件上传服务
+- [imageProcessor.js](file:///d:/bs25-2/frontend/src/utils/imageProcessor.js) - 图片处理工具
+- [ImageUpload.vue](file:///d:/bs25-2/frontend/src/components/ImageUpload.vue) - 图片上传组件
+- [Profile.vue](file:///d:/bs25-2/frontend/src/views/Profile.vue) - 个人中心（头像上传）
+- [ProductForm.vue](file:///d:/bs25-2/frontend/src/components/ProductForm.vue) - 商品表单（商品图片上传）
+
+#### 6.2 数据库更新
 - 用户表新增字段：`email`（邮箱地址）、`phone`（手机号码）、`role`（用户角色）
 - 商品表新增字段：`merchant_id`（商家ID）、`category`（商品分类）、`sales`（销量）、`status`（商品状态）
 - 执行SQL更新脚本：`UpdateSchema.sql`
@@ -435,9 +470,91 @@ npm run dev
      }
      ```
 
-### 7. 商家商品管理模块
+### 8. 图片上传模块
 
-#### 7.1 商家添加商品
+#### 8.1 上传商品图片
+- **接口地址**: `/upload/image`
+- **请求方式**: POST
+- **请求头**: 需要携带token
+- **请求类型**: multipart/form-data
+- **请求参数**:
+  - `file`: 图片文件（必填）
+  - `type`: 图片类型（可选，用于区分不同用途的图片）
+    - `avatar`: 用户头像
+    - `product-cover`: 商品封面图
+    - `product-detail`: 商品详情图
+- **支持格式**: jpg, jpeg, png, gif
+- **文件大小限制**: 最大5MB
+- **返回示例**:
+  ```json
+  {
+    "code": 200,
+    "msg": "上传成功",
+    "data": {
+      "url": "http://localhost/v1/static/product/cover/2025/12/30/abc123.jpg"
+    }
+  }
+  ```
+
+#### 8.2 图片处理规则
+
+系统在前端对上传的图片进行自动处理，以优化存储和显示效果：
+
+**用户头像**:
+- 尺寸限制: 最大300x300像素
+- 保持正方形比例
+- 自动缩放至合适尺寸
+
+**商品封面图**:
+- 尺寸限制: 最大800x600像素
+- 保持原始宽高比
+- 自动缩放至合适尺寸
+
+**商品详情图**:
+- 尺寸限制: 最大1920x1080像素
+- 强制16:9宽高比
+- 自动裁剪或填充以符合比例
+
+#### 8.3 前端图片上传功能
+
+**用户头像上传**:
+- 访问路径: 个人中心页面
+- 操作方式: 点击"更换头像"按钮打开上传对话框
+- 支持拖拽上传或点击选择文件
+- 上传成功后自动更新用户头像
+
+**商品图片上传**:
+- 访问路径: 商家管理后台 -> 添加/编辑商品
+- 支持上传商品封面图
+- 支持上传最多5张商品详情图
+- 可预览已上传的图片
+- 支持删除已上传的详情图
+
+#### 8.4 图片存储路径
+
+系统将图片按类型和日期分类存储：
+
+```
+/static/
+├── user/
+│   └── avatar/
+│       └── {year}/{month}/{day}/
+├── product/
+│   ├── cover/
+│   │   └── {year}/{month}/{day}/
+│   └── detail/
+│       └── {year}/{month}/{day}/
+```
+
+#### 8.5 图片访问方式
+
+通过Nginx代理访问静态资源：
+- 访问路径: `http://localhost/v1/static/{type}/{category}/{year}/{month}/{day}/{filename}`
+- 示例: `http://localhost/v1/static/product/cover/2025/12/30/abc123.jpg`
+
+### 9. 商家商品管理模块
+
+#### 9.1 商家添加商品
 - **接口地址**: `/merchant/products`
 - **请求方式**: POST
 - **请求头**: 需要携带token
@@ -475,7 +592,7 @@ npm run dev
   }
   ```
 
-#### 7.2 商家修改商品
+#### 9.2 商家修改商品
 - **接口地址**: `/merchant/products/{id}`
 - **请求方式**: PUT
 - **请求头**: 需要携带token
@@ -515,7 +632,7 @@ npm run dev
   }
   ```
 
-#### 7.3 商家删除商品
+#### 9.3 商家删除商品
 - **接口地址**: `/merchant/products/{id}`
 - **请求方式**: DELETE
 - **请求头**: 需要携带token
@@ -530,7 +647,7 @@ npm run dev
   }
   ```
 
-#### 7.4 商家查询商品列表
+#### 9.4 商家查询商品列表
 - **接口地址**: `/merchant/products`
 - **请求方式**: GET
 - **请求头**: 需要携带token
@@ -563,7 +680,7 @@ npm run dev
   }
   ```
 
-#### 7.5 商家查询商品详情
+#### 9.5 商家查询商品详情
 - **接口地址**: `/merchant/products/{id}`
 - **请求方式**: GET
 - **请求头**: 需要携带token
@@ -590,7 +707,7 @@ npm run dev
   }
   ```
 
-#### 7.6 商家更新商品状态
+#### 9.6 商家更新商品状态
 - **接口地址**: `/merchant/products/{id}/status`
 - **请求方式**: PATCH
 - **请求头**: 需要携带token
@@ -607,7 +724,7 @@ npm run dev
   }
   ```
 
-#### 7.7 商家更新商品库存
+#### 9.7 商家更新商品库存
 - **接口地址**: `/merchant/products/{id}/stock`
 - **请求方式**: PATCH
 - **请求头**: 需要携带token
@@ -624,7 +741,7 @@ npm run dev
   }
   ```
 
-### 8. 测试账号
+### 9. 测试账号
 
 系统提供以下测试账号用于功能测试：
 

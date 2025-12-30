@@ -4,7 +4,9 @@ import com.healthmall.dto.MerchantProductRequest;
 import com.healthmall.dto.MerchantProductResponse;
 import com.healthmall.dto.PageResponse;
 import com.healthmall.entity.Product;
+import com.healthmall.entity.ProductDetailsImage;
 import com.healthmall.entity.User;
+import com.healthmall.repository.ProductDetailsImageRepository;
 import com.healthmall.repository.ProductRepository;
 import com.healthmall.repository.UserRepository;
 import org.slf4j.Logger;
@@ -27,10 +29,12 @@ public class MerchantProductService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final ProductDetailsImageRepository productDetailsImageRepository;
 
-    public MerchantProductService(ProductRepository productRepository, UserRepository userRepository) {
+    public MerchantProductService(ProductRepository productRepository, UserRepository userRepository, ProductDetailsImageRepository productDetailsImageRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.productDetailsImageRepository = productDetailsImageRepository;
     }
 
     @Transactional
@@ -57,6 +61,17 @@ public class MerchantProductService {
         product.setStatus(request.getStatus() != null ? request.getStatus() : Product.ProductStatus.ON_SALE);
 
         Product savedProduct = productRepository.save(product);
+
+        if (request.getDetailImages() != null && !request.getDetailImages().isEmpty()) {
+            for (int i = 0; i < request.getDetailImages().size(); i++) {
+                ProductDetailsImage detailImage = new ProductDetailsImage();
+                detailImage.setProductId(savedProduct.getId());
+                detailImage.setImageUrl(request.getDetailImages().get(i));
+                detailImage.setSortOrder(i);
+                productDetailsImageRepository.save(detailImage);
+            }
+        }
+
         return convertToResponse(savedProduct);
     }
 
@@ -81,6 +96,20 @@ public class MerchantProductService {
         }
 
         Product updatedProduct = productRepository.save(product);
+
+        List<ProductDetailsImage> existingImages = productDetailsImageRepository.findByProductIdOrderBySortOrderAsc(productId);
+        productDetailsImageRepository.deleteAll(existingImages);
+
+        if (request.getDetailImages() != null && !request.getDetailImages().isEmpty()) {
+            for (int i = 0; i < request.getDetailImages().size(); i++) {
+                ProductDetailsImage detailImage = new ProductDetailsImage();
+                detailImage.setProductId(productId);
+                detailImage.setImageUrl(request.getDetailImages().get(i));
+                detailImage.setSortOrder(i);
+                productDetailsImageRepository.save(detailImage);
+            }
+        }
+
         return convertToResponse(updatedProduct);
     }
 
@@ -92,6 +121,9 @@ public class MerchantProductService {
         if (!product.getMerchantId().equals(merchantId)) {
             throw new RuntimeException("无权删除此商品");
         }
+
+        List<ProductDetailsImage> detailImages = productDetailsImageRepository.findByProductIdOrderBySortOrderAsc(productId);
+        productDetailsImageRepository.deleteAll(detailImages);
 
         productRepository.delete(product);
     }
@@ -195,6 +227,14 @@ public class MerchantProductService {
     private MerchantProductResponse convertToResponse(Product product) {
         MerchantProductResponse response = new MerchantProductResponse();
         BeanUtils.copyProperties(product, response);
+
+        List<ProductDetailsImage> detailImages = productDetailsImageRepository
+                .findByProductIdOrderBySortOrderAsc(product.getId());
+        List<String> imageUrls = detailImages.stream()
+                .map(ProductDetailsImage::getImageUrl)
+                .collect(Collectors.toList());
+        response.setDetailImages(imageUrls);
+
         return response;
     }
 }

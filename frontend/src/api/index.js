@@ -34,6 +34,10 @@ export default {
     login: (data) => api.post('/auth/login', data),
     logout: () => api.post('/auth/logout')
   },
+  user: {
+    getProfile: () => api.get('/user/profile'),
+    updateProfile: (data) => api.put('/user/profile/update', data)
+  },
   products: {
     getList: (params) => api.get('/products', { params }),
     search: (params) => api.get('/products/search', { params }),
@@ -49,5 +53,11 @@ export default {
     getProductDetail: (id) => api.get(`/merchant/products/${id}`),
     updateProductStatus: (id, status) => api.patch(`/merchant/products/${id}/status`, null, { params: { status } }),
     updateProductStock: (id, stock) => api.patch(`/merchant/products/${id}/stock`, null, { params: { stock } })
-  }
+  },
+  upload: (endpoint, formData, config = {}) => api.post(endpoint, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    ...config
+  })
 }
