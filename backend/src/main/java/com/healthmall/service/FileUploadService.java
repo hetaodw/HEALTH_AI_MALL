@@ -57,11 +57,21 @@ public class FileUploadService {
 
     public boolean deleteFile(String fileUrl) {
         try {
-            if (fileUrl == null || !fileUrl.startsWith(accessPath)) {
+            if (fileUrl == null) {
                 return false;
             }
 
-            String relativePath = fileUrl.substring(accessPath.length());
+            String urlToProcess = fileUrl;
+
+            if (!contextPath.isEmpty() && fileUrl.startsWith(contextPath)) {
+                urlToProcess = fileUrl.substring(contextPath.length());
+            }
+
+            if (!urlToProcess.startsWith(accessPath)) {
+                return false;
+            }
+
+            String relativePath = urlToProcess.substring(accessPath.length());
             String fullPath = uploadPath + relativePath;
 
             Path path = Paths.get(fullPath);

@@ -19,10 +19,10 @@
         <div class="image-preview skeuomorphic-card">
           <img :src="imageUrl" :alt="alt" class="preview-image" />
           <div class="image-actions">
-            <button @click="triggerUpload" class="action-button skeuomorphic-button">
-              重新上传
+            <button @click.stop="triggerUpload" class="action-button skeuomorphic-button">
+              修改图片
             </button>
-            <button @click="handleRemove" class="action-button skeuomorphic-button danger">
+            <button @click.stop="handleRemove" class="action-button skeuomorphic-button danger">
               删除
             </button>
           </div>
@@ -192,9 +192,18 @@ const uploadFile = async (file) => {
     uploadProgress.value = 100
 
     if (response.code === 200) {
+      const oldImageUrl = imageUrl.value
       imageUrl.value = response.data.url
       emit('update:modelValue', response.data.url)
       emit('upload-success', response.data.url)
+      
+      if (oldImageUrl) {
+        try {
+          await api.deleteFile(oldImageUrl)
+        } catch (err) {
+          console.error('Delete old image error:', err)
+        }
+      }
     } else {
       error.value = response.msg || '上传失败'
       emit('upload-error', error.value)
@@ -223,7 +232,14 @@ const validateFile = (file) => {
   return true
 }
 
-const handleRemove = () => {
+const handleRemove = async () => {
+  if (imageUrl.value) {
+    try {
+      await api.deleteFile(imageUrl.value)
+    } catch (err) {
+      console.error('Delete image error:', err)
+    }
+  }
   imageUrl.value = ''
   emit('update:modelValue', '')
 }

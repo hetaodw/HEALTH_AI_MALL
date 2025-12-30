@@ -28,7 +28,16 @@ server:
   port: 8080
   servlet:
     context-path: /v1
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
 
 jwt:
   secret: health-mall-secret-key-2024-extended-for-security-requirements
   expiration: 86400000
+
+file:
+  upload:
+    path: ${FILE_UPLOAD_PATH:/app/uploads}
+  access:
+    path: ${FILE_ACCESS_PATH:/static}

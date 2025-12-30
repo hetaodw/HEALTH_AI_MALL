@@ -302,10 +302,18 @@ const handleAvatarUploadError = (error) => {
   alert('头像上传失败：' + error)
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (userStore.user) {
+    try {
+      const response = await api.user.getProfile()
+      if (response.code === 200) {
+        userStore.setUser(response.data)
+        avatarUrl.value = response.data.avatarUrl || ''
+      }
+    } catch (err) {
+      console.error('Get profile error:', err)
+    }
     orders.value = []
-    avatarUrl.value = userStore.user.avatarUrl || ''
   }
 })
 </script>

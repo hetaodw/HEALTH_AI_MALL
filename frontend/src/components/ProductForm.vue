@@ -60,7 +60,10 @@
           <div class="detail-images-container">
             <div v-for="(image, index) in formData.detailImages" :key="index" class="detail-image-item">
               <img :src="image" :alt="`详情图片${index + 1}`" class="detail-image-preview" />
-              <button @click="removeDetailImage(index)" class="remove-button">×</button>
+              <div class="detail-image-actions">
+                <button @click="editDetailImage(index)" class="edit-button" title="修改图片">✎</button>
+                <button @click="removeDetailImage(index)" class="remove-button" title="删除图片">×</button>
+              </div>
             </div>
             <div v-if="formData.detailImages.length < 5" class="add-detail-image" @click="showDetailImageUpload = true">
               <span class="add-icon">+</span>
@@ -135,11 +138,11 @@
 
     <div v-if="showDetailImageUpload" class="modal-overlay" @click="showDetailImageUpload = false">
       <div class="detail-image-modal skeuomorphic-modal" @click.stop>
-        <h3>上传详情图片</h3>
+        <h3>{{ editingDetailImageIndex !== null ? '修改详情图片' : '上传详情图片' }}</h3>
         <ImageUpload 
           v-model="newDetailImageUrl" 
           type="product-detail" 
-          placeholder="上传商品详情图片" 
+          :placeholder="editingDetailImageIndex !== null ? '修改商品详情图片' : '上传商品详情图片'" 
           @upload-success="handleDetailImageUploadSuccess"
           @upload-error="handleDetailImageUploadError"
         />
@@ -180,6 +183,7 @@ const formData = ref({
 
 const showDetailImageUpload = ref(false)
 const newDetailImageUrl = ref('')
+const editingDetailImageIndex = ref(null)
 
 watch(() => props.product, (newProduct) => {
   if (newProduct) {
@@ -221,11 +225,20 @@ const handleCoverUploadError = (error) => {
 }
 
 const handleDetailImageUploadSuccess = (url) => {
-  if (formData.value.detailImages.length < 5) {
+  if (editingDetailImageIndex.value !== null) {
+    formData.value.detailImages[editingDetailImageIndex.value] = url
+  } else if (formData.value.detailImages.length < 5) {
     formData.value.detailImages.push(url)
   }
   newDetailImageUrl.value = ''
+  editingDetailImageIndex.value = null
   showDetailImageUpload.value = false
+}
+
+const editDetailImage = (index) => {
+  editingDetailImageIndex.value = index
+  newDetailImageUrl.value = formData.value.detailImages[index]
+  showDetailImageUpload.value = true
 }
 
 const handleDetailImageUploadError = (error) => {
@@ -431,10 +444,39 @@ const handleSubmit = () => {
   object-fit: cover;
 }
 
-.remove-button {
+.detail-image-actions {
   position: absolute;
   top: 4px;
   right: 4px;
+  display: flex;
+  gap: 4px;
+}
+
+.edit-button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(145deg, #e0f7fa, #b2ebf2);
+  color: #006064;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.1),
+    -2px -2px 4px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.edit-button:hover {
+  background: linear-gradient(145deg, #b2ebf2, #80deea);
+  transform: scale(1.1);
+}
+
+.remove-button {
   width: 24px;
   height: 24px;
   border-radius: 50%;

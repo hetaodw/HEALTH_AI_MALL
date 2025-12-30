@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片上传测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .result.success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .result.error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .preview {
+            margin-top: 20px;
+            display: none;
+        }
+        .preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .upload-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+        .token-display {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>图片上传功能测试</h1>
+        
+        <div class="form-group">
+            <label for="username">用户名：</label>
+            <input type="text" id="username" value="MALL" placeholder="输入用户名">
+        </div>
+        
+        <div class="form-group">
+            <label for="password">密码：</label>
+            <input type="password" id="password" value="7410852963" placeholder="输入密码">
+        </div>
+        
+        <button onclick="login()">登录</button>
+        
+        <div id="tokenSection" style="display: none;">
+            <div class="form-group">
+                <label>Token：</label>
+                <div class="token-display" id="tokenDisplay"></div>
+            </div>
+            
+            <div class="upload-section">
+                <h2>上传图片</h2>
+                
+                <div class="form-group">
+                    <label for="uploadType">上传类型：</label>
+                    <select id="uploadType" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="avatar">头像</option>
+                        <option value="product/cover">商品封面</option>
+                        <option value="product/detail">商品详情图</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fileInput">选择文件：</label>
+                    <input type="file" id="fileInput" accept="image/*" onchange="previewImage()">
+                </div>
+                
+                <div class="preview" id="preview">
+                    <label>预览：</label>
+                    <img id="previewImage" src="" alt="预览图片">
+                </div>
+                
+                <button id="uploadBtn" onclick="uploadImage()" disabled>上传图片</button>
+            </div>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        let token = '';
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('http://localhost/v1/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.code === 200) {
+                    token = result.data.token;
+                    document.getElementById('tokenDisplay').textContent = token;
+                    document.getElementById('tokenSection').style.display = 'block';
+                    showResult('登录成功！', 'success');
+                } else {
+                    showResult('登录失败：' + result.msg, 'error');
+                }
+            } catch (error) {
+                showResult('登录失败：' + error.message, 'error');
+            }
+        }
+
+        function previewImage() {
+            const fileInput = document.getElementById('fileInput');
+            const preview = document.getElementById('preview');
+            const previewImage = document.getElementById('previewImage');
+            const uploadBtn = document.getElementById('uploadBtn');
+            
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadBtn.disabled = false;
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                preview.style.display = 'none';
+                uploadBtn.disabled = true;
+            }
+        }
+
+        async function uploadImage() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadType = document.getElementById('uploadType').value;
+            
+            if (!fileInput.files || !fileInput.files[0]) {
+                showResult('请选择要上传的文件', 'error');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            let endpoint;
+            switch (uploadType) {
+                case 'avatar':
+                    endpoint = 'http://localhost/v1/upload/avatar';
+                    break;
+                case 'product/cover':
+                    endpoint = 'http://localhost/v1/upload/product/cover';
+                    break;
+                case 'product/detail':
+                    endpoint = 'http://localhost/v1/upload/product/detail';
+                    break;
+            }
+            
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.code === 200) {
+                    showResult('上传成功！图片URL：' + result.data.url, 'success');
+                } else {
+                    showResult('上传失败：' + result.msg, 'error');
+                }
+            } catch (error) {
+                showResult('上传失败：' + error.message, 'error');
+            }
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = message;
+            resultDiv.className = 'result ' + type;
+            resultDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

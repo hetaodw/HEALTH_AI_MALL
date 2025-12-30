@@ -36,7 +36,7 @@ export default {
   },
   user: {
     getProfile: () => api.get('/user/profile'),
-    updateProfile: (data) => api.put('/user/profile/update', data)
+    updateProfile: (data) => api.put('/user/profile/update', null, { params: data })
   },
   products: {
     getList: (params) => api.get('/products', { params }),
@@ -59,5 +59,6 @@ export default {
       'Content-Type': 'multipart/form-data'
     },
     ...config
-  })
+  }),
+  deleteFile: (url) => api.delete('/upload', { params: { url } })
 }
