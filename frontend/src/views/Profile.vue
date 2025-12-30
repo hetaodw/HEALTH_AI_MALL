@@ -47,6 +47,19 @@
           </div>
         </div>
 
+        <div v-if="userStore.isMerchant()" class="profile-section merchant-entry skeuomorphic-card">
+          <div class="merchant-entry-content">
+            <div class="merchant-icon">🏪</div>
+            <div class="merchant-info">
+              <h3 class="merchant-title">商家管理后台</h3>
+              <p class="merchant-description">管理您的商品、订单和店铺设置</p>
+            </div>
+            <router-link to="/merchant" class="merchant-button skeuomorphic-button primary">
+              进入后台
+            </router-link>
+          </div>
+        </div>
+
         <div class="profile-section skeuomorphic-card">
           <h3 class="section-title">我的订单</h3>
           <div class="order-tabs">
@@ -340,6 +353,61 @@ onMounted(() => {
   padding: 24px;
 }
 
+.merchant-entry {
+  background: linear-gradient(145deg, #fff7ed, #ffedd5);
+  border: 2px solid #f59e0b;
+}
+
+.merchant-entry-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.merchant-icon {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.merchant-info {
+  flex: 1;
+}
+
+.merchant-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  background: linear-gradient(145deg, #f59e0b, #d97706);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.merchant-description {
+  color: #92400e;
+  font-size: 14px;
+}
+
+.merchant-button {
+  padding: 12px 28px;
+  background: linear-gradient(145deg, #f59e0b, #d97706);
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 
+    4px 4px 8px #fed7aa,
+    -4px -4px 8px #fff7ed;
+  transition: all 0.3s ease;
+}
+
+.merchant-button:hover {
+  background: linear-gradient(145deg, #d97706, #b45309);
+  box-shadow: 
+    2px 2px 4px #fed7aa,
+    -2px -2px 4px #fff7ed;
+  transform: translateY(-2px);
+}
+
 .section-title {
   font-size: 20px;
   font-weight: 700;
@@ -603,6 +671,15 @@ onMounted(() => {
   .profile-header {
     flex-direction: column;
     text-align: center;
+  }
+
+  .merchant-entry-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .merchant-button {
+    width: 100%;
   }
 
   .info-grid {

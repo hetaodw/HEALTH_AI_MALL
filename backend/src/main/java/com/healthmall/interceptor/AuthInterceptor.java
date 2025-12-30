@@ -3,12 +3,16 @@ package com.healthmall.interceptor;
 import com.healthmall.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -34,6 +38,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         Integer userId = jwtUtil.getUserIdFromToken(token);
+        logger.info("Token validated - userId: {}", userId);
         request.setAttribute("userId", userId);
 
         return true;

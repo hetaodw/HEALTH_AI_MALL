@@ -33,6 +33,7 @@ public class LoginResponse {
         private String avatarUrl;
         private String email;
         private String phone;
+        private String role;
 
         public UserInfo(User user) {
             this.id = user.getId();
@@ -40,6 +41,7 @@ public class LoginResponse {
             this.avatarUrl = user.getAvatarUrl();
             this.email = user.getEmail();
             this.phone = user.getPhone();
+            this.role = user.getRole() != null ? user.getRole().name() : null;
         }
 
         public Integer getId() {
@@ -80,6 +82,14 @@ public class LoginResponse {
 
         public void setPhone(String phone) {
             this.phone = phone;
+        }
+
+        public String getRole() {
+            return role;
+        }
+
+        public void setRole(String role) {
+            this.role = role;
         }
     }
 }

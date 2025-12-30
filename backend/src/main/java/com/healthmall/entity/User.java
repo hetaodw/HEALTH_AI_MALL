@@ -6,6 +6,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
+    
+    public enum Role {
+        USER,
+        MERCHANT
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,6 +30,10 @@ public class User {
 
     @Column(length = 20)
     private String phone;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private Role role = Role.USER;
 
     @Column(columnDefinition = "TEXT")
     private String remarks;
@@ -82,6 +92,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getRemarks() {

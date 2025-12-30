@@ -65,6 +65,36 @@
           />
         </div>
 
+        <div class="form-group">
+          <label class="form-label">身份类型</label>
+          <div class="role-selector">
+            <label class="role-option">
+              <input
+                type="radio"
+                v-model="formData.role"
+                value="USER"
+                class="role-radio"
+              />
+              <span class="role-label skeuomorphic-button">
+                <span class="role-icon">👤</span>
+                <span class="role-text">普通用户</span>
+              </span>
+            </label>
+            <label class="role-option">
+              <input
+                type="radio"
+                v-model="formData.role"
+                value="MERCHANT"
+                class="role-radio"
+              />
+              <span class="role-label skeuomorphic-button">
+                <span class="role-icon">🏪</span>
+                <span class="role-text">商家</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
         <div v-if="error" class="error">
           {{ error }}
         </div>
@@ -104,7 +134,8 @@ const formData = ref({
   password: '',
   confirmPassword: '',
   email: '',
-  phone: ''
+  phone: '',
+  role: 'USER'
 })
 
 const loading = ref(false)
@@ -133,7 +164,8 @@ const handleRegister = async () => {
       username: formData.value.username,
       password: formData.value.password,
       email: formData.value.email,
-      phone: formData.value.phone
+      phone: formData.value.phone,
+      role: formData.value.role
     }
 
     const response = await api.auth.register(registerData)
@@ -268,5 +300,85 @@ const handleRegister = async () => {
 .login-link:hover {
   color: #764ba2;
   text-decoration: underline;
+}
+
+.role-selector {
+  display: flex;
+  gap: 16px;
+}
+
+.role-option {
+  flex: 1;
+  cursor: pointer;
+}
+
+.role-radio {
+  display: none;
+}
+
+.role-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 
+    5px 5px 10px #d1d9e6,
+    -5px -5px 10px #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.role-label:hover {
+  background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+  transform: translateY(-2px);
+  box-shadow: 
+    7px 7px 14px #d1d9e6,
+    -7px -7px 14px #ffffff;
+}
+
+.role-radio:checked + .role-label {
+  background: linear-gradient(145deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 
+    8px 8px 16px rgba(102, 126, 234, 0.3),
+    -8px -8px 16px rgba(118, 75, 162, 0.3);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.role-radio:checked + .role-label:hover {
+  background: linear-gradient(145deg, #764ba2, #667eea);
+  box-shadow: 
+    10px 10px 20px rgba(102, 126, 234, 0.4),
+    -10px -10px 20px rgba(118, 75, 162, 0.4);
+}
+
+.role-icon {
+  font-size: 32px;
+}
+
+.role-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .role-selector {
+    flex-direction: column;
+  }
+
+  .role-label {
+    flex-direction: row;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .role-icon {
+    font-size: 24px;
+  }
 }
 </style>

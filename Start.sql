@@ -9,7 +9,10 @@ CREATE TABLE `users` (
     `id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '用户唯一标识',
     `username` VARCHAR(50) NOT NULL UNIQUE COMMENT '用户名',
     `password` VARCHAR(255) NOT NULL COMMENT '加密后的密码',
+    `email` VARCHAR(100) DEFAULT NULL COMMENT '邮箱地址',
+    `phone` VARCHAR(20) DEFAULT NULL COMMENT '手机号码',
     `avatar_url` VARCHAR(255) DEFAULT NULL COMMENT '用户头像地址',
+    `role` ENUM('USER', 'MERCHANT','admin') DEFAULT 'USER' COMMENT '用户角色：USER-普通用户，MERCHANT-商家',
     `remarks` TEXT DEFAULT NULL COMMENT '备注信息',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
@@ -17,13 +20,18 @@ CREATE TABLE `users` (
 -- 3. 商品表：用于保存商品的基本信息，包括名称、描述、封面图、价格和库存等
 CREATE TABLE `products` (
     `id` INT AUTO_INCREMENT PRIMARY KEY COMMENT '商品唯一标识',
+    `merchant_id` INT DEFAULT NULL COMMENT '商家用户ID，关联users表',
     `title` VARCHAR(100) NOT NULL COMMENT '商品名称',
     `description` TEXT COMMENT '商品详细描述',
     `cover_url` VARCHAR(255) NOT NULL COMMENT '商品封面图片URL',
     `features` JSON DEFAULT NULL COMMENT '商品特征（暂时留空，使用JSON格式方便扩展）',
     `price` DECIMAL(10, 2) NOT NULL DEFAULT 0.00 COMMENT '价格',
     `stock` INT DEFAULT 0 COMMENT '库存',
-    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '商品创建时间'
+    `sales` INT DEFAULT 0 COMMENT '销量',
+    `status` ENUM('ON_SALE', 'OFF_SALE', 'OUT_OF_STOCK') DEFAULT 'ON_SALE' COMMENT '商品状态：ON_SALE-在售，OFF_SALE-下架，OUT_OF_STOCK-缺货',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '商品创建时间',
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '商品更新时间',
+    FOREIGN KEY (`merchant_id`) REFERENCES `users`(`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商品基础信息表';
 
 -- 4. 商品详情图片表：用于存储某商品的多张详情介绍图，并支持按顺序展示

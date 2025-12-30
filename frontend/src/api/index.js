@@ -40,5 +40,14 @@ export default {
     getHot: (params) => api.get('/products/hot', { params }),
     getDetail: (id) => api.get(`/products/${id}`),
     getByCategory: (category, params) => api.get(`/products/category/${category}`, { params })
+  },
+  merchant: {
+    addProduct: (data) => api.post('/merchant/products', data),
+    updateProduct: (id, data) => api.put(`/merchant/products/${id}`, data),
+    deleteProduct: (id) => api.delete(`/merchant/products/${id}`),
+    getProductList: (params) => api.get('/merchant/products', { params }),
+    getProductDetail: (id) => api.get(`/merchant/products/${id}`),
+    updateProductStatus: (id, status) => api.patch(`/merchant/products/${id}/status`, null, { params: { status } }),
+    updateProductStock: (id, stock) => api.patch(`/merchant/products/${id}/stock`, null, { params: { stock } })
   }
 }

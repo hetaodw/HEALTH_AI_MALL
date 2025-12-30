@@ -5,6 +5,7 @@ import Search from '../views/Search.vue'
 import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import MerchantDashboard from '../views/MerchantDashboard.vue'
 
 const routes = [
   {
@@ -36,6 +37,12 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path: '/merchant',
+    name: 'MerchantDashboard',
+    component: MerchantDashboard,
+    meta: { requiresAuth: true, requiresMerchant: true }
   }
 ]
 

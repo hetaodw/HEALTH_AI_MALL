@@ -28,12 +28,17 @@ export const useUserStore = defineStore('user', () => {
     return !!token.value
   }
 
+  function isMerchant() {
+    return user.value?.role === 'MERCHANT'
+  }
+
   return {
     user,
     token,
     setUser,
     setToken,
     logout,
-    isLoggedIn
+    isLoggedIn,
+    isMerchant
   }
 })
