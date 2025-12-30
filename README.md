@@ -35,7 +35,7 @@ CREATE TABLE `products` (
     `price` DECIMAL(10, 2) NOT NULL DEFAULT 0.00 COMMENT '价格',
     `stock` INT DEFAULT 0 COMMENT '库存',
     `sales` INT DEFAULT 0 COMMENT '销量',
-    `status` ENUM('ON_SALE', 'OFF_SALE', 'OUT_OF_STOCK') DEFAULT 'ON_SALE' COMMENT '商品状态：ON_SALE-在售，OFF_SALE-下架，OUT_OF_STOCK-缺货',
+    `status` ENUM('ON_SALE', 'OFF_SALE', 'OUT_OF_STOCK') DEFAULT 'ON_SALE' COMMENT '商品状态：ON_SALE-在售，OFF_SALE-下架（前端不展示），OUT_OF_STOCK-缺货',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`merchant_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB COMMENT='商品基础信息表';
@@ -159,6 +159,8 @@ CREATE TABLE `hot_products` (
   ```
 
 ### 3. 商品展示模块
+
+**重要说明**: 所有商品查询接口都会自动过滤掉状态为 `OFF_SALE`（下架）的商品，仅展示 `ON_SALE`（在售）和 `OUT_OF_STOCK`（缺货）状态的商品。
 
 #### 3.1 获取商品列表
 - **接口地址**: `/products`
@@ -408,6 +410,31 @@ npm run dev
    - 现在商家API需要携带token才能访问，确保数据安全
    - 修复了添加商品时 merchantId 为 null 的问题
 
+6. JSON反序列化问题修复
+   - 修复了商家添加商品时的JSON反序列化错误
+   - 问题原因：前端发送的features字段为JSON对象，但后端定义为String类型
+   - 解决方案：
+     - 创建了自定义反序列化器 [JsonToStringDeserializer.java](file:///d:/bs25-2/backend/src/main/java/com/healthmall/util/JsonToStringDeserializer.java)
+     - 在 [MerchantProductRequest.java](file:///d:/bs25-2/backend/src/main/java/com/healthmall/dto/MerchantProductRequest.java) 中为features字段添加@JsonDeserialize注解
+   - 现在支持前端发送JSON格式的features数据，后端自动转换为JSON字符串存储
+   - 前端发送示例：
+     ```json
+     {
+       "title": "商品名称",
+       "category": "保健品",
+       "description": "商品描述",
+       "coverUrl": "http://example.com/image.jpg",
+       "features": {
+         "brand": "品牌名",
+         "specification": "规格",
+         "origin": "产地"
+       },
+       "price": 99.99,
+       "stock": 100,
+       "status": "ON_SALE"
+     }
+     ```
+
 ### 7. 商家商品管理模块
 
 #### 7.1 商家添加商品
@@ -636,7 +663,7 @@ $body = @{
     category="保健品"
     description="富含维生素C，增强免疫力，抗氧化"
     coverUrl="http://example.com/products/vitamin_c.jpg"
-    features="{}"
+    features=@{brand="健康品牌";specification="500mg/片";origin="中国"}
     price=98.00
     stock=100
     status="ON_SALE"

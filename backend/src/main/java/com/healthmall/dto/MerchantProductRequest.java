@@ -1,13 +1,18 @@
 package com.healthmall.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.healthmall.entity.Product;
+import com.healthmall.util.JsonToStringDeserializer;
 
 public class MerchantProductRequest {
     private String title;
     private String category;
     private String description;
     private String coverUrl;
+    
+    @JsonDeserialize(using = JsonToStringDeserializer.class)
     private String features;
+    
     private java.math.BigDecimal price;
     private Integer stock;
     private Product.ProductStatus status;

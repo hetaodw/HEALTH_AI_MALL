@@ -137,6 +137,8 @@ http://localhost/v1
 
 ### 商品展示模块
 
+**重要说明**: 所有商品查询接口都会自动过滤掉状态为 `OFF_SALE`（下架）的商品，仅展示 `ON_SALE`（在售）和 `OUT_OF_STOCK`（缺货）状态的商品。
+
 #### 1. 获取商品列表
 - **接口**: `GET /products?page=1&size=10&is_hot=false`
 - **参数**:
