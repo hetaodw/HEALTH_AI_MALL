@@ -33,6 +33,7 @@ public class AuthService {
         user.setAvatarUrl(request.getAvatarUrl());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
+        user.setRole(request.getRole());
         user.setRemarks(request.getRemarks());
 
         userRepository.save(user);

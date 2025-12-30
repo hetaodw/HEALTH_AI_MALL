@@ -1,5 +1,6 @@
 package com.healthmall.dto;
 
+import com.healthmall.entity.User;
 import jakarta.validation.constraints.NotBlank;
 
 public class RegisterRequest {
@@ -14,6 +15,8 @@ public class RegisterRequest {
     private String email;
 
     private String phone;
+
+    private User.Role role = User.Role.USER;
 
     private String remarks;
 
@@ -55,6 +58,14 @@ public class RegisterRequest {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public User.Role getRole() {
+        return role;
+    }
+
+    public void setRole(User.Role role) {
+        this.role = role;
     }
 
     public String getRemarks() {

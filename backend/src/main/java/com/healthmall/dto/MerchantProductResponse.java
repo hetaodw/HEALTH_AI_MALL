@@ -1,70 +1,23 @@
-package com.healthmall.entity;
+package com.healthmall.dto;
 
-import jakarta.persistence.*;
+import com.healthmall.entity.Product;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "products")
-public class Product {
-    
-    public enum ProductStatus {
-        ON_SALE,
-        OFF_SALE,
-        OUT_OF_STOCK
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MerchantProductResponse {
     private Integer id;
-
-    @Column(name = "merchant_id")
     private Integer merchantId;
-
-    @Column(nullable = false, length = 100)
     private String title;
-
-    @Column(length = 50)
     private String category;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
-
-    @Column(name = "cover_url", nullable = false, length = 255)
     private String coverUrl;
-
-    @Column(columnDefinition = "JSON")
     private String features;
-
-    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
-
-    @Column
     private Integer stock;
-
-    @Column
-    private Integer sales = 0;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private ProductStatus status = ProductStatus.ON_SALE;
-
-    @Column(name = "created_at", updatable = false)
+    private Integer sales;
+    private Product.ProductStatus status;
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Integer getId() {
         return id;
@@ -146,11 +99,11 @@ public class Product {
         this.sales = sales;
     }
 
-    public ProductStatus getStatus() {
+    public Product.ProductStatus getStatus() {
         return status;
     }
 
-    public void setStatus(ProductStatus status) {
+    public void setStatus(Product.ProductStatus status) {
         this.status = status;
     }
 

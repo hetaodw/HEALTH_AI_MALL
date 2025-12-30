@@ -243,6 +243,188 @@
         </div>
 
         <div class="api-section">
+            <h2>🏪 商家功能 (需要商家权限)</h2>
+            <div class="grid">
+                <div>
+                    <h3><span class="method post">POST</span> 添加商品</h3>
+                    <div class="form-group">
+                        <label>商品名称</label>
+                        <input type="text" id="merchant-add-title" placeholder="输入商品名称">
+                    </div>
+                    <div class="form-group">
+                        <label>分类</label>
+                        <select id="merchant-add-category">
+                            <option value="保健品">保健品</option>
+                            <option value="医疗器械">医疗器械</option>
+                            <option value="营养补充">营养补充</option>
+                            <option value="健康食品">健康食品</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>描述</label>
+                        <textarea id="merchant-add-description" rows="3" placeholder="输入商品描述"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>封面URL</label>
+                        <input type="text" id="merchant-add-cover" placeholder="输入封面图片URL">
+                    </div>
+                    <div class="form-group">
+                        <label>特性</label>
+                        <input type="text" id="merchant-add-features" placeholder="输入商品特性，用逗号分隔">
+                    </div>
+                    <div class="form-group">
+                        <label>价格</label>
+                        <input type="number" id="merchant-add-price" placeholder="输入价格">
+                    </div>
+                    <div class="form-group">
+                        <label>库存</label>
+                        <input type="number" id="merchant-add-stock" placeholder="输入库存">
+                    </div>
+                    <div class="form-group">
+                        <label>状态</label>
+                        <select id="merchant-add-status">
+                            <option value="ON_SALE">在售</option>
+                            <option value="OFF_SALE">下架</option>
+                            <option value="OUT_OF_STOCK">缺货</option>
+                        </select>
+                    </div>
+                    <button onclick="merchantAddProduct()">添加商品</button>
+                    <div id="merchant-add-response" class="response"></div>
+                </div>
+                <div>
+                    <h3><span class="method put">PUT</span> 修改商品</h3>
+                    <div class="form-group">
+                        <label>商品ID</label>
+                        <input type="number" id="merchant-update-id" placeholder="输入商品ID">
+                    </div>
+                    <div class="form-group">
+                        <label>商品名称</label>
+                        <input type="text" id="merchant-update-title" placeholder="输入商品名称">
+                    </div>
+                    <div class="form-group">
+                        <label>分类</label>
+                        <select id="merchant-update-category">
+                            <option value="保健品">保健品</option>
+                            <option value="医疗器械">医疗器械</option>
+                            <option value="营养补充">营养补充</option>
+                            <option value="健康食品">健康食品</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>描述</label>
+                        <textarea id="merchant-update-description" rows="3" placeholder="输入商品描述"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>封面URL</label>
+                        <input type="text" id="merchant-update-cover" placeholder="输入封面图片URL">
+                    </div>
+                    <div class="form-group">
+                        <label>特性</label>
+                        <input type="text" id="merchant-update-features" placeholder="输入商品特性，用逗号分隔">
+                    </div>
+                    <div class="form-group">
+                        <label>价格</label>
+                        <input type="number" id="merchant-update-price" placeholder="输入价格">
+                    </div>
+                    <div class="form-group">
+                        <label>库存</label>
+                        <input type="number" id="merchant-update-stock" placeholder="输入库存">
+                    </div>
+                    <div class="form-group">
+                        <label>状态</label>
+                        <select id="merchant-update-status">
+                            <option value="ON_SALE">在售</option>
+                            <option value="OFF_SALE">下架</option>
+                            <option value="OUT_OF_STOCK">缺货</option>
+                        </select>
+                    </div>
+                    <button onclick="merchantUpdateProduct()">修改商品</button>
+                    <div id="merchant-update-response" class="response"></div>
+                </div>
+                <div>
+                    <h3><span class="method delete">DELETE</span> 删除商品</h3>
+                    <div class="form-group">
+                        <label>商品ID</label>
+                        <input type="number" id="merchant-delete-id" placeholder="输入商品ID">
+                    </div>
+                    <button onclick="merchantDeleteProduct()">删除商品</button>
+                    <div id="merchant-delete-response" class="response"></div>
+                </div>
+                <div>
+                    <h3><span class="method get">GET</span> 获取商家商品列表</h3>
+                    <div class="form-group">
+                        <label>页码</label>
+                        <input type="number" id="merchant-page-num" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>每页数量</label>
+                        <input type="number" id="merchant-page-size" value="10" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>状态筛选</label>
+                        <select id="merchant-status-filter">
+                            <option value="">全部</option>
+                            <option value="ON_SALE">在售</option>
+                            <option value="OFF_SALE">下架</option>
+                            <option value="OUT_OF_STOCK">缺货</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>分类筛选</label>
+                        <select id="merchant-category-filter">
+                            <option value="">全部</option>
+                            <option value="保健品">保健品</option>
+                            <option value="医疗器械">医疗器械</option>
+                            <option value="营养补充">营养补充</option>
+                            <option value="健康食品">健康食品</option>
+                        </select>
+                    </div>
+                    <button onclick="merchantGetProducts()">获取商品列表</button>
+                    <div id="merchant-products-response" class="response"></div>
+                </div>
+                <div>
+                    <h3><span class="method get">GET</span> 获取商品详情</h3>
+                    <div class="form-group">
+                        <label>商品ID</label>
+                        <input type="number" id="merchant-detail-id" placeholder="输入商品ID">
+                    </div>
+                    <button onclick="merchantGetProductDetail()">获取商品详情</button>
+                    <div id="merchant-detail-response" class="response"></div>
+                </div>
+                <div>
+                    <h3><span class="method get">PATCH</span> 更新商品状态</h3>
+                    <div class="form-group">
+                        <label>商品ID</label>
+                        <input type="number" id="merchant-status-id" placeholder="输入商品ID">
+                    </div>
+                    <div class="form-group">
+                        <label>状态</label>
+                        <select id="merchant-status-value">
+                            <option value="ON_SALE">在售</option>
+                            <option value="OFF_SALE">下架</option>
+                            <option value="OUT_OF_STOCK">缺货</option>
+                        </select>
+                    </div>
+                    <button onclick="merchantUpdateStatus()">更新状态</button>
+                    <div id="merchant-status-response" class="response"></div>
+                </div>
+                <div>
+                    <h3><span class="method get">PATCH</span> 更新商品库存</h3>
+                    <div class="form-group">
+                        <label>商品ID</label>
+                        <input type="number" id="merchant-stock-id" placeholder="输入商品ID">
+                    </div>
+                    <div class="form-group">
+                        <label>库存数量</label>
+                        <input type="number" id="merchant-stock-value" placeholder="输入库存数量">
+                    </div>
+                    <button onclick="merchantUpdateStock()">更新库存</button>
+                    <div id="merchant-stock-response" class="response"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="api-section">
             <h2>⚙️ 管理员功能 (需要管理员权限)</h2>
             <div class="grid">
                 <div>
@@ -449,6 +631,131 @@
                 sort: parseInt(sort)
             }, true);
             displayResponse('hot-product-response', result);
+        }
+
+        async function merchantAddProduct() {
+            const title = document.getElementById('merchant-add-title').value;
+            const category = document.getElementById('merchant-add-category').value;
+            const description = document.getElementById('merchant-add-description').value;
+            const coverUrl = document.getElementById('merchant-add-cover').value;
+            const features = document.getElementById('merchant-add-features').value;
+            const price = document.getElementById('merchant-add-price').value;
+            const stock = document.getElementById('merchant-add-stock').value;
+            const status = document.getElementById('merchant-add-status').value;
+
+            if (!title || !price || !stock) {
+                alert('请填写必填字段');
+                return;
+            }
+
+            const result = await apiRequest('POST', '/merchant/products', {
+                title,
+                category,
+                description,
+                coverUrl,
+                features: features ? features.split(',').map(f => f.trim()) : [],
+                price: parseFloat(price),
+                stock: parseInt(stock),
+                status: status
+            }, true);
+            displayResponse('merchant-add-response', result);
+        }
+
+        async function merchantUpdateProduct() {
+            const id = document.getElementById('merchant-update-id').value;
+            const title = document.getElementById('merchant-update-title').value;
+            const category = document.getElementById('merchant-update-category').value;
+            const description = document.getElementById('merchant-update-description').value;
+            const coverUrl = document.getElementById('merchant-update-cover').value;
+            const features = document.getElementById('merchant-update-features').value;
+            const price = document.getElementById('merchant-update-price').value;
+            const stock = document.getElementById('merchant-update-stock').value;
+            const status = document.getElementById('merchant-update-status').value;
+
+            if (!id) {
+                alert('请输入商品ID');
+                return;
+            }
+
+            const result = await apiRequest('PUT', `/merchant/products/${id}`, {
+                title,
+                category,
+                description,
+                coverUrl,
+                features: features ? features.split(',').map(f => f.trim()) : [],
+                price: price ? parseFloat(price) : null,
+                stock: stock ? parseInt(stock) : null,
+                status: status
+            }, true);
+            displayResponse('merchant-update-response', result);
+        }
+
+        async function merchantDeleteProduct() {
+            const id = document.getElementById('merchant-delete-id').value;
+
+            if (!id) {
+                alert('请输入商品ID');
+                return;
+            }
+
+            const result = await apiRequest('DELETE', `/merchant/products/${id}`, null, true);
+            displayResponse('merchant-delete-response', result);
+        }
+
+        async function merchantGetProducts() {
+            const page = document.getElementById('merchant-page-num').value;
+            const size = document.getElementById('merchant-page-size').value;
+            const status = document.getElementById('merchant-status-filter').value;
+            const category = document.getElementById('merchant-category-filter').value;
+
+            let url = `/merchant/products?page=${page}&size=${size}`;
+            if (status) {
+                url += `&status=${status}`;
+            }
+            if (category) {
+                url += `&category=${encodeURIComponent(category)}`;
+            }
+
+            const result = await apiRequest('GET', url, null, true);
+            displayResponse('merchant-products-response', result);
+        }
+
+        async function merchantGetProductDetail() {
+            const id = document.getElementById('merchant-detail-id').value;
+
+            if (!id) {
+                alert('请输入商品ID');
+                return;
+            }
+
+            const result = await apiRequest('GET', `/merchant/products/${id}`, null, true);
+            displayResponse('merchant-detail-response', result);
+        }
+
+        async function merchantUpdateStatus() {
+            const id = document.getElementById('merchant-status-id').value;
+            const status = document.getElementById('merchant-status-value').value;
+
+            if (!id) {
+                alert('请输入商品ID');
+                return;
+            }
+
+            const result = await apiRequest('PATCH', `/merchant/products/${id}/status?status=${status}`, null, true);
+            displayResponse('merchant-status-response', result);
+        }
+
+        async function merchantUpdateStock() {
+            const id = document.getElementById('merchant-stock-id').value;
+            const stock = document.getElementById('merchant-stock-value').value;
+
+            if (!id || !stock) {
+                alert('请填写所有字段');
+                return;
+            }
+
+            const result = await apiRequest('PATCH', `/merchant/products/${id}/stock?stock=${stock}`, null, true);
+            displayResponse('merchant-stock-response', result);
         }
 
         updateTokenDisplay();
