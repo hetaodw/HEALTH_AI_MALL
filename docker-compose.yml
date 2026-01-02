@@ -34,7 +34,7 @@ services:
       dockerfile: Dockerfile
     container_name: mall-backend
     ports:
-      - "8080:8080"
+      - "18080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mall-mysql:3306/health_mall_system?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: mall_user

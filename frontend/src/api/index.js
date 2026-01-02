@@ -20,7 +20,15 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   response => {
-    return response.data
+    const res = response.data
+    if (res.code !== 200) {
+      console.error('API Error:', res)
+      const error = new Error(res.msg || '未知错误')
+      error.response = response
+      error.code = res.code
+      return Promise.reject(error)
+    }
+    return res
   },
   error => {
     console.error('API Error:', error)

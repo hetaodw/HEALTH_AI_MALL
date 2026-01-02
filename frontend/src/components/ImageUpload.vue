@@ -78,6 +78,10 @@ const props = defineProps({
   alt: {
     type: String,
     default: '预览图片'
+  },
+  autoDeleteOld: {
+    type: Boolean,
+    default: true
   }
 })
 
@@ -93,9 +97,14 @@ const processing = ref(false)
 
 watch(() => props.modelValue, (newValue) => {
   imageUrl.value = newValue
-})
+}, { immediate: true })
 
 const triggerUpload = () => {
+  // 重置错误和上传状态，确保在打开文件选择器时没有之前的提示信息
+  error.value = null
+  uploading.value = false
+  processing.value = false
+  uploadProgress.value = 0
   fileInput.value.click()
 }
 
@@ -180,8 +189,6 @@ const uploadFile = async (file) => {
         endpoint = '/upload/avatar'
     }
 
-    uploadProgress.value = 50
-
     const response = await api.upload(endpoint, formData, {
       onUploadProgress: (progressEvent) => {
         const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
@@ -196,8 +203,9 @@ const uploadFile = async (file) => {
       imageUrl.value = response.data.url
       emit('update:modelValue', response.data.url)
       emit('upload-success', response.data.url)
+      emit('image-changed', { oldUrl: oldImageUrl, newUrl: response.data.url })
       
-      if (oldImageUrl) {
+      if (props.autoDeleteOld && oldImageUrl) {
         try {
           await api.deleteFile(oldImageUrl)
         } catch (err) {
@@ -209,9 +217,9 @@ const uploadFile = async (file) => {
       emit('upload-error', error.value)
     }
   } catch (err) {
+    console.error('Upload error:', err)
     error.value = '网络错误，请稍后重试'
     emit('upload-error', error.value)
-    console.error('Upload error:', err)
   } finally {
     uploading.value = false
   }

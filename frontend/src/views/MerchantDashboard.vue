@@ -77,7 +77,8 @@
     </div>
 
     <div v-if="showAddModal || showEditModal" class="modal-overlay" @click.self="closeModals">
-      <ProductForm
+      <ProductCombinedForm
+        ref="productFormRef"
         :product="editingProduct"
         @submit="handleSubmit"
         @cancel="closeModals"
@@ -119,7 +120,7 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 import api from '../api'
 import Pagination from '../components/Pagination.vue'
-import ProductForm from '../components/ProductForm.vue'
+import ProductCombinedForm from '../components/ProductCombinedForm.vue'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -147,6 +148,7 @@ const showStockModalFlag = ref(false)
 const editingProduct = ref(null)
 const currentProduct = ref(null)
 const newStock = ref(0)
+const productFormRef = ref(null)
 
 const loadProducts = async () => {
   loading.value = true
@@ -173,24 +175,26 @@ const handlePageChange = (page) => {
 }
 
 const editProduct = (product) => {
-  editingProduct.value = product
+  editingProduct.value = JSON.parse(JSON.stringify(product))
   showEditModal.value = true
 }
 
 const handleSubmit = async (formData) => {
   try {
+    const isEdit = !!editingProduct.value
+    
     if (editingProduct.value) {
       await api.merchant.updateProduct(editingProduct.value.id, formData)
-      alert('商品更新成功')
     } else {
       await api.merchant.addProduct(formData)
-      alert('商品添加成功')
     }
+    
     closeModals()
     loadProducts()
+    alert(isEdit ? '商品更新成功' : '商品添加成功')
   } catch (error) {
     console.error('操作失败:', error)
-    alert('操作失败: ' + (error.response?.data?.msg || '未知错误'))
+    alert('操作失败: ' + (error.message || '未知错误'))
   }
 }
 
@@ -208,13 +212,14 @@ const showStockModal = (product) => {
 
 const updateStock = async () => {
   try {
-    await api.merchant.updateProductStock(currentProduct.value.id, newStock.value)
+    const stockChange = newStock.value - currentProduct.value.stock
+    await api.merchant.updateProductStock(currentProduct.value.id, stockChange)
     alert('库存更新成功')
     showStockModalFlag.value = false
     loadProducts()
   } catch (error) {
     console.error('更新库存失败:', error)
-    alert('更新库存失败')
+    alert('更新库存失败: ' + (error.message || '未知错误'))
   }
 }
 
@@ -226,7 +231,7 @@ const toggleStatus = async (product) => {
     loadProducts()
   } catch (error) {
     console.error('更新状态失败:', error)
-    alert('更新状态失败')
+    alert('更新状态失败: ' + (error.message || '未知错误'))
   }
 }
 
@@ -238,7 +243,7 @@ const deleteProduct = async (id) => {
     loadProducts()
   } catch (error) {
     console.error('删除失败:', error)
-    alert('删除失败')
+    alert('删除失败: ' + (error.message || '未知错误'))
   }
 }
 
