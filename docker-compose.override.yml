@@ -1,0 +1,16 @@
+services:
+  mall-backend:
+    build:
+      args:
+        - HTTP_PROXY=http://host.docker.internal:7897
+        - HTTPS_PROXY=http://host.docker.internal:7897
+        - http_proxy=http://host.docker.internal:7897
+        - https_proxy=http://host.docker.internal:7897
+
+  mall-frontend:
+    build:
+      args:
+        - HTTP_PROXY=http://host.docker.internal:7897
+        - HTTPS_PROXY=http://host.docker.internal:7897
+        - http_proxy=http://host.docker.internal:7897
+        - https_proxy=http://host.docker.internal:7897

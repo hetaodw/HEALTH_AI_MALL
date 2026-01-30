@@ -42,12 +42,32 @@ export default {
     getByCategory: (category, params) => api.get(`/products/category/${category}`, { params })
   },
   merchant: {
-    addProduct: (data) => api.post('/merchant/products', data),
-    updateProduct: (id, data) => api.put(`/merchant/products/${id}`, data),
+    addProduct: (data) => {
+      // 如果是FormData，不设置Content-Type，让浏览器自动设置
+      const isFormData = data instanceof FormData
+      return api.post('/merchant/products', data, {
+        headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
+      })
+    },
+    updateProduct: (id, data) => {
+      const isFormData = data instanceof FormData
+      return api.put(`/merchant/products/${id}`, data, {
+        headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
+      })
+    },
     deleteProduct: (id) => api.delete(`/merchant/products/${id}`),
     getProductList: (params) => api.get('/merchant/products', { params }),
     getProductDetail: (id) => api.get(`/merchant/products/${id}`),
     updateProductStatus: (id, status) => api.patch(`/merchant/products/${id}/status`, null, { params: { status } }),
     updateProductStock: (id, stock) => api.patch(`/merchant/products/${id}/stock`, null, { params: { stock } })
+  },
+  admin: {
+    createProduct: (data) => {
+      const isFormData = data instanceof FormData
+      return api.post('/admin/products', data, {
+        headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
+      })
+    },
+    deleteProduct: (id) => api.delete(`/admin/products/${id}`)
   }
 }

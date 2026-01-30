@@ -1,9 +1,100 @@
-1.系统使用docker构建
-2.系统使用mysql数据库，数据库地址为mysql://mall-mysql:3306/health_mall_system，外部访问端口为4000
-utf8mb4编码
-3.系统使用redis数据库，数据库地址为redis://mall-redis:6379/0
-4.系统使用nginx作为web服务器，nginx配置文件为/etc/nginx/nginx.conf
-5：系统将使用docker-compose.yml文件启动，启动时需要初始化数据库等
+## 系统部署说明
+
+### 1. 环境要求
+- Docker Desktop
+- Docker Compose
+- PowerShell (Windows) 或 Bash (Linux/Mac)
+
+### 2. 代理配置
+
+#### 2.1 主机代理设置（用于Docker下载镜像）
+如果需要通过代理下载Docker镜像，请在主机上设置环境变量：
+
+**PowerShell:**
+```powershell
+$env:HTTP_PROXY="http://127.0.0.1:7897"
+$env:HTTPS_PROXY="http://127.0.0.1:7897"
+```
+
+**Bash:**
+```bash
+export HTTP_PROXY="http://127.0.0.1:7897"
+export HTTPS_PROXY="http://127.0.0.1:7897"
+```
+
+#### 2.2 容器构建代理设置
+已在 `docker-compose.override.yml` 中配置构建代理参数，使用 `host.docker.internal` 让容器访问主机的代理：
+
+```yaml
+services:
+  mall-backend:
+    build:
+      args:
+        - HTTP_PROXY=http://host.docker.internal:7897
+        - HTTPS_PROXY=http://host.docker.internal:7897
+  mall-frontend:
+    build:
+      args:
+        - HTTP_PROXY=http://host.docker.internal:7897
+        - HTTPS_PROXY=http://host.docker.internal:7897
+```
+
+**注意**: `host.docker.internal` 是Docker提供的特殊DNS名称，用于容器访问主机服务。在Windows和Mac上默认可用，Linux上需要Docker 20.10+版本。
+
+### 3. 系统架构
+1. 系统使用docker构建
+2. 系统使用mysql数据库，数据库地址为mysql://mall-mysql:3306/health_mall_system，外部访问端口为4000，utf8mb4编码
+3. 系统使用redis数据库，数据库地址为redis://mall-redis:6379/0
+4. 系统使用nginx作为web服务器，nginx配置文件为/etc/nginx/nginx.conf
+5. 系统将使用docker-compose.yml文件启动，启动时需要初始化数据库等
+
+### 4. 快速启动
+
+```powershell
+# 设置代理（如需要）
+$env:HTTP_PROXY="http://127.0.0.1:7897"
+$env:HTTPS_PROXY="http://127.0.0.1:7897"
+
+# 启动所有服务
+docker-compose up -d
+
+# 或只启动特定服务
+docker-compose up -d mall-backend
+docker-compose up -d mall-frontend
+```
+
+### 5. 重新构建服务
+
+当代码修改后，需要重新构建容器：
+
+```powershell
+# 设置代理
+$env:HTTP_PROXY="http://127.0.0.1:7897"
+$env:HTTPS_PROXY="http://127.0.0.1:7897"
+
+# 停止并删除容器
+docker-compose stop mall-backend
+docker-compose rm -f mall-backend
+
+# 重新构建（不使用缓存）
+docker-compose build --no-cache mall-backend
+
+# 启动容器
+docker-compose up -d mall-backend
+
+# 查看日志
+docker logs -f mall-backend
+```
+
+### 6. 服务端口
+
+| 服务 | 容器端口 | 映射端口 | 说明 |
+|------|----------|----------|------|
+| mall-backend | 8080 | 8080 | 后端API服务 |
+| mall-mysql | 3306 | 4000 | MySQL数据库 |
+| mall-redis | 6379 | 6379 | Redis缓存 |
+| mall-nginx | 80 | 80 | Nginx反向代理 |
+| mall-frontend | 80 | 3000 | 前端服务 |
 
 数据库部分:-- 创建数据库 (可选)
 CREATE DATABASE IF NOT EXISTS health_mall DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -414,7 +505,57 @@ npm run dev
 - [Profile.vue](file:///d:/bs25-2/frontend/src/views/Profile.vue) - 个人中心（头像上传）
 - [ProductForm.vue](file:///d:/bs25-2/frontend/src/components/ProductForm.vue) - 商品表单（商品图片上传）
 
-#### 6.2 数据库更新
+#### 6.2 商品图片上传功能重构（2026-01-30）
+
+**功能概述**:
+重构了商品创建和编辑流程，从输入图片URL改为直接上传文件，并增加了详细介绍图片上传功能。
+
+**主要修改**:
+
+1. **后端API重构**:
+   - 商品创建接口 (`POST /merchant/products`) 改为 `multipart/form-data` 格式，支持文件上传
+   - 商品更新接口 (`PUT /merchant/products/{id}`) 改为 `multipart/form-data` 格式
+   - 新增详细介绍图片上传支持，可同时上传多张详情图
+   - [MerchantProductRequest.java](file:///d:/26bs/backend/src/main/java/com/healthmall/dto/MerchantProductRequest.java) 新增 `detailImages` 字段
+
+2. **前端表单重构**:
+   - [ProductForm.vue](file:///d:/26bs/frontend/src/components/ProductForm.vue) 完全重构
+   - 封面图片从URL输入改为文件上传组件
+   - 新增详细介绍图片上传区域，支持多选上传
+   - 图片预览功能，支持删除已选图片
+   - 文件类型验证（jpg、png、gif）和大小限制（5MB）
+
+3. **静态资源访问**:
+   - [WebConfig.java](file:///d:/26bs/backend/src/main/java/com/healthmall/config/WebConfig.java) 添加静态资源映射
+   - 配置 `/static/**` 路径映射到文件系统
+   - 上传图片存储路径：`/app/static/product/cover/` 和 `/app/static/product/detail/`
+
+4. **表单交互优化**:
+   - 移除点击遮罩层关闭表单的功能，防止误操作
+   - 添加右上角关闭按钮（×）
+   - 修复文件上传后表单自动关闭的问题
+   - 添加事件阻止冒泡处理
+
+**API变更示例**:
+```javascript
+// 创建商品 - 使用 FormData
+const formData = new FormData();
+formData.append('title', '商品名称');
+formData.append('category', '保健品');
+formData.append('description', '商品描述');
+formData.append('price', '99.99');
+formData.append('stock', '100');
+formData.append('coverImage', coverFile);  // 文件对象
+formData.append('detailImages', detailFile1);  // 多张详情图
+formData.append('detailImages', detailFile2);
+formData.append('status', 'ON_SALE');
+
+await api.post('/merchant/products', formData, {
+  headers: { 'Content-Type': 'multipart/form-data' }
+});
+```
+
+#### 6.3 数据库更新
 - 用户表新增字段：`email`（邮箱地址）、`phone`（手机号码）、`role`（用户角色）
 - 商品表新增字段：`merchant_id`（商家ID）、`category`（商品分类）、`sales`（销量）、`status`（商品状态）
 - 执行SQL更新脚本：`UpdateSchema.sql`
@@ -558,19 +699,39 @@ npm run dev
 - **接口地址**: `/merchant/products`
 - **请求方式**: POST
 - **请求头**: 需要携带token
+- **请求类型**: `multipart/form-data` (支持文件上传)
 - **请求参数**:
-  ```json
-  {
-    "title": "天然维C片500mg",
-    "category": "保健品",
-    "description": "富含维生素C，增强免疫力，抗氧化",
-    "coverUrl": "http://example.com/products/vitamin_c.jpg",
-    "features": {},
-    "price": 98.00,
-    "stock": 100,
-    "status": "ON_SALE"
-  }
+  | 参数 | 类型 | 必填 | 说明 |
+  |------|------|------|------|
+  | title | string | 是 | 商品名称 |
+  | category | string | 是 | 商品分类 |
+  | description | string | 是 | 商品描述 |
+  | coverImage | file | 是 | 封面图片文件 |
+  | detailImages | file[] | 否 | 详细介绍图片文件数组（可选，可多选） |
+  | price | decimal | 是 | 价格 |
+  | stock | int | 是 | 库存 |
+  | status | string | 否 | 状态: ON_SALE/OFF_SALE/OUT_OF_STOCK |
+  | features | string | 否 | JSON格式字符串 |
+
+- **请求示例** (使用FormData):
+  ```javascript
+  const formData = new FormData();
+  formData.append('title', '天然维C片500mg');
+  formData.append('category', '保健品');
+  formData.append('description', '富含维生素C');
+  formData.append('coverImage', fileInput.files[0]); // 封面图片文件
+  formData.append('detailImages', detailFile1); // 详细介绍图片（可多选）
+  formData.append('detailImages', detailFile2);
+  formData.append('detailImages', detailFile3);
+  formData.append('price', '98.00');
+  formData.append('stock', '100');
+  formData.append('status', 'ON_SALE');
+  
+  await api.post('/merchant/products', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
   ```
+
 - **返回示例**:
   ```json
   {
@@ -581,7 +742,11 @@ npm run dev
       "title": "天然维C片500mg",
       "category": "保健品",
       "description": "富含维生素C，增强免疫力，抗氧化",
-      "coverUrl": "http://example.com/products/vitamin_c.jpg",
+      "coverUrl": "http://localhost/v1/static/product/cover/2025/01/15/abc123.jpg",
+      "detailImages": [
+        "http://localhost/v1/static/product/detail/2025/01/15/def456.jpg",
+        "http://localhost/v1/static/product/detail/2025/01/15/ghi789.jpg"
+      ],
       "features": {},
       "price": 98.00,
       "stock": 100,
@@ -596,20 +761,38 @@ npm run dev
 - **接口地址**: `/merchant/products/{id}`
 - **请求方式**: PUT
 - **请求头**: 需要携带token
+- **请求类型**: `multipart/form-data` (支持文件上传)
 - **路径参数**:
   - `id`: 商品ID
 - **请求参数**:
-  ```json
-  {
-    "title": "天然维C片500mg（升级版）",
-    "category": "保健品",
-    "description": "富含维生素C，增强免疫力，抗氧化，升级配方",
-    "coverUrl": "http://example.com/products/vitamin_c_new.jpg",
-    "features": {},
-    "price": 108.00,
-    "stock": 150,
-    "status": "ON_SALE"
-  }
+  | 参数 | 类型 | 必填 | 说明 |
+  |------|------|------|------|
+  | title | string | 是 | 商品名称 |
+  | category | string | 是 | 商品分类 |
+  | description | string | 是 | 商品描述 |
+  | coverImage | file | 否 | 新封面图片文件（不传则保留原图） |
+  | detailImages | file[] | 否 | 详细介绍图片文件数组（可选） |
+  | price | decimal | 是 | 价格 |
+  | stock | int | 是 | 库存 |
+  | status | string | 否 | 状态: ON_SALE/OFF_SALE/OUT_OF_STOCK |
+  | features | string | 否 | JSON格式字符串 |
+
+- **请求示例** (使用FormData):
+  ```javascript
+  const formData = new FormData();
+  formData.append('title', '天然维C片500mg（升级版）');
+  formData.append('category', '保健品');
+  formData.append('description', '富含维生素C，升级配方');
+  formData.append('coverImage', newCoverFile); // 新封面图片（可选）
+  formData.append('detailImages', detailFile1); // 详细介绍图片（可选）
+  formData.append('detailImages', detailFile2);
+  formData.append('price', '108.00');
+  formData.append('stock', '150');
+  formData.append('status', 'ON_SALE');
+  
+  await api.put(`/merchant/products/${productId}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
   ```
 - **返回示例**:
   ```json
@@ -621,7 +804,11 @@ npm run dev
       "title": "天然维C片500mg（升级版）",
       "category": "保健品",
       "description": "富含维生素C，增强免疫力，抗氧化，升级配方",
-      "coverUrl": "http://example.com/products/vitamin_c_new.jpg",
+      "coverUrl": "http://localhost/v1/static/product/cover/2025/01/15/abc123.jpg",
+      "detailImages": [
+        "http://localhost/v1/static/product/detail/2025/01/15/def456.jpg",
+        "http://localhost/v1/static/product/detail/2025/01/15/ghi789.jpg"
+      ],
       "features": {},
       "price": 108.00,
       "stock": 150,
@@ -882,3 +1069,84 @@ $response.Content
 6. 在商品列表中可以查看、编辑、删除商品
 7. 使用筛选功能快速查找特定商品
 8. 使用快速操作功能更新商品状态和库存
+
+### 10. 管理员商品管理模块
+
+#### 10.1 管理员创建商品
+- **接口地址**: `/admin/products`
+- **请求方式**: POST
+- **请求头**: 需要携带token (ADMIN角色)
+- **请求类型**: `multipart/form-data` (支持文件上传)
+- **请求参数**:
+  | 参数 | 类型 | 必填 | 说明 |
+  |------|------|------|------|
+  | name | string | 是 | 商品名称 |
+  | category | string | 是 | 商品分类 |
+  | description | string | 是 | 商品描述 |
+  | coverImage | file | 是 | 封面图片文件 |
+  | price | decimal | 是 | 价格 |
+  | stock | int | 是 | 库存 |
+  | features | string | 否 | JSON格式字符串 |
+
+- **请求示例** (使用FormData):
+  ```javascript
+  const formData = new FormData();
+  formData.append('name', '天然维C片500mg');
+  formData.append('category', '保健品');
+  formData.append('description', '富含维生素C');
+  formData.append('coverImage', fileInput.files[0]); // 文件对象
+  formData.append('price', '98.00');
+  formData.append('stock', '100');
+  ```
+
+- **返回示例**:
+  ```json
+  {
+    "code": 200,
+    "msg": "操作成功",
+    "data": 1
+  }
+  ```
+
+#### 10.2 管理员删除商品
+- **接口地址**: `/admin/products/{id}`
+- **请求方式**: DELETE
+- **请求头**: 需要携带token (ADMIN角色)
+- **路径参数**:
+  - `id`: 商品ID
+- **返回示例**:
+  ```json
+  {
+    "code": 200,
+    "msg": "操作成功",
+    "data": null
+  }
+  ```
+
+#### 10.3 商品图片上传说明
+创建商品时，封面图片通过 `coverImage` 字段上传，支持以下格式：
+- **支持格式**: jpg, jpeg, png, gif
+- **文件大小限制**: 最大 5MB
+- **存储路径**: `/static/product/cover/{year}/{month}/{day}/{filename}`
+- **访问URL**: `http://localhost/v1/static/product/cover/{year}/{month}/{day}/{filename}`
+
+**PowerShell 测试示例**:
+```powershell
+# 管理员登录
+$headers = @{"Content-Type"="application/json"}
+$body = @{username="admin";password="admin123"} | ConvertTo-Json
+$response = Invoke-WebRequest -Uri "http://localhost/v1/auth/login" -Method POST -Headers $headers -Body $body -UseBasicParsing
+$token = ($response.Content | ConvertFrom-Json).data.token
+
+# 创建商品（带图片上传）
+$headers = @{"Authorization"="Bearer $token"}
+$form = @{
+    name="测试商品"
+    category="保健品"
+    description="测试描述"
+    price="99.99"
+    stock="100"
+}
+# 使用 -InFile 参数上传图片文件
+Invoke-WebRequest -Uri "http://localhost/v1/admin/products" -Method POST -Headers $headers -Form $form -InFile "path/to/image.jpg" -UseBasicParsing
+```
