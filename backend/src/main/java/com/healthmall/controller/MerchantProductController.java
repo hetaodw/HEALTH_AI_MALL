@@ -5,10 +5,14 @@ import com.healthmall.dto.MerchantProductRequest;
 import com.healthmall.dto.MerchantProductResponse;
 import com.healthmall.dto.PageResponse;
 import com.healthmall.entity.Product;
+import com.healthmall.service.FileUploadService;
 import com.healthmall.service.MerchantProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("/merchant/products")
@@ -17,23 +21,112 @@ public class MerchantProductController {
     @Autowired
     private MerchantProductService merchantProductService;
 
+    @Autowired
+    private FileUploadService fileUploadService;
+
     @PostMapping
     public ApiResponse<MerchantProductResponse> addProduct(
             HttpServletRequest request,
-            @RequestBody MerchantProductRequest productRequest) {
+            @RequestParam("title") String title,
+            @RequestParam("category") String category,
+            @RequestParam("price") BigDecimal price,
+            @RequestParam("stock") Integer stock,
+            @RequestParam("description") String description,
+            @RequestParam("coverImage") MultipartFile coverImage,
+            @RequestParam(value = "features", required = false) String features,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "detailImages", required = false) List<MultipartFile> detailImages) {
+        
         Integer merchantId = (Integer) request.getAttribute("userId");
-        MerchantProductResponse response = merchantProductService.addProduct(merchantId, productRequest);
-        return ApiResponse.success(response);
+        
+        try {
+            // 上传封面图片
+            String coverUrl = fileUploadService.uploadImage(coverImage, "product-cover");
+            
+            // 上传详细介绍图片
+            List<String> detailImageUrls = new java.util.ArrayList<>();
+            if (detailImages != null && !detailImages.isEmpty()) {
+                for (MultipartFile image : detailImages) {
+                    if (!image.isEmpty()) {
+                        String imageUrl = fileUploadService.uploadImage(image, "product-detail");
+                        detailImageUrls.add(imageUrl);
+                    }
+                }
+            }
+            
+            // 构建请求对象
+            MerchantProductRequest productRequest = new MerchantProductRequest();
+            productRequest.setTitle(title);
+            productRequest.setCategory(category);
+            productRequest.setPrice(price);
+            productRequest.setStock(stock);
+            productRequest.setDescription(description);
+            productRequest.setCoverUrl(coverUrl);
+            productRequest.setFeatures(features);
+            productRequest.setDetailImages(detailImageUrls);
+            if (status != null) {
+                productRequest.setStatus(Product.ProductStatus.valueOf(status.toUpperCase()));
+            }
+            
+            MerchantProductResponse response = merchantProductService.addProduct(merchantId, productRequest);
+            return ApiResponse.success(response);
+        } catch (Exception e) {
+            return ApiResponse.error(500, "商品添加失败: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
     public ApiResponse<MerchantProductResponse> updateProduct(
             HttpServletRequest request,
             @PathVariable Integer id,
-            @RequestBody MerchantProductRequest productRequest) {
+            @RequestParam("title") String title,
+            @RequestParam("category") String category,
+            @RequestParam("price") BigDecimal price,
+            @RequestParam("stock") Integer stock,
+            @RequestParam("description") String description,
+            @RequestParam(value = "coverImage", required = false) MultipartFile coverImage,
+            @RequestParam(value = "features", required = false) String features,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "detailImages", required = false) List<MultipartFile> detailImages) {
+        
         Integer merchantId = (Integer) request.getAttribute("userId");
-        MerchantProductResponse response = merchantProductService.updateProduct(merchantId, id, productRequest);
-        return ApiResponse.success(response);
+        
+        try {
+            // 构建请求对象
+            MerchantProductRequest productRequest = new MerchantProductRequest();
+            productRequest.setTitle(title);
+            productRequest.setCategory(category);
+            productRequest.setPrice(price);
+            productRequest.setStock(stock);
+            productRequest.setDescription(description);
+            productRequest.setFeatures(features);
+            if (status != null) {
+                productRequest.setStatus(Product.ProductStatus.valueOf(status.toUpperCase()));
+            }
+            
+            // 如果有新封面图片则上传
+            if (coverImage != null && !coverImage.isEmpty()) {
+                String coverUrl = fileUploadService.uploadImage(coverImage, "product-cover");
+                productRequest.setCoverUrl(coverUrl);
+            }
+            
+            // 上传详细介绍图片
+            List<String> detailImageUrls = new java.util.ArrayList<>();
+            if (detailImages != null && !detailImages.isEmpty()) {
+                for (MultipartFile image : detailImages) {
+                    if (!image.isEmpty()) {
+                        String imageUrl = fileUploadService.uploadImage(image, "product-detail");
+                        detailImageUrls.add(imageUrl);
+                    }
+                }
+                productRequest.setDetailImages(detailImageUrls);
+            }
+            
+            MerchantProductResponse response = merchantProductService.updateProduct(merchantId, id, productRequest);
+            return ApiResponse.success(response);
+        } catch (Exception e) {
+            return ApiResponse.error(500, "商品更新失败: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

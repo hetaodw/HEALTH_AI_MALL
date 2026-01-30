@@ -76,11 +76,12 @@
       />
     </div>
 
-    <div v-if="showAddModal || showEditModal" class="modal-overlay" @click.self="closeModals">
+    <div v-if="showAddModal || showEditModal" class="modal-overlay">
       <ProductForm
         :product="editingProduct"
         @submit="handleSubmit"
         @cancel="closeModals"
+        @close="closeModals"
       />
     </div>
 

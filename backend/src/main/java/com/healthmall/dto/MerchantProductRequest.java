@@ -1,6 +1,7 @@
 package com.healthmall.dto;
 
 import com.healthmall.entity.Product;
+import java.util.List;
 
 public class MerchantProductRequest {
     private String title;
@@ -11,6 +12,7 @@ public class MerchantProductRequest {
     private java.math.BigDecimal price;
     private Integer stock;
     private Product.ProductStatus status;
+    private List<String> detailImages;
 
     public String getTitle() {
         return title;
@@ -74,5 +76,13 @@ public class MerchantProductRequest {
 
     public void setStatus(Product.ProductStatus status) {
         this.status = status;
+    }
+
+    public List<String> getDetailImages() {
+        return detailImages;
+    }
+
+    public void setDetailImages(List<String> detailImages) {
+        this.detailImages = detailImages;
     }
 }

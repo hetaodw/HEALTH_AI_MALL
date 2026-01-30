@@ -32,3 +32,9 @@ server:
 jwt:
   secret: health-mall-secret-key-2024-extended-for-security-requirements
   expiration: 86400000
+
+file:
+  upload:
+    path: /app/static
+  access:
+    url: http://localhost:8080/v1/static
