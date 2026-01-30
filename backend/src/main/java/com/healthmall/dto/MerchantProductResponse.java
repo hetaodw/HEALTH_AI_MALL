@@ -3,6 +3,7 @@ package com.healthmall.dto;
 import com.healthmall.entity.Product;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MerchantProductResponse {
     private Integer id;
@@ -18,6 +19,7 @@ public class MerchantProductResponse {
     private Product.ProductStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<String> detailImages;
 
     public Integer getId() {
         return id;
@@ -121,5 +123,13 @@ public class MerchantProductResponse {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<String> getDetailImages() {
+        return detailImages;
+    }
+
+    public void setDetailImages(List<String> detailImages) {
+        this.detailImages = detailImages;
     }
 }

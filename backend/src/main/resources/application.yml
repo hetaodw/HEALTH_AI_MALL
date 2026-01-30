@@ -35,6 +35,6 @@ jwt:
 
 file:
   upload:
-    path: /app/static
+    path: ${FILE_UPLOAD_PATH:/app/static}
   access:
-    url: http://localhost:8080/v1/static
+    url: ${FILE_ACCESS_URL:http://localhost:8080/v1/static}

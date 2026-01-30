@@ -115,13 +115,13 @@
         </div>
 
         <div class="form-group">
-          <label for="features">商品特征 (JSON格式)</label>
+          <label for="features">商品介绍</label>
           <textarea
             id="features"
             v-model="formData.features"
             class="skeuomorphic-input"
-            rows="3"
-            placeholder='{"key": "value"}'
+            rows="4"
+            placeholder='请输入商品详细介绍，如：品牌、规格、产地、适用人群等'
           ></textarea>
         </div>
 
@@ -193,7 +193,7 @@ const formData = ref({
   price: 0,
   stock: 0,
   status: 'ON_SALE',
-  features: '{}'
+  features: ''
 })
 
 const isValid = computed(() => {
@@ -214,12 +214,21 @@ watch(() => props.product, (newProduct) => {
       price: newProduct.price || 0,
       stock: newProduct.stock || 0,
       status: newProduct.status || 'ON_SALE',
-      features: typeof newProduct.features === 'object' 
-        ? JSON.stringify(newProduct.features) 
-        : (newProduct.features || '{}')
+      features: newProduct.features || ''
     }
     if (newProduct.coverUrl) {
       previewUrl.value = newProduct.coverUrl
+    }
+    // 加载详情图片
+    if (newProduct.detailImages && newProduct.detailImages.length > 0) {
+      detailImages.value = newProduct.detailImages.map((url, index) => ({
+        file: null, // 已有图片没有文件对象
+        preview: url,
+        isExisting: true, // 标记为已存在的图片
+        url: url
+      }))
+    } else {
+      detailImages.value = []
     }
   } else {
     resetForm()
@@ -234,10 +243,11 @@ const resetForm = () => {
     price: 0,
     stock: 0,
     status: 'ON_SALE',
-    features: '{}'
+    features: ''
   }
   selectedFile.value = null
   previewUrl.value = ''
+  detailImages.value = []
 }
 
 const triggerFileInput = (event) => {
@@ -344,23 +354,38 @@ const handleSubmit = () => {
     submitData.append('price', formData.value.price.toString())
     submitData.append('stock', formData.value.stock.toString())
     submitData.append('status', formData.value.status)
-    
+
     if (selectedFile.value) {
       submitData.append('coverImage', selectedFile.value)
     }
-    
-    // 处理 features
-    let featuresObj = {}
-    try {
-      featuresObj = JSON.parse(formData.value.features)
-    } catch (e) {
-      featuresObj = {}
+
+    // 处理商品介绍（作为普通文本）
+    submitData.append('features', formData.value.features || '')
+
+    // 分离已有图片和新上传的图片
+    const existingImages = []
+    const newImages = []
+
+    detailImages.value.forEach((image) => {
+      if (image.isExisting && image.url) {
+        // 已有图片，传递URL
+        existingImages.push(image.url)
+      } else if (image.file) {
+        // 新上传的图片，传递文件
+        newImages.push(image.file)
+      }
+    })
+
+    // 添加已有图片URL（编辑时）
+    if (existingImages.length > 0) {
+      existingImages.forEach((url) => {
+        submitData.append('existingDetailImages', url)
+      })
     }
-    submitData.append('features', JSON.stringify(featuresObj))
-    
-    // 添加详细介绍图片
-    detailImages.value.forEach((image, index) => {
-      submitData.append(`detailImages`, image.file)
+
+    // 添加新上传的图片文件
+    newImages.forEach((file) => {
+      submitData.append('detailImages', file)
     })
 
     emit('submit', submitData)

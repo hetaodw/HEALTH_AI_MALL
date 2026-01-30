@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/merchant/products")
@@ -87,10 +89,11 @@ public class MerchantProductController {
             @RequestParam(value = "coverImage", required = false) MultipartFile coverImage,
             @RequestParam(value = "features", required = false) String features,
             @RequestParam(value = "status", required = false) String status,
-            @RequestParam(value = "detailImages", required = false) List<MultipartFile> detailImages) {
-        
+            @RequestParam(value = "detailImages", required = false) List<MultipartFile> detailImages,
+            @RequestParam(value = "existingDetailImages", required = false) List<String> existingDetailImages) {
+
         Integer merchantId = (Integer) request.getAttribute("userId");
-        
+
         try {
             // 构建请求对象
             MerchantProductRequest productRequest = new MerchantProductRequest();
@@ -103,15 +106,22 @@ public class MerchantProductController {
             if (status != null) {
                 productRequest.setStatus(Product.ProductStatus.valueOf(status.toUpperCase()));
             }
-            
+
             // 如果有新封面图片则上传
             if (coverImage != null && !coverImage.isEmpty()) {
                 String coverUrl = fileUploadService.uploadImage(coverImage, "product-cover");
                 productRequest.setCoverUrl(coverUrl);
             }
-            
-            // 上传详细介绍图片
+
+            // 合并已有图片和新上传的图片
             List<String> detailImageUrls = new java.util.ArrayList<>();
+
+            // 先添加已存在的图片URL
+            if (existingDetailImages != null && !existingDetailImages.isEmpty()) {
+                detailImageUrls.addAll(existingDetailImages);
+            }
+
+            // 再上传并添加新图片
             if (detailImages != null && !detailImages.isEmpty()) {
                 for (MultipartFile image : detailImages) {
                     if (!image.isEmpty()) {
@@ -119,9 +129,13 @@ public class MerchantProductController {
                         detailImageUrls.add(imageUrl);
                     }
                 }
+            }
+
+            // 只有当有图片（已有或新上传）时才设置详情图片列表
+            if (!detailImageUrls.isEmpty()) {
                 productRequest.setDetailImages(detailImageUrls);
             }
-            
+
             MerchantProductResponse response = merchantProductService.updateProduct(merchantId, id, productRequest);
             return ApiResponse.success(response);
         } catch (Exception e) {

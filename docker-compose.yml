@@ -41,6 +41,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: mall_password
       SPRING_REDIS_HOST: mall-redis
       SPRING_REDIS_PORT: 6379
+      FILE_UPLOAD_PATH: /app/static
+      FILE_ACCESS_URL: http://localhost/v1/static
+    volumes:
+      - ./uploads:/app/static
     depends_on:
       - mall-mysql
       - mall-redis
@@ -66,6 +70,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - HTTP_PROXY
+        - HTTPS_PROXY
     container_name: mall-frontend
     ports:
       - "3000:80"

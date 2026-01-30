@@ -8,6 +8,7 @@ import com.healthmall.entity.ProductDetailsImage;
 import com.healthmall.exception.BusinessException;
 import com.healthmall.repository.ProductDetailsImageRepository;
 import com.healthmall.repository.ProductRepository;
+import com.healthmall.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,9 @@ public class ProductService {
 
     @Autowired
     private ProductDetailsImageRepository productDetailsImageRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public PageResponse<ProductListItem> getProductList(Integer page, Integer size, Boolean isHot,
                                                          String category, BigDecimal minPrice,
@@ -92,7 +96,15 @@ public class ProductService {
                 .map(ProductDetailsImage::getImageUrl)
                 .collect(Collectors.toList());
 
-        return new ProductDetailResponse(product, imageUrls);
+        ProductDetailResponse response = new ProductDetailResponse(product, imageUrls);
+        
+        // 查询并设置商家名称
+        if (product.getMerchantId() != null) {
+            userRepository.findById(product.getMerchantId())
+                    .ifPresent(user -> response.setMerchantName(user.getUsername()));
+        }
+        
+        return response;
     }
 
     public Integer createProduct(String name, String category, BigDecimal price,

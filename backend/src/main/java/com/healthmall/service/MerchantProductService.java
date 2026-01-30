@@ -4,7 +4,9 @@ import com.healthmall.dto.MerchantProductRequest;
 import com.healthmall.dto.MerchantProductResponse;
 import com.healthmall.dto.PageResponse;
 import com.healthmall.entity.Product;
+import com.healthmall.entity.ProductDetailsImage;
 import com.healthmall.entity.User;
+import com.healthmall.repository.ProductDetailsImageRepository;
 import com.healthmall.repository.ProductRepository;
 import com.healthmall.repository.UserRepository;
 import org.slf4j.Logger;
@@ -27,10 +29,12 @@ public class MerchantProductService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final ProductDetailsImageRepository productDetailsImageRepository;
 
-    public MerchantProductService(ProductRepository productRepository, UserRepository userRepository) {
+    public MerchantProductService(ProductRepository productRepository, UserRepository userRepository, ProductDetailsImageRepository productDetailsImageRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.productDetailsImageRepository = productDetailsImageRepository;
     }
 
     @Transactional
@@ -57,6 +61,19 @@ public class MerchantProductService {
         product.setStatus(request.getStatus() != null ? request.getStatus() : Product.ProductStatus.ON_SALE);
 
         Product savedProduct = productRepository.save(product);
+        
+        // 保存详细图片
+        if (request.getDetailImages() != null && !request.getDetailImages().isEmpty()) {
+            int sortOrder = 0;
+            for (String imageUrl : request.getDetailImages()) {
+                ProductDetailsImage detailImage = new ProductDetailsImage();
+                detailImage.setProductId(savedProduct.getId());
+                detailImage.setImageUrl(imageUrl);
+                detailImage.setSortOrder(sortOrder++);
+                productDetailsImageRepository.save(detailImage);
+            }
+        }
+        
         return convertToResponse(savedProduct);
     }
 
@@ -72,7 +89,10 @@ public class MerchantProductService {
         product.setTitle(request.getTitle());
         product.setCategory(request.getCategory());
         product.setDescription(request.getDescription());
-        product.setCoverUrl(request.getCoverUrl());
+        // 只有传入新的coverUrl时才更新，否则保留原值
+        if (request.getCoverUrl() != null && !request.getCoverUrl().isEmpty()) {
+            product.setCoverUrl(request.getCoverUrl());
+        }
         product.setFeatures(request.getFeatures());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
@@ -81,6 +101,26 @@ public class MerchantProductService {
         }
 
         Product updatedProduct = productRepository.save(product);
+        
+        // 更新详细图片 - 先删除旧的，再添加新的
+        if (request.getDetailImages() != null) {
+            // 删除旧的详细图片
+            List<ProductDetailsImage> oldImages = productDetailsImageRepository.findByProductIdOrderBySortOrderAsc(productId);
+            productDetailsImageRepository.deleteAll(oldImages);
+            
+            // 添加新的详细图片
+            if (!request.getDetailImages().isEmpty()) {
+                int sortOrder = 0;
+                for (String imageUrl : request.getDetailImages()) {
+                    ProductDetailsImage detailImage = new ProductDetailsImage();
+                    detailImage.setProductId(productId);
+                    detailImage.setImageUrl(imageUrl);
+                    detailImage.setSortOrder(sortOrder++);
+                    productDetailsImageRepository.save(detailImage);
+                }
+            }
+        }
+        
         return convertToResponse(updatedProduct);
     }
 
@@ -195,6 +235,15 @@ public class MerchantProductService {
     private MerchantProductResponse convertToResponse(Product product) {
         MerchantProductResponse response = new MerchantProductResponse();
         BeanUtils.copyProperties(product, response);
+        
+        // 查询并设置详细图片
+        List<ProductDetailsImage> detailImages = productDetailsImageRepository
+                .findByProductIdOrderBySortOrderAsc(product.getId());
+        List<String> imageUrls = detailImages.stream()
+                .map(ProductDetailsImage::getImageUrl)
+                .collect(Collectors.toList());
+        response.setDetailImages(imageUrls);
+        
         return response;
     }
 }
