@@ -1070,9 +1070,146 @@ $response.Content
 7. 使用筛选功能快速查找特定商品
 8. 使用快速操作功能更新商品状态和库存
 
-### 10. 管理员商品管理模块
+### 10. 商品详情与订单模块
 
-#### 10.1 管理员创建商品
+#### 10.1 获取商品详情（用于商品详情页）
+- **接口地址**: `/products/{id}`
+- **请求方式**: GET
+- **说明**: 不需要登录，公开访问
+- **路径参数**:
+  - `id`: 商品ID
+- **返回示例**:
+  ```json
+  {
+    "code": 200,
+    "msg": "操作成功",
+    "data": {
+      "id": 1,
+      "merchantId": 3,
+      "merchantName": "健康商城",
+      "title": "天然维C片500mg",
+      "category": "保健品",
+      "description": "富含维生素C，增强免疫力",
+      "coverUrl": "http://localhost:8080/v1/static/product/cover/2026/01/30/xxx.png",
+      "features": "品牌：健康品牌，规格：500mg/片",
+      "price": 999.00,
+      "stock": 99,
+      "sales": 0,
+      "status": "ON_SALE",
+      "createdAt": "2026-01-30T01:03:40",
+      "detailImages": [
+        "http://localhost:8080/v1/static/product/detail/2026/01/30/detail1.jpg",
+        "http://localhost:8080/v1/static/product/detail/2026/01/30/detail2.jpg"
+      ]
+    }
+  }
+  ```
+
+#### 10.2 创建订单
+- **接口地址**: `/orders`
+- **请求方式**: POST
+- **请求头**: 需要携带token (Authorization: Bearer {token})
+- **请求参数**:
+  | 参数 | 类型 | 必填 | 说明 |
+  |------|------|------|------|
+  | productId | int | 是 | 商品ID |
+  | quantity | int | 是 | 购买数量 |
+  | receiverName | string | 是 | 收货人姓名 |
+  | receiverPhone | string | 是 | 收货人电话 |
+  | receiverAddress | string | 是 | 收货地址 |
+  | remark | string | 否 | 订单备注 |
+
+- **请求示例**:
+  ```json
+  {
+    "productId": 1,
+    "quantity": 2,
+    "receiverName": "张三",
+    "receiverPhone": "13800138000",
+    "receiverAddress": "北京市朝阳区xxx街道xxx号",
+    "remark": "请尽快发货"
+  }
+  ```
+
+- **返回示例**:
+  ```json
+  {
+    "code": 200,
+    "msg": "操作成功",
+    "data": {
+      "id": 1,
+      "orderNo": "202601300227557694",
+      "userId": 4,
+      "productId": 1,
+      "productTitle": "天然维C片500mg",
+      "productCoverUrl": "http://localhost:8080/v1/static/product/cover/2026/01/30/xxx.png",
+      "quantity": 2,
+      "unitPrice": 999.00,
+      "totalAmount": 1998.00,
+      "status": "PENDING_PAYMENT",
+      "receiverName": "张三",
+      "receiverPhone": "13800138000",
+      "receiverAddress": "北京市朝阳区xxx街道xxx号",
+      "remark": "请尽快发货",
+      "paidAt": null,
+      "shippedAt": null,
+      "completedAt": null,
+      "createdAt": "2026-01-30T02:27:55"
+    }
+  }
+  ```
+
+#### 10.3 查询我的订单列表
+- **接口地址**: `/orders/my`
+- **请求方式**: GET
+- **请求头**: 需要携带token (Authorization: Bearer {token})
+- **返回示例**:
+  ```json
+  {
+    "code": 200,
+    "msg": "操作成功",
+    "data": [
+      {
+        "id": 1,
+        "orderNo": "202601300227557694",
+        "productTitle": "天然维C片500mg",
+        "productCoverUrl": "http://localhost:8080/v1/static/product/cover/2026/01/30/xxx.png",
+        "quantity": 2,
+        "totalAmount": 1998.00,
+        "status": "PENDING_PAYMENT",
+        "createdAt": "2026-01-30T02:27:55"
+      }
+    ]
+  }
+  ```
+
+#### 10.4 查询订单详情
+- **接口地址**: `/orders/{id}`
+- **请求方式**: GET
+- **请求头**: 需要携带token (Authorization: Bearer {token})
+- **路径参数**:
+  - `id`: 订单ID
+- **返回示例**: 同创建订单返回格式
+
+#### 10.5 取消订单
+- **接口地址**: `/orders/{id}/cancel`
+- **请求方式**: POST
+- **请求头**: 需要携带token (Authorization: Bearer {token})
+- **路径参数**:
+  - `id`: 订单ID
+- **说明**: 只能取消状态为"待付款"的订单
+- **返回示例**:
+  ```json
+  {
+    "code": 200,
+    "msg": "操作成功",
+    "data": null
+  }
+  ```
+
+### 11. 管理员商品管理模块
+
+#### 11.1 管理员创建商品
 - **接口地址**: `/admin/products`
 - **请求方式**: POST
 - **请求头**: 需要携带token (ADMIN角色)
@@ -1108,7 +1245,7 @@ $response.Content
   }
   ```
 
-#### 10.2 管理员删除商品
+#### 11.2 管理员删除商品
 - **接口地址**: `/admin/products/{id}`
 - **请求方式**: DELETE
 - **请求头**: 需要携带token (ADMIN角色)
@@ -1123,7 +1260,7 @@ $response.Content
   }
   ```
 
-#### 10.3 商品图片上传说明
+#### 11.3 商品图片上传说明
 创建商品时，封面图片通过 `coverImage` 字段上传，支持以下格式：
 - **支持格式**: jpg, jpeg, png, gif
 - **文件大小限制**: 最大 5MB

@@ -43,16 +43,16 @@ export default {
   },
   merchant: {
     addProduct: (data) => {
-      // 如果是FormData，不设置Content-Type，让浏览器自动设置
+      // 如果是FormData，不设置Content-Type，让浏览器自动设置boundary
       const isFormData = data instanceof FormData
       return api.post('/merchant/products', data, {
-        headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
+        headers: isFormData ? {} : {}
       })
     },
     updateProduct: (id, data) => {
       const isFormData = data instanceof FormData
       return api.put(`/merchant/products/${id}`, data, {
-        headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
+        headers: isFormData ? {} : {}
       })
     },
     deleteProduct: (id) => api.delete(`/merchant/products/${id}`),

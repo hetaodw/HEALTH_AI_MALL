@@ -1,16 +1,29 @@
 services:
   mall-backend:
     build:
+      context: ./backend
+      dockerfile: Dockerfile
       args:
-        - HTTP_PROXY=http://host.docker.internal:7897
-        - HTTPS_PROXY=http://host.docker.internal:7897
-        - http_proxy=http://host.docker.internal:7897
-        - https_proxy=http://host.docker.internal:7897
+        - HTTP_PROXY=http://127.0.0.1:7897
+        - HTTPS_PROXY=http://127.0.0.1:7897
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mall-mysql:3306/health_mall_system?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=mall_user
+      - SPRING_DATASOURCE_PASSWORD=mall_password
+      - SPRING_REDIS_HOST=mall-redis
+      - FILE_UPLOAD_PATH=/app/uploads
+      - FILE_ACCESS_URL=/v1/static
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - mall-network
 
   mall-frontend:
     build:
+      context: ./frontend
+      dockerfile: Dockerfile
       args:
-        - HTTP_PROXY=http://host.docker.internal:7897
-        - HTTPS_PROXY=http://host.docker.internal:7897
-        - http_proxy=http://host.docker.internal:7897
-        - https_proxy=http://host.docker.internal:7897
+        - HTTP_PROXY=http://127.0.0.1:7897
+        - HTTPS_PROXY=http://127.0.0.1:7897
+    networks:
+      - mall-network
