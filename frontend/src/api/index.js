@@ -69,5 +69,12 @@ export default {
       })
     },
     deleteProduct: (id) => api.delete(`/admin/products/${id}`)
+  },
+  user: {
+    getProfile: () => api.get('/user/profile'),
+    updateProfile: (data) => api.put('/user/profile/update', null, { params: data }),
+    uploadAvatar: (formData) => api.post('/user/avatar/upload', formData, {
+      headers: {}
+    })
   }
 }

@@ -57,10 +57,13 @@ public class ProductDetailService {
         response.setStatus(product.getStatus());
         response.setCreatedAt(product.getCreatedAt());
         
-        // 获取商家名称
+        // 获取商家信息
         if (product.getMerchantId() != null) {
             Optional<User> merchantOpt = userRepository.findById(product.getMerchantId());
-            merchantOpt.ifPresent(merchant -> response.setMerchantName(merchant.getUsername()));
+            merchantOpt.ifPresent(merchant -> {
+                response.setMerchantName(merchant.getUsername());
+                response.setMerchantAvatar(merchant.getAvatarUrl());
+            });
         }
         
         // 获取详细介绍图片

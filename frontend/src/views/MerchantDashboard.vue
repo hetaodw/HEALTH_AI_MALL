@@ -1,10 +1,21 @@
 <template>
   <div class="merchant-dashboard">
     <div class="dashboard-header">
-      <h1 class="dashboard-title">🏪 商家管理后台</h1>
-      <button @click="showAddModal = true" class="skeuomorphic-button primary add-button">
-        + 添加商品
-      </button>
+      <div class="header-left">
+        <h1 class="dashboard-title">🏪 商家管理后台</h1>
+      </div>
+      <div class="header-right">
+        <div class="merchant-profile">
+          <AvatarUpload 
+            :current-avatar="userProfile?.avatarUrl" 
+            @avatar-updated="handleAvatarUpdated"
+          />
+          <span class="merchant-name">{{ userProfile?.username || '商家' }}</span>
+        </div>
+        <button @click="showAddModal = true" class="skeuomorphic-button primary add-button">
+          + 添加商品
+        </button>
+      </div>
     </div>
 
     <div class="filters">
@@ -121,6 +132,7 @@ import { useUserStore } from '../stores/user'
 import api from '../api'
 import Pagination from '../components/Pagination.vue'
 import ProductForm from '../components/ProductForm.vue'
+import AvatarUpload from '../components/AvatarUpload.vue'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -148,6 +160,24 @@ const showStockModalFlag = ref(false)
 const editingProduct = ref(null)
 const currentProduct = ref(null)
 const newStock = ref(0)
+const userProfile = ref(null)
+
+const loadUserProfile = async () => {
+  try {
+    const response = await api.user.getProfile()
+    if (response.code === 200) {
+      userProfile.value = response.data
+    }
+  } catch (error) {
+    console.error('加载用户信息失败:', error)
+  }
+}
+
+const handleAvatarUpdated = (newAvatarUrl) => {
+  if (userProfile.value) {
+    userProfile.value.avatarUrl = newAvatarUrl
+  }
+}
 
 const loadProducts = async () => {
   loading.value = true
@@ -253,6 +283,7 @@ const getStatusText = (status) => {
 }
 
 onMounted(() => {
+  loadUserProfile()
   loadProducts()
 })
 </script>
@@ -269,6 +300,36 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 32px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.merchant-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 16px;
+  box-shadow:
+    5px 5px 10px #d1d9e6,
+    -5px -5px 10px #ffffff;
+}
+
+.merchant-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
 }
 
 .dashboard-title {

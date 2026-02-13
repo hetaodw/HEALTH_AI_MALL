@@ -1,13 +1,19 @@
 # syntax=docker/dockerfile:1
 FROM node:18-alpine AS builder
 
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+
+ENV HTTP_PROXY=${HTTP_PROXY}
+ENV HTTPS_PROXY=${HTTPS_PROXY}
+ENV http_proxy=${HTTP_PROXY}
+ENV https_proxy=${HTTPS_PROXY}
+
 WORKDIR /app
 
 COPY package*.json ./
 
-# 强制清除环境变量和 npm 配置
-RUN unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy && \
-    npm config set registry https://registry.npmjs.org/ && \
+RUN npm config set registry https://registry.npmjs.org/ && \
     npm install --no-audit --progress=false
 
 COPY . .

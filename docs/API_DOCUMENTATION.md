@@ -11,30 +11,40 @@
 - [用户相关 API](#用户相关-api)
   - [4. 获取用户信息](#4-获取用户信息)
   - [5. 更新用户信息](#5-更新用户信息)
+  - [6. 上传用户头像](#6-上传用户头像)
 - [商品相关 API (用户端)](#商品相关-api-用户端)
-  - [6. 获取商品列表](#6-获取商品列表)
-  - [7. 搜索商品](#7-搜索商品)
-  - [8. 获取热门商品](#8-获取热门商品)
-  - [9. 获取商品详情](#9-获取商品详情)
-  - [10. 按分类获取商品](#10-按分类获取商品)
+  - [7. 获取商品列表](#7-获取商品列表)
+  - [8. 搜索商品](#8-搜索商品)
+  - [9. 获取热门商品](#9-获取热门商品)
+  - [10. 获取商品详情](#10-获取商品详情)
+  - [11. 按分类获取商品](#11-按分类获取商品)
 - [文件上传 API](#文件上传-api)
-  - [11. 上传图片](#11-上传图片)
+  - [12. 上传图片](#12-上传图片)
 - [商家商品管理 API](#商家商品管理-api)
-  - [12. 添加商品](#12-添加商品)
-  - [13. 更新商品](#13-更新商品)
-  - [14. 删除商品](#14-删除商品)
-  - [15. 获取商家商品列表](#15-获取商家商品列表)
-  - [16. 获取商家商品详情](#16-获取商家商品详情)
-  - [17. 更新商品状态](#17-更新商品状态)
-  - [18. 更新商品库存](#18-更新商品库存)
+  - [13. 添加商品](#13-添加商品)
+  - [14. 更新商品](#14-更新商品)
+  - [15. 删除商品](#15-删除商品)
+  - [16. 获取商家商品列表](#16-获取商家商品列表)
+  - [17. 获取商家商品详情](#17-获取商家商品详情)
+  - [18. 更新商品状态](#18-更新商品状态)
+  - [19. 更新商品库存](#19-更新商品库存)
 - [管理员 API](#管理员-api)
-  - [19. 创建商品 (管理员)](#19-创建商品-管理员)
-  - [20. 删除商品 (管理员)](#20-删除商品-管理员)
+  - [20. 创建商品 (管理员)](#20-创建商品-管理员)
+  - [21. 删除商品 (管理员)](#21-删除商品-管理员)
 - [订单 API](#订单-api)
-  - [21. 创建订单](#21-创建订单)
-  - [22. 查询我的订单列表](#22-查询我的订单列表)
-  - [23. 查询订单详情](#23-查询订单详情)
-  - [24. 取消订单](#24-取消订单)
+  - [22. 创建订单](#22-创建订单)
+  - [23. 查询我的订单列表](#23-查询我的订单列表)
+  - [24. 查询订单详情](#24-查询订单详情)
+  - [25. 取消订单](#25-取消订单)
+  - [26. 支付订单](#26-支付订单)
+- [地址管理 API](#地址管理-api)
+  - [27. 获取用户地址列表](#27-获取用户地址列表)
+  - [28. 获取默认地址](#28-获取默认地址)
+  - [29. 获取地址详情](#29-获取地址详情)
+  - [30. 创建地址](#30-创建地址)
+  - [31. 更新地址](#31-更新地址)
+  - [32. 删除地址](#32-删除地址)
+  - [33. 设置默认地址](#33-设置默认地址)
 - [测试用例 (cURL)](#测试用例-curl)
 - [状态码说明](#状态码说明)
 - [角色说明](#角色说明)
@@ -224,9 +234,41 @@
 
 ---
 
+### 6. 上传用户头像
+
+**接口**: `POST /v1/user/avatar/upload`
+
+**请求头**: 
+- `Authorization: Bearer {token}`
+- `Content-Type: multipart/form-data`
+
+**请求参数**:
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| file | file | 是 | 头像图片文件 (JPG, PNG, GIF, 最大5MB) |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "头像上传成功",
+  "data": {
+    "avatarUrl": "http://localhost:8080/v1/static/user/avatar/2026/01/31/abc123.jpg"
+  }
+}
+```
+
+**说明**:
+- 支持格式: JPG, JPEG, PNG, GIF
+- 文件大小限制: 5MB
+- 上传成功后自动更新用户头像URL
+- 头像存储路径: `user/avatar/年/月/日/文件名`
+
+---
+
 ## 商品相关 API (用户端)
 
-### 6. 获取商品列表
+### 7. 获取商品列表
 
 **接口**: `GET /v1/products`
 
@@ -266,7 +308,7 @@
 
 ---
 
-### 7. 搜索商品
+### 8. 搜索商品
 
 **接口**: `GET /v1/products/search`
 
@@ -284,7 +326,7 @@
 
 ---
 
-### 8. 获取热门商品
+### 9. 获取热门商品
 
 **接口**: `GET /v1/products/hot`
 
@@ -314,7 +356,7 @@
 
 ---
 
-### 9. 获取商品详情
+### 10. 获取商品详情
 
 **接口**: `GET /v1/products/{id}`
 
@@ -373,7 +415,7 @@
 
 ---
 
-### 10. 按分类获取商品
+### 11. 按分类获取商品
 
 **接口**: `GET /v1/products/category/{category}`
 
@@ -394,7 +436,7 @@
 
 ## 文件上传 API
 
-### 11. 上传图片
+### 12. 上传图片
 
 **接口**: `POST /v1/upload/image`
 
@@ -423,7 +465,7 @@
 
 ## 商家商品管理 API
 
-### 12. 添加商品
+### 13. 添加商品
 
 **接口**: `POST /v1/merchant/products`
 
@@ -474,7 +516,7 @@
 
 ---
 
-### 13. 更新商品
+### 14. 更新商品
 
 **接口**: `PUT /v1/merchant/products/{id}`
 
@@ -491,7 +533,7 @@
 
 ---
 
-### 14. 删除商品
+### 15. 删除商品
 
 **接口**: `DELETE /v1/merchant/products/{id}`
 
@@ -513,7 +555,7 @@
 
 ---
 
-### 15. 获取商家商品列表
+### 16. 获取商家商品列表
 
 **接口**: `GET /v1/merchant/products`
 
@@ -551,7 +593,7 @@
 
 ---
 
-### 16. 获取商家商品详情
+### 17. 获取商家商品详情
 
 **接口**: `GET /v1/merchant/products/{id}`
 
@@ -566,7 +608,7 @@
 
 ---
 
-### 17. 更新商品状态
+### 18. 更新商品状态
 
 **接口**: `PATCH /v1/merchant/products/{id}/status`
 
@@ -593,7 +635,7 @@
 
 ---
 
-### 18. 更新商品库存
+### 19. 更新商品库存
 
 **接口**: `PATCH /v1/merchant/products/{id}/stock`
 
@@ -622,7 +664,7 @@
 
 ## 管理员 API
 
-### 19. 创建商品 (管理员)
+### 20. 创建商品 (管理员)
 
 **接口**: `POST /v1/admin/products`
 
@@ -652,7 +694,7 @@
 
 ---
 
-### 20. 删除商品 (管理员)
+### 21. 删除商品 (管理员)
 
 **接口**: `DELETE /v1/admin/products/{id}`
 
@@ -728,7 +770,14 @@ curl -X POST http://localhost:8080/v1/upload/image \
   -F "type=products"
 ```
 
-### 8. 商家添加商品
+### 8. 上传用户头像
+```bash
+curl -X POST http://localhost:8080/v1/user/avatar/upload \
+  -H "Authorization: Bearer {user_token}" \
+  -F "file=@/path/to/avatar.jpg"
+```
+
+### 9. 商家添加商品
 ```bash
 curl -X POST http://localhost:8080/v1/merchant/products \
   -H "Authorization: Bearer {merchant_token}" \
@@ -743,13 +792,13 @@ curl -X POST http://localhost:8080/v1/merchant/products \
   }'
 ```
 
-### 9. 商家更新商品状态
+### 10. 商家更新商品状态
 ```bash
 curl -X PATCH "http://localhost:8080/v1/merchant/products/1/status?status=INACTIVE" \
   -H "Authorization: Bearer {merchant_token}"
 ```
 
-### 10. 商家更新商品库存
+### 11. 商家更新商品库存
 ```bash
 curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
   -H "Authorization: Bearer {merchant_token}"
@@ -759,7 +808,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ## 订单 API
 
-### 21. 创建订单
+### 22. 创建订单
 
 **接口**: `POST /v1/orders`
 
@@ -768,11 +817,17 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 **请求体**:
 ```json
 {
-  "productId": 1,
-  "quantity": 2,
-  "receiverName": "张三",
-  "receiverPhone": "13800138000",
-  "receiverAddress": "北京市朝阳区xxx街道xxx号",
+  "addressId": 1,
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    },
+    {
+      "productId": 2,
+      "quantity": 1
+    }
+  ],
   "remark": "请尽快发货"
 }
 ```
@@ -780,11 +835,10 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 **字段说明**:
 | 字段 | 类型 | 必填 | 说明 |
 |------|------|------|------|
-| productId | int | 是 | 商品ID |
-| quantity | int | 是 | 购买数量 |
-| receiverName | string | 是 | 收货人姓名 |
-| receiverPhone | string | 是 | 收货人电话 |
-| receiverAddress | string | 是 | 收货地址 |
+| addressId | int | 是 | 收货地址ID |
+| items | array | 是 | 订单商品列表 |
+| items[].productId | int | 是 | 商品ID |
+| items[].quantity | int | 是 | 购买数量 |
 | remark | string | 否 | 订单备注 |
 
 **响应示例**:
@@ -793,24 +847,47 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
   "code": 200,
   "msg": "操作成功",
   "data": {
-    "id": 1,
-    "orderNo": "202601300227557694",
-    "userId": 4,
-    "productId": 1,
-    "productTitle": "维生素C片",
-    "productCoverUrl": "http://localhost:8080/v1/static/product/cover/2026/01/30/xxx.png",
-    "quantity": 2,
-    "unitPrice": 999.00,
-    "totalAmount": 1998.00,
+    "id": 2,
+    "orderNo": "280686617910448128",
+    "userId": 8,
+    "totalAmount": 2064.00,
+    "itemCount": 2,
     "status": "PENDING_PAYMENT",
+    "payExpireAt": "2026-02-13T13:23:24.865534",
     "receiverName": "张三",
-    "receiverPhone": "13800138000",
-    "receiverAddress": "北京市朝阳区xxx街道xxx号",
+    "receiverPhone": "13800138001",
+    "receiverAddress": "北京市北京市朝阳区建国路88号SOHO现代城A座1001室",
     "remark": "请尽快发货",
     "paidAt": null,
     "shippedAt": null,
     "completedAt": null,
-    "createdAt": "2026-01-30T02:27:55"
+    "cancelledAt": null,
+    "cancelReason": null,
+    "createdAt": "2026-02-13T13:08:24.86944",
+    "items": [
+      {
+        "id": 1,
+        "productId": 1,
+        "productTitle": "test",
+        "productCoverUrl": "/v1/static/product/cover/2026/01/30/xxx.png",
+        "category": "保健品",
+        "merchantName": "MALL",
+        "quantity": 2,
+        "unitPrice": 999.00,
+        "totalPrice": 1998.00
+      },
+      {
+        "id": 2,
+        "productId": 2,
+        "productTitle": "测试商品",
+        "productCoverUrl": "/v1/static/product/cover/2026/01/30/xxx.png",
+        "category": "保健品",
+        "merchantName": "MALL",
+        "quantity": 1,
+        "unitPrice": 66.00,
+        "totalPrice": 66.00
+      }
+    ]
   }
 }
 ```
@@ -828,7 +905,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
-### 22. 查询我的订单列表
+### 23. 查询我的订单列表
 
 **接口**: `GET /v1/orders/my`
 
@@ -856,7 +933,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
-### 23. 查询订单详情
+### 24. 查询订单详情
 
 **接口**: `GET /v1/orders/{id}`
 
@@ -871,7 +948,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
-### 24. 取消订单
+### 25. 取消订单
 
 **接口**: `POST /v1/orders/{id}/cancel`
 
@@ -879,6 +956,11 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 | 参数 | 类型 | 说明 |
 |------|------|------|
 | id | int | 订单ID |
+
+**请求参数**:
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| reason | string | 否 | 取消原因，默认"用户取消" |
 
 **请求头**: `Authorization: Bearer {token}`
 
@@ -895,19 +977,57 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
+### 26. 支付订单
+
+**接口**: `POST /v1/orders/{orderNo}/pay`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| orderNo | string | 订单号 |
+
+**请求参数**:
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| payMethod | string | 是 | 支付方式: ALIPAY(支付宝), WECHAT(微信), BANK(银行卡) |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**说明**: 支付成功后订单状态变为"已付款"，库存预占转为正式扣减
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 2,
+    "orderNo": "280686617910448128",
+    "userId": 8,
+    "totalAmount": 2064.00,
+    "itemCount": 2,
+    "status": "PAID",
+    "paidAt": "2026-02-13T13:09:34.170749",
+    "items": [...]
+  }
+}
+```
+
+---
+
 ## 测试用例 - 订单相关 (cURL)
 
-### 11. 创建订单
+### 11. 创建订单（多商品）
 ```bash
 curl -X POST http://localhost:8080/v1/orders \
   -H "Authorization: Bearer {user_token}" \
   -H "Content-Type: application/json" \
   -d '{
-    "productId": 1,
-    "quantity": 2,
-    "receiverName": "张三",
-    "receiverPhone": "13800138000",
-    "receiverAddress": "北京市朝阳区xxx街道xxx号",
+    "addressId": 1,
+    "items": [
+      {"productId": 1, "quantity": 2},
+      {"productId": 2, "quantity": 1}
+    ],
     "remark": "请尽快发货"
   }'
 ```
@@ -924,9 +1044,214 @@ curl -X GET http://localhost:8080/v1/orders/1 \
   -H "Authorization: Bearer {user_token}"
 ```
 
-### 14. 取消订单
+### 14. 支付订单
 ```bash
-curl -X POST http://localhost:8080/v1/orders/1/cancel \
+curl -X POST "http://localhost:8080/v1/orders/280686617910448128/pay?payMethod=ALIPAY" \
+  -H "Authorization: Bearer {user_token}"
+```
+
+### 15. 取消订单
+```bash
+curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
+  -H "Authorization: Bearer {user_token}"
+```
+
+---
+
+## 地址管理 API
+
+### 26. 获取用户地址列表
+
+**接口**: `GET /v1/addresses`
+
+**请求头**: `Authorization: Bearer {token}`
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": [
+    {
+      "id": 1,
+      "userId": 8,
+      "receiverName": "张三",
+      "receiverPhone": "13800138001",
+      "province": "北京市",
+      "city": "北京市",
+      "district": "朝阳区",
+      "detailAddress": "建国路88号SOHO现代城A座1001室",
+      "isDefault": true,
+      "createdAt": "2026-02-13T13:03:22",
+      "updatedAt": "2026-02-13T13:03:22",
+      "fullAddress": "北京市北京市朝阳区建国路88号SOHO现代城A座1001室"
+    }
+  ]
+}
+```
+
+---
+
+### 27. 获取默认地址
+
+**接口**: `GET /v1/addresses/default`
+
+**请求头**: `Authorization: Bearer {token}`
+
+**响应示例**: 同地址详情
+
+---
+
+### 28. 获取地址详情
+
+**接口**: `GET /v1/addresses/{id}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| id | int | 地址ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "userId": 8,
+    "receiverName": "张三",
+    "receiverPhone": "13800138001",
+    "province": "北京市",
+    "city": "北京市",
+    "district": "朝阳区",
+    "detailAddress": "建国路88号SOHO现代城A座1001室",
+    "isDefault": true,
+    "createdAt": "2026-02-13T13:03:22",
+    "updatedAt": "2026-02-13T13:03:22",
+    "fullAddress": "北京市北京市朝阳区建国路88号SOHO现代城A座1001室"
+  }
+}
+```
+
+---
+
+### 29. 创建地址
+
+**接口**: `POST /v1/addresses`
+
+**请求头**: `Authorization: Bearer {token}`
+
+**请求体**:
+```json
+{
+  "receiverName": "张三",
+  "receiverPhone": "13800138001",
+  "province": "北京市",
+  "city": "北京市",
+  "district": "朝阳区",
+  "detailAddress": "建国路88号SOHO现代城A座1001室",
+  "isDefault": true
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| receiverName | string | 是 | 收货人姓名 |
+| receiverPhone | string | 是 | 收货人电话 |
+| province | string | 是 | 省份 |
+| city | string | 是 | 城市 |
+| district | string | 是 | 区/县 |
+| detailAddress | string | 是 | 详细地址 |
+| isDefault | boolean | 否 | 是否默认地址，默认false |
+
+**响应示例**: 同地址详情
+
+---
+
+### 30. 更新地址
+
+**接口**: `PUT /v1/addresses/{id}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| id | int | 地址ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**请求体**: 同创建地址
+
+**响应示例**: 同地址详情
+
+---
+
+### 31. 删除地址
+
+**接口**: `DELETE /v1/addresses/{id}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| id | int | 地址ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+---
+
+### 32. 设置默认地址
+
+**接口**: `POST /v1/addresses/{id}/default`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| id | int | 地址ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**响应示例**: 同地址详情
+
+---
+
+## 测试用例 - 地址管理 (cURL)
+
+### 15. 创建地址
+```bash
+curl -X POST http://localhost:8080/v1/addresses \
+  -H "Authorization: Bearer {user_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "receiverName": "张三",
+    "receiverPhone": "13800138001",
+    "province": "北京市",
+    "city": "北京市",
+    "district": "朝阳区",
+    "detailAddress": "建国路88号SOHO现代城A座1001室",
+    "isDefault": true
+  }'
+```
+
+### 16. 获取地址列表
+```bash
+curl -X GET http://localhost:8080/v1/addresses \
+  -H "Authorization: Bearer {user_token}"
+```
+
+### 17. 设置默认地址
+```bash
+curl -X POST http://localhost:8080/v1/addresses/1/default \
   -H "Authorization: Bearer {user_token}"
 ```
 
