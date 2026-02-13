@@ -1,57 +1,30 @@
 package com.healthmall.dto;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 /**
- * 创建订单请求DTO
+ * 创建订单请求DTO - 支持多商品
  */
 public class CreateOrderRequest {
-    private Integer productId;
-    private Integer quantity;
-    private String receiverName;
-    private String receiverPhone;
-    private String receiverAddress;
+    
+    private Integer addressId;
+    private List<OrderItemRequest> items;
     private String remark;
 
-    // Getters and Setters
-    public Integer getProductId() {
-        return productId;
+    public Integer getAddressId() {
+        return addressId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public List<OrderItemRequest> getItems() {
+        return items;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getReceiverName() {
-        return receiverName;
-    }
-
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
-    }
-
-    public String getReceiverPhone() {
-        return receiverPhone;
-    }
-
-    public void setReceiverPhone(String receiverPhone) {
-        this.receiverPhone = receiverPhone;
-    }
-
-    public String getReceiverAddress() {
-        return receiverAddress;
-    }
-
-    public void setReceiverAddress(String receiverAddress) {
-        this.receiverAddress = receiverAddress;
+    public void setItems(List<OrderItemRequest> items) {
+        this.items = items;
     }
 
     public String getRemark() {
@@ -60,5 +33,26 @@ public class CreateOrderRequest {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public static class OrderItemRequest {
+        private Integer productId;
+        private Integer quantity;
+
+        public Integer getProductId() {
+            return productId;
+        }
+
+        public void setProductId(Integer productId) {
+            this.productId = productId;
+        }
+
+        public Integer getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(Integer quantity) {
+            this.quantity = quantity;
+        }
     }
 }

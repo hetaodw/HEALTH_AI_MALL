@@ -3,6 +3,8 @@ package com.healthmall.entity;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -28,21 +30,21 @@ public class Order {
     @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
-
-    @Column(nullable = false)
-    private Integer quantity;
-
-    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2)
-    private BigDecimal unitPrice;
+    @Column(name = "address_id")
+    private Integer addressId;
 
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
+    @Column(name = "item_count")
+    private Integer itemCount = 0;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private OrderStatus status = OrderStatus.PENDING_PAYMENT;
+
+    @Column(name = "pay_expire_at")
+    private LocalDateTime payExpireAt;
 
     @Column(name = "receiver_name", length = 50)
     private String receiverName;
@@ -65,11 +67,24 @@ public class Order {
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
 
+    @Column(name = "cancelled_at")
+    private LocalDateTime cancelledAt;
+
+    @Column(name = "cancel_reason", length = 255)
+    private String cancelReason;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "orderId")
+    private List<OrderItem> items = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", insertable = false, updatable = false)
+    private Address address;
 
     @PrePersist
     protected void onCreate() {
@@ -82,7 +97,6 @@ public class Order {
         updatedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -107,28 +121,12 @@ public class Order {
         this.userId = userId;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Integer getAddressId() {
+        return addressId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
     }
 
     public BigDecimal getTotalAmount() {
@@ -139,12 +137,28 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
+    public Integer getItemCount() {
+        return itemCount;
+    }
+
+    public void setItemCount(Integer itemCount) {
+        this.itemCount = itemCount;
+    }
+
     public OrderStatus getStatus() {
         return status;
     }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public LocalDateTime getPayExpireAt() {
+        return payExpireAt;
+    }
+
+    public void setPayExpireAt(LocalDateTime payExpireAt) {
+        this.payExpireAt = payExpireAt;
     }
 
     public String getReceiverName() {
@@ -203,6 +217,22 @@ public class Order {
         this.completedAt = completedAt;
     }
 
+    public LocalDateTime getCancelledAt() {
+        return cancelledAt;
+    }
+
+    public void setCancelledAt(LocalDateTime cancelledAt) {
+        this.cancelledAt = cancelledAt;
+    }
+
+    public String getCancelReason() {
+        return cancelReason;
+    }
+
+    public void setCancelReason(String cancelReason) {
+        this.cancelReason = cancelReason;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -217,5 +247,26 @@ public class Order {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public void addItem(OrderItem item) {
+        items.add(item);
+        item.setOrderId(this.id);
     }
 }

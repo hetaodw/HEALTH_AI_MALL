@@ -13,9 +13,10 @@
     <div v-else class="profile-container">
       <div class="profile-header skeuomorphic-card">
         <div class="avatar-container">
-          <div class="avatar skeuomorphic-avatar">
-            {{ userStore.user.username.charAt(0).toUpperCase() }}
-          </div>
+          <AvatarUpload 
+            :current-avatar="userStore.user.avatarUrl" 
+            @avatar-updated="handleAvatarUpdated"
+          />
         </div>
         <div class="user-info">
           <h2 class="username">{{ userStore.user.username }}</h2>
@@ -173,6 +174,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
+import AvatarUpload from '../components/AvatarUpload.vue'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -254,6 +256,10 @@ const handleChangePassword = async () => {
   } finally {
     passwordLoading.value = false
   }
+}
+
+const handleAvatarUpdated = (avatarUrl) => {
+  userStore.user.avatarUrl = avatarUrl
 }
 
 onMounted(() => {

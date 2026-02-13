@@ -3,6 +3,9 @@ package com.healthmall.controller;
 import com.healthmall.common.ApiResponse;
 import com.healthmall.dto.CreateOrderRequest;
 import com.healthmall.dto.OrderResponse;
+import com.healthmall.entity.Order;
+import com.healthmall.entity.Payment;
+import com.healthmall.exception.BusinessException;
 import com.healthmall.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * 订单控制器 - 处理用户下单和订单查询
- */
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -20,12 +20,6 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    /**
-     * 创建订单
-     * @param request HTTP请求
-     * @param createOrderRequest 创建订单请求
-     * @return 创建的订单信息
-     */
     @PostMapping
     public ApiResponse<OrderResponse> createOrder(
             HttpServletRequest request,
@@ -39,17 +33,11 @@ public class OrderController {
         try {
             OrderResponse order = orderService.createOrder(userId, createOrderRequest);
             return ApiResponse.success(order);
-        } catch (RuntimeException e) {
-            return ApiResponse.error(400, e.getMessage());
+        } catch (BusinessException e) {
+            return ApiResponse.error(e.getCode(), e.getMessage());
         }
     }
 
-    /**
-     * 获取订单详情
-     * @param request HTTP请求
-     * @param id 订单ID
-     * @return 订单详情
-     */
     @GetMapping("/{id}")
     public ApiResponse<OrderResponse> getOrderDetail(
             HttpServletRequest request,
@@ -60,50 +48,79 @@ public class OrderController {
             return ApiResponse.error(401, "请先登录");
         }
 
-        OrderResponse order = orderService.getOrderDetail(userId, id);
-        if (order == null) {
-            return ApiResponse.error(404, "订单不存在");
+        try {
+            OrderResponse order = orderService.getOrderDetail(userId, id);
+            return ApiResponse.success(order);
+        } catch (BusinessException e) {
+            return ApiResponse.error(e.getCode(), e.getMessage());
         }
-        return ApiResponse.success(order);
     }
 
-    /**
-     * 获取当前用户的所有订单
-     * @param request HTTP请求
-     * @return 订单列表
-     */
     @GetMapping("/my")
-    public ApiResponse<List<OrderResponse>> getMyOrders(HttpServletRequest request) {
-        Integer userId = (Integer) request.getAttribute("userId");
-        if (userId == null) {
-            return ApiResponse.error(401, "请先登录");
-        }
-
-        List<OrderResponse> orders = orderService.getUserOrders(userId);
-        return ApiResponse.success(orders);
-    }
-
-    /**
-     * 取消订单
-     * @param request HTTP请求
-     * @param id 订单ID
-     * @return 取消结果
-     */
-    @PostMapping("/{id}/cancel")
-    public ApiResponse<Void> cancelOrder(
+    public ApiResponse<List<OrderResponse>> getMyOrders(
             HttpServletRequest request,
-            @PathVariable Integer id) {
+            @RequestParam(required = false) String status) {
         
         Integer userId = (Integer) request.getAttribute("userId");
         if (userId == null) {
             return ApiResponse.error(401, "请先登录");
         }
 
-        boolean success = orderService.cancelOrder(userId, id);
-        if (success) {
+        Order.OrderStatus orderStatus = null;
+        if (status != null && !status.isEmpty()) {
+            try {
+                orderStatus = Order.OrderStatus.valueOf(status);
+            } catch (IllegalArgumentException e) {
+                return ApiResponse.error(400, "无效的订单状态");
+            }
+        }
+
+        List<OrderResponse> orders = orderService.getUserOrders(userId, orderStatus);
+        return ApiResponse.success(orders);
+    }
+
+    @PostMapping("/{orderNo}/pay")
+    public ApiResponse<OrderResponse> payOrder(
+            HttpServletRequest request,
+            @PathVariable String orderNo,
+            @RequestParam String payMethod) {
+        
+        Integer userId = (Integer) request.getAttribute("userId");
+        if (userId == null) {
+            return ApiResponse.error(401, "请先登录");
+        }
+
+        Payment.PaymentMethod method;
+        try {
+            method = Payment.PaymentMethod.valueOf(payMethod.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return ApiResponse.error(400, "无效的支付方式");
+        }
+
+        try {
+            OrderResponse order = orderService.payOrder(userId, orderNo, method);
+            return ApiResponse.success(order);
+        } catch (BusinessException e) {
+            return ApiResponse.error(e.getCode(), e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/cancel")
+    public ApiResponse<Void> cancelOrder(
+            HttpServletRequest request,
+            @PathVariable Integer id,
+            @RequestParam(required = false, defaultValue = "用户取消") String reason) {
+        
+        Integer userId = (Integer) request.getAttribute("userId");
+        if (userId == null) {
+            return ApiResponse.error(401, "请先登录");
+        }
+
+        try {
+            orderService.cancelOrder(userId, id, reason);
             return ApiResponse.success(null);
-        } else {
-            return ApiResponse.error(400, "取消订单失败，订单不存在或状态不允许取消");
+        } catch (BusinessException e) {
+            return ApiResponse.error(e.getCode(), e.getMessage());
         }
     }
 }

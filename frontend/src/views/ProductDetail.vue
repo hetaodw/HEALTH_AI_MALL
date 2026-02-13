@@ -51,11 +51,7 @@
           <!-- 价格区域 -->
           <div class="price-section">
             <div class="price-row">
-              <span class="price-label">原价</span>
-              <span class="original-price">¥{{ (product.price * 1.2).toFixed(2) }}</span>
-            </div>
-            <div class="price-row">
-              <span class="price-label">现价</span>
+              <span class="price-label">价格</span>
               <span class="current-price">¥{{ product.price?.toFixed(2) }}</span>
             </div>
             <div class="price-row">
@@ -71,7 +67,6 @@
             </div>
             <div class="merchant-detail">
               <span class="merchant-name">{{ product.merchantName || '官方店铺' }}</span>
-              <span class="merchant-tag">企业认证</span>
             </div>
           </div>
 
@@ -98,14 +93,6 @@
               <span class="btn-icon">🛒</span>
               加入购物车
             </button>
-          </div>
-
-          <!-- 服务承诺 -->
-          <div class="service-tags">
-            <span class="service-tag">✓ 正品保证</span>
-            <span class="service-tag">✓ 七天无理由</span>
-            <span class="service-tag">✓ 极速发货</span>
-            <span class="service-tag">✓ 售后无忧</span>
           </div>
         </div>
       </div>
@@ -248,7 +235,11 @@ const showImagePreview = ref(false)
 const previewDetailImageUrl = ref(null)
 
 const placeholderImage = 'https://via.placeholder.com/600x600?text=Product'
-const merchantAvatar = 'https://via.placeholder.com/60x60?text=Shop'
+
+// 商家头像 - 使用API返回的头像或默认占位符
+const merchantAvatar = computed(() => {
+  return product.value.merchantAvatar || 'https://via.placeholder.com/60x60?text=Shop'
+})
 
 // 所有图片（封面图 + 详情图）
 const allImages = computed(() => {
@@ -528,12 +519,6 @@ onMounted(() => {
   width: 60px;
 }
 
-.original-price {
-  font-size: 16px;
-  color: #999;
-  text-decoration: line-through;
-}
-
 .current-price {
   font-size: 36px;
   font-weight: 700;
@@ -585,15 +570,6 @@ onMounted(() => {
   font-size: 16px;
   font-weight: 600;
   color: #333;
-}
-
-.merchant-tag {
-  font-size: 12px;
-  color: #4a90d9;
-  background: rgba(74, 144, 217, 0.1);
-  padding: 3px 10px;
-  border-radius: 10px;
-  width: fit-content;
 }
 
 /* 规格选择 */
@@ -716,20 +692,6 @@ onMounted(() => {
 
 .btn-icon {
   font-size: 22px;
-}
-
-/* 服务承诺 */
-.service-tags {
-  display: flex;
-  gap: 20px;
-  padding: 20px 0;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  margin-top: 10px;
-}
-
-.service-tag {
-  font-size: 14px;
-  color: #666;
 }
 
 /* 商品详情区域 */

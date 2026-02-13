@@ -98,10 +98,13 @@ public class ProductService {
 
         ProductDetailResponse response = new ProductDetailResponse(product, imageUrls);
         
-        // 查询并设置商家名称
+        // 查询并设置商家名称和头像
         if (product.getMerchantId() != null) {
             userRepository.findById(product.getMerchantId())
-                    .ifPresent(user -> response.setMerchantName(user.getUsername()));
+                    .ifPresent(user -> {
+                        response.setMerchantName(user.getUsername());
+                        response.setMerchantAvatar(user.getAvatarUrl());
+                    });
         }
         
         return response;

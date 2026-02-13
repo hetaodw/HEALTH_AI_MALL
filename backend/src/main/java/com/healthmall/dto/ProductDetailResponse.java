@@ -13,6 +13,7 @@ public class ProductDetailResponse {
     private Integer id;
     private Integer merchantId;
     private String merchantName;
+    private String merchantAvatar;
     private String title;
     private String category;
     private String description;
@@ -67,6 +68,14 @@ public class ProductDetailResponse {
 
     public void setMerchantName(String merchantName) {
         this.merchantName = merchantName;
+    }
+
+    public String getMerchantAvatar() {
+        return merchantAvatar;
+    }
+
+    public void setMerchantAvatar(String merchantAvatar) {
+        this.merchantAvatar = merchantAvatar;
     }
 
     public String getTitle() {
