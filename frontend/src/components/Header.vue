@@ -28,6 +28,12 @@
           <button @click="handleSearch" class="search-button">🔍</button>
         </div>
 
+        <!-- 购物车入口 -->
+        <router-link v-if="userStore.isLoggedIn" to="/cart" class="cart-link skeuomorphic-button">
+          <span class="cart-icon">🛒</span>
+          <span v-if="cartCount > 0" class="cart-badge">{{ cartCount > 99 ? '99+' : cartCount }}</span>
+        </router-link>
+
         <div v-if="userStore.isLoggedIn" class="user-menu">
           <router-link to="/profile" class="user-link">
             <div class="skeuomorphic-avatar user-avatar">
@@ -48,23 +54,56 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 
 const router = useRouter()
 const userStore = useUserStore()
 const searchQuery = ref('')
+const cartCount = ref(0)
+
+// 计算购物车数量
+const updateCartCount = () => {
+  try {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+    cartCount.value = cart.reduce((sum, item) => sum + (item.quantity || 0), 0)
+  } catch (err) {
+    console.error('获取购物车数量失败:', err)
+    cartCount.value = 0
+  }
+}
+
+// 监听购物车变化
+const handleStorageChange = (e) => {
+  if (e.key === 'cart') {
+    updateCartCount()
+  }
+}
+
+onMounted(() => {
+  updateCartCount()
+  window.addEventListener('storage', handleStorageChange)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('storage', handleStorageChange)
+})
 
 const handleSearch = () => {
   if (searchQuery.value.trim()) {
-    router.push({ name: 'Search', query: { q: searchQuery.value } })
+    router.push({
+      path: '/search',
+      query: { keyword: searchQuery.value.trim() }
+    })
   }
 }
 
 const handleLogout = () => {
-  userStore.logout()
-  router.push('/')
+  if (confirm('确定要退出登录吗？')) {
+    userStore.logout()
+    router.push('/')
+  }
 }
 </script>
 
@@ -242,6 +281,38 @@ const handleLogout = () => {
 .auth-buttons .skeuomorphic-button {
   padding: 10px 20px;
   font-size: 14px;
+}
+
+/* 购物车链接 */
+.cart-link {
+  position: relative;
+  padding: 10px 14px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-icon {
+  font-size: 20px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: linear-gradient(145deg, #ff6b6b, #ee5a5a);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
 }
 
 @media (max-width: 768px) {

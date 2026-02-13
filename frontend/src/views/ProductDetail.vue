@@ -313,7 +313,46 @@ const addToCart = () => {
     return
   }
   
-  alert(`已将 ${quantity.value} 件商品加入购物车`)
+  try {
+    // 获取现有购物车
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]')
+    
+    // 检查商品是否已在购物车中
+    const existingItem = cart.find(item => item.productId === product.value.id)
+    
+    if (existingItem) {
+      // 更新数量
+      const newQuantity = existingItem.quantity + quantity.value
+      if (newQuantity > product.value.stock) {
+        alert(`库存不足，最多可购买 ${product.value.stock} 件`)
+        return
+      }
+      existingItem.quantity = newQuantity
+    } else {
+      // 添加新商品
+      cart.push({
+        productId: product.value.id,
+        title: product.value.title,
+        coverUrl: product.value.coverUrl,
+        price: product.value.price,
+        quantity: quantity.value,
+        stock: product.value.stock,
+        selected: true
+      })
+    }
+    
+    // 保存到 localStorage
+    localStorage.setItem('cart', JSON.stringify(cart))
+    
+    // 触发购物车更新事件
+    window.dispatchEvent(new StorageEvent('storage', { key: 'cart' }))
+    
+    alert(`已将 ${quantity.value} 件 "${product.value.title}" 加入购物车`)
+    console.log('Cart updated:', cart)
+  } catch (err) {
+    console.error('加入购物车失败:', err)
+    alert('加入购物车失败，请稍后重试')
+  }
 }
 
 // 预览详情图片

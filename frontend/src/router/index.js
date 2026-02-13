@@ -4,6 +4,8 @@ import ProductList from '../views/ProductList.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import Search from '../views/Search.vue'
 import Profile from '../views/Profile.vue'
+import OrderConfirm from '../views/OrderConfirm.vue'
+import Cart from '../views/Cart.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import MerchantDashboard from '../views/MerchantDashboard.vue'
@@ -32,7 +34,20 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/order/confirm',
+    name: 'OrderConfirm',
+    component: OrderConfirm,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
+    meta: { requiresAuth: true }
   },
   {
     path: '/login',

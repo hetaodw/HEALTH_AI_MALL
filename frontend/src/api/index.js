@@ -76,5 +76,21 @@ export default {
     uploadAvatar: (formData) => api.post('/user/avatar/upload', formData, {
       headers: {}
     })
+  },
+  orders: {
+    create: (data) => api.post('/orders', data),
+    getMyOrders: () => api.get('/orders/my'),
+    getOrderDetail: (id) => api.get(`/orders/${id}`),
+    cancelOrder: (id, reason) => api.post(`/orders/${id}/cancel`, null, { params: { reason } }),
+    payOrder: (orderNo, payMethod) => api.post(`/orders/${orderNo}/pay`, null, { params: { payMethod } })
+  },
+  addresses: {
+    getList: () => api.get('/addresses'),
+    getDefault: () => api.get('/addresses/default'),
+    getDetail: (id) => api.get(`/addresses/${id}`),
+    create: (data) => api.post('/addresses', data),
+    update: (id, data) => api.put(`/addresses/${id}`, data),
+    delete: (id) => api.delete(`/addresses/${id}`),
+    setDefault: (id) => api.post(`/addresses/${id}/default`)
   }
 }
