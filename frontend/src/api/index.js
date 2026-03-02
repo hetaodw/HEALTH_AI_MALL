@@ -73,9 +73,7 @@ export default {
   user: {
     getProfile: () => api.get('/user/profile'),
     updateProfile: (data) => api.put('/user/profile/update', null, { params: data }),
-    uploadAvatar: (formData) => api.post('/user/avatar/upload', formData, {
-      headers: {}
-    })
+    uploadAvatar: (formData) => api.post('/user/avatar/upload', formData)
   },
   orders: {
     create: (data) => api.post('/orders', data),
@@ -92,5 +90,16 @@ export default {
     update: (id, data) => api.put(`/addresses/${id}`, data),
     delete: (id) => api.delete(`/addresses/${id}`),
     setDefault: (id) => api.post(`/addresses/${id}/default`)
+  },
+  productDescription: {
+    get: (productId) => api.get(`/product/descriptions/${productId}`),
+    createOrUpdate: (productId, data) => api.post(`/product/descriptions/${productId}`, data),
+    delete: (productId) => api.delete(`/product/descriptions/${productId}`)
+  },
+  productReviews: {
+    getList: (productId, params) => api.get(`/product/reviews/${productId}`, { params }),
+    getDetail: (reviewId) => api.get(`/product/reviews/detail/${reviewId}`),
+    create: (productId, data) => api.post(`/product/reviews/${productId}`, data),
+    delete: (reviewId) => api.delete(`/product/reviews/${reviewId}`)
   }
 }

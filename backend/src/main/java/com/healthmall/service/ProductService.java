@@ -4,10 +4,14 @@ import com.healthmall.dto.PageResponse;
 import com.healthmall.dto.ProductDetailResponse;
 import com.healthmall.dto.ProductListItem;
 import com.healthmall.entity.Product;
+import com.healthmall.entity.ProductDescription;
 import com.healthmall.entity.ProductDetailsImage;
+import com.healthmall.entity.ProductReview;
 import com.healthmall.exception.BusinessException;
+import com.healthmall.repository.ProductDescriptionRepository;
 import com.healthmall.repository.ProductDetailsImageRepository;
 import com.healthmall.repository.ProductRepository;
+import com.healthmall.repository.ProductReviewRepository;
 import com.healthmall.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +32,12 @@ public class ProductService {
 
     @Autowired
     private ProductDetailsImageRepository productDetailsImageRepository;
+
+    @Autowired
+    private ProductDescriptionRepository productDescriptionRepository;
+
+    @Autowired
+    private ProductReviewRepository productReviewRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -106,6 +116,16 @@ public class ProductService {
                         response.setMerchantAvatar(user.getAvatarUrl());
                     });
         }
+        
+        // 查询并设置商品详情介绍
+        productDescriptionRepository.findByProductId(id)
+                .ifPresent(description -> response.setDescriptionContent(description.getContent()));
+        
+        // 查询并设置评分统计
+        Double averageRating = productReviewRepository.findAverageRatingByProductId(id, ProductReview.ReviewStatus.APPROVED);
+        Long reviewCount = productReviewRepository.countByProductIdAndStatus(id, ProductReview.ReviewStatus.APPROVED);
+        response.setAverageRating(averageRating != null ? averageRating : 0.0);
+        response.setReviewCount(reviewCount != null ? reviewCount.intValue() : 0);
         
         return response;
     }

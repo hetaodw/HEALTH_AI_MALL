@@ -11,6 +11,9 @@ public class ProductListItem {
     private String features;
     private java.math.BigDecimal price;
     private Integer stock;
+    private Integer sales;
+    private Double averageRating;
+    private Integer reviewCount;
 
     public ProductListItem(Product product) {
         this.id = product.getId();
@@ -21,6 +24,9 @@ public class ProductListItem {
         this.features = product.getFeatures();
         this.price = product.getPrice();
         this.stock = product.getStock();
+        this.sales = product.getSales();
+        this.averageRating = product.getAverageRating();
+        this.reviewCount = product.getReviewCount();
     }
 
     public Integer getId() {
@@ -85,5 +91,29 @@ public class ProductListItem {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Integer getSales() {
+        return sales;
+    }
+
+    public void setSales(Integer sales) {
+        this.sales = sales;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
     }
 }

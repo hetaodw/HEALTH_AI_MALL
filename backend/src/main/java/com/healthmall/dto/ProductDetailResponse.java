@@ -17,11 +17,14 @@ public class ProductDetailResponse {
     private String title;
     private String category;
     private String description;
+    private String descriptionContent;
     private String coverUrl;
     private String features;
     private BigDecimal price;
     private Integer stock;
     private Integer sales;
+    private Double averageRating;
+    private Integer reviewCount;
     private Product.ProductStatus status;
     private LocalDateTime createdAt;
     private List<String> detailImages;
@@ -100,6 +103,30 @@ public class ProductDetailResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDescriptionContent() {
+        return descriptionContent;
+    }
+
+    public void setDescriptionContent(String descriptionContent) {
+        this.descriptionContent = descriptionContent;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
     }
 
     public String getCoverUrl() {

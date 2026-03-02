@@ -207,7 +207,7 @@ public class MerchantProductService {
     }
 
     @Transactional
-    public MerchantProductResponse updateProductStock(Integer merchantId, Integer productId, Integer stockChange) {
+    public MerchantProductResponse updateProductStock(Integer merchantId, Integer productId, Integer newStock) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("商品不存在"));
 
@@ -215,8 +215,7 @@ public class MerchantProductService {
             throw new RuntimeException("无权修改此商品库存");
         }
 
-        int newStock = product.getStock() + stockChange;
-        if (newStock < 0) {
+        if (newStock == null || newStock < 0) {
             throw new RuntimeException("库存不能为负数");
         }
 

@@ -18,6 +18,8 @@
 | `users` | 用户信息表 | 万级 |
 | `products` | 商品基础信息表 | 千级 |
 | `product_details_images` | 商品详情图片表 | 万级 |
+| `product_descriptions` | 商品详情文字介绍表 | 千级 |
+| `product_reviews` | 商品评价表 | 万级 |
 | `hot_products` | 首页热门商品推荐表 | 十级 |
 
 ---
@@ -61,6 +63,8 @@
 | `price` | DECIMAL(10,2) | NOT NULL | 0.00 | 商品价格 |
 | `stock` | INT | NULL | 0 | 库存数量 |
 | `sales` | INT | NULL | 0 | 销量统计 |
+| `average_rating` | DECIMAL(3,2) | NULL | 0.00 | 商品平均评分 (0-5) |
+| `review_count` | INT | NULL | 0 | 评价数量 |
 | `status` | ENUM | NULL | 'ON_SALE' | 商品状态：ON_SALE-在售，OFF_SALE-下架，OUT_OF_STOCK-缺货 |
 | `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 商品创建时间 |
 | `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 商品更新时间 |
@@ -101,7 +105,64 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 
 ---
 
-### 4. hot_products - 首页热门商品推荐表
+### 5. product_descriptions - 商品详情文字介绍表
+
+存储商品的详细文字介绍内容，每个商品只能有一条详情介绍。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | INT | PRIMARY KEY, AUTO_INCREMENT | - | 详情介绍唯一标识 |
+| `product_id` | INT | FOREIGN KEY, NOT NULL | - | 商品 ID，关联 products 表 |
+| `content` | TEXT | NOT NULL | - | 商品详细文字介绍内容 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP | 更新时间 |
+
+**索引**:
+- 主键索引：`id`
+- 外键索引：`product_id` → `products(id)`
+- 建议索引：`product_id`（商品详情查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+```
+
+---
+
+### 6. product_reviews - 商品评价表
+
+存储用户对商品的评价信息，包括评分、评价内容等。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | INT | PRIMARY KEY, AUTO_INCREMENT | - | 评价唯一标识 |
+| `product_id` | INT | FOREIGN KEY, NOT NULL | - | 商品 ID，关联 products 表 |
+| `user_id` | INT | FOREIGN KEY, NOT NULL | - | 用户 ID，关联 users 表 |
+| `rating` | TINYINT | NOT NULL | - | 评分 (1-5) |
+| `title` | VARCHAR(200) | NULL | NULL | 评价标题 |
+| `content` | TEXT | NULL | NULL | 评价内容 |
+| `is_anonymous` | BOOLEAN | NULL | FALSE | 是否匿名评价 |
+| `status` | ENUM | NULL | 'APPROVED' | 评价状态：APPROVED-已通过，PENDING-待审核，REJECTED-已拒绝 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP | 更新时间 |
+
+**索引**:
+- 主键索引：`id`
+- 外键索引：`product_id` → `products(id)`
+- 外键索引：`user_id` → `users(id)`
+- 建议索引：`product_id` + `status` + `created_at`（商品评价列表查询）
+- 建议索引：`user_id`（用户评价查询）
+- 建议索引：`status`（评价审核查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+```
+
+---
+
+### 7. hot_products - 首页热门商品推荐表
 
 维护首页展示的热门商品列表，通过外键关联商品表。
 
@@ -135,17 +196,38 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 │    role         │         │    price        │         │    sort_order           │
 │    ...          │         │    status       │         │                         │
 └─────────────────┘         └─────────────────┘         └─────────────────────────┘
-                                     ▲
-                                     │
-                                     │ 1:1
-                                     │
-                            ┌─────────────────┐
-                            │  hot_products   │
-                            ├─────────────────┤
-                            │ PK id           │
-                            │ FK product_id   │
-                            │    hot_score    │
-                            └─────────────────┘
+         ▲                       │
+         │                       │ 1:1
+         │                       │
+         │              ┌─────────────────┐
+         │              │  hot_products   │
+         │              ├─────────────────┤
+         │              │ PK id           │
+         │              │ FK product_id   │
+         │              │    hot_score    │
+         │              └─────────────────┘
+         │                       │
+         │                       │ 1:1
+         │                       │
+         │              ┌─────────────────────────┐
+         │              │ product_descriptions    │
+         │              ├─────────────────────────┤
+         │              │ PK id                   │
+         │              │ FK product_id           │
+         │              │    content              │
+         │              └─────────────────────────┘
+         │                       │
+         │                       │ 1:N
+         │                       │
+         │              ┌─────────────────────────┐
+         │              │    product_reviews      │
+         │              ├─────────────────────────┤
+         │              │ PK id                   │
+         │              │ FK product_id           │
+         │              │ FK user_id              │
+         │              │    rating               │
+         │              │    content              │
+         │              └─────────────────────────┘
 ```
 
 ---
@@ -157,6 +239,9 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 | users | products | 1:N | users.id = products.merchant_id | ON DELETE SET NULL |
 | products | product_details_images | 1:N | products.id = product_details_images.product_id | ON DELETE CASCADE |
 | products | hot_products | 1:1 | products.id = hot_products.product_id | ON DELETE CASCADE |
+| products | product_descriptions | 1:1 | products.id = product_descriptions.product_id | ON DELETE CASCADE |
+| products | product_reviews | 1:N | products.id = product_reviews.product_id | ON DELETE CASCADE |
+| users | product_reviews | 1:N | users.id = product_reviews.user_id | ON DELETE CASCADE |
 
 ---
 
@@ -209,6 +294,67 @@ WHERE p.status = 'ON_SALE'
 ORDER BY h.hot_score DESC;
 ```
 
+### 查询商品详情介绍
+```sql
+SELECT 
+    pd.id,
+    pd.product_id,
+    pd.content,
+    pd.created_at,
+    pd.updated_at
+FROM product_descriptions pd
+WHERE pd.product_id = ?;
+```
+
+### 查询商品评价列表（带用户信息）
+```sql
+SELECT 
+    pr.id,
+    pr.product_id,
+    pr.user_id,
+    pr.rating,
+    pr.title,
+    pr.content,
+    pr.is_anonymous,
+    pr.status,
+    pr.created_at,
+    u.username,
+    u.avatar_url
+FROM product_reviews pr
+LEFT JOIN users u ON pr.user_id = u.id
+WHERE pr.product_id = ? 
+  AND pr.status = 'APPROVED'
+ORDER BY pr.created_at DESC
+LIMIT ? OFFSET ?;
+```
+
+### 查询商品评分统计
+```sql
+SELECT 
+    AVG(rating) as average_rating,
+    COUNT(*) as review_count
+FROM product_reviews
+WHERE product_id = ? 
+  AND status = 'APPROVED';
+```
+
+### 更新商品评分统计
+```sql
+UPDATE products p
+SET 
+    average_rating = (
+        SELECT AVG(rating) 
+        FROM product_reviews 
+        WHERE product_id = p.id AND status = 'APPROVED'
+    ),
+    review_count = (
+        SELECT COUNT(*) 
+        FROM product_reviews 
+        WHERE product_id = p.id AND status = 'APPROVED'
+    )
+WHERE p.id = ?;
+```
+
 ---
 
 ## 数据库初始化
@@ -242,8 +388,10 @@ mall-mysql:
 2. **索引优化**: 根据查询日志定期优化索引
 3. **数据清理**: 定期清理已下架商品的详情图片
 4. **监控告警**: 监控库存预警和热门商品变化
+5. **评价管理**: 定期审核用户评价，清理虚假评价
 
 ---
 
-*文档版本: 1.0*
-*最后更新: 2026-01-30*
+*文档版本：2.0*
+*最后更新：2026-02-28*
+*更新内容：新增商品详情介绍表、商品评价表，更新商品表评分统计字段*

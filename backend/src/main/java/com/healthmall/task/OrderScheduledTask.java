@@ -1,8 +1,10 @@
 package com.healthmall.task;
 
 import com.healthmall.entity.Order;
+import com.healthmall.entity.Product;
 import com.healthmall.entity.StockReservation;
 import com.healthmall.repository.OrderRepository;
+import com.healthmall.repository.ProductRepository;
 import com.healthmall.repository.StockReservationRepository;
 import com.healthmall.service.StockReservationService;
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class OrderScheduledTask {
 
     @Autowired
     private StockReservationService stockReservationService;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Scheduled(fixedRate = 60000)
     @Transactional
@@ -64,6 +69,12 @@ public class OrderScheduledTask {
                 reservationRepository.save(reservation);
                 
                 stockReservationService.releaseReservation(reservation.getProductId(), order.getOrderNo());
+                
+                Product product = productRepository.findById(reservation.getProductId()).orElse(null);
+                if (product != null) {
+                    product.setStock(product.getStock() + reservation.getQuantity());
+                    productRepository.save(product);
+                }
             }
         }
         
@@ -74,6 +85,7 @@ public class OrderScheduledTask {
     }
 
     @Scheduled(fixedRate = 300000)
+    @Transactional
     public void cleanupExpiredReservations() {
         logger.info("开始清理过期预占记录...");
         
@@ -92,6 +104,12 @@ public class OrderScheduledTask {
                         reservation.getProductId(), 
                         reservation.getOrderNo()
                 );
+                
+                Product product = productRepository.findById(reservation.getProductId()).orElse(null);
+                if (product != null) {
+                    product.setStock(product.getStock() + reservation.getQuantity());
+                    productRepository.save(product);
+                }
                 
                 logger.info("预占记录 {} 已释放", reservation.getId());
             } catch (Exception e) {

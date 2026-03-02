@@ -42,7 +42,7 @@ services:
       SPRING_REDIS_HOST: mall-redis
       SPRING_REDIS_PORT: 6379
       FILE_UPLOAD_PATH: /app/static
-      FILE_ACCESS_URL: http://localhost/v1/static
+      FILE_ACCESS_URL: /v1/static
     volumes:
       - ./uploads:/app/static
     depends_on:

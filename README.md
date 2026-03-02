@@ -149,6 +149,118 @@ CREATE TABLE `hot_products` (
     FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB COMMENT='首页/最热商品推荐表';
 
+-- 5. 收货地址表
+CREATE TABLE `addresses` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL COMMENT '用户ID',
+    `receiver_name` VARCHAR(50) NOT NULL COMMENT '收货人姓名',
+    `receiver_phone` VARCHAR(20) NOT NULL COMMENT '收货人电话',
+    `province` VARCHAR(50) COMMENT '省份',
+    `city` VARCHAR(50) COMMENT '城市',
+    `district` VARCHAR(50) COMMENT '区县',
+    `detail_address` VARCHAR(255) NOT NULL COMMENT '详细地址',
+    `is_default` TINYINT(1) DEFAULT 0 COMMENT '是否默认地址',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB COMMENT='收货地址表';
+
+-- 6. 订单表
+CREATE TABLE `orders` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `order_no` VARCHAR(32) NOT NULL UNIQUE COMMENT '订单号（雪花算法生成）',
+    `user_id` INT NOT NULL COMMENT '用户ID',
+    `status` ENUM('PENDING_PAYMENT', 'PAID', 'SHIPPED', 'DELIVERED', 'CANCELLED') DEFAULT 'PENDING_PAYMENT' COMMENT '订单状态',
+    `total_amount` DECIMAL(10, 2) NOT NULL COMMENT '订单总金额',
+    `receiver_name` VARCHAR(50) NOT NULL COMMENT '收货人姓名',
+    `receiver_phone` VARCHAR(20) NOT NULL COMMENT '收货人电话',
+    `receiver_address` VARCHAR(255) NOT NULL COMMENT '收货地址',
+    `pay_expire_at` TIMESTAMP NULL COMMENT '支付过期时间',
+    `paid_at` TIMESTAMP NULL COMMENT '支付时间',
+    `shipped_at` TIMESTAMP NULL COMMENT '发货时间',
+    `delivered_at` TIMESTAMP NULL COMMENT '收货时间',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB COMMENT='订单表';
+
+-- 7. 订单项表
+CREATE TABLE `order_items` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `order_id` INT NOT NULL COMMENT '订单ID',
+    `product_id` INT NOT NULL COMMENT '商品ID',
+    `snapshot_id` BIGINT NOT NULL COMMENT '商品快照ID',
+    `quantity` INT NOT NULL COMMENT '购买数量',
+    `unit_price` DECIMAL(10, 2) NOT NULL COMMENT '下单时单价',
+    `total_price` DECIMAL(10, 2) NOT NULL COMMENT '小计金额',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB COMMENT='订单项表';
+
+-- 8. 商品快照表
+CREATE TABLE `product_snapshots` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL COMMENT '商品ID',
+    `title` VARCHAR(100) NOT NULL COMMENT '商品标题',
+    `category` VARCHAR(50) COMMENT '商品分类',
+    `cover_url` VARCHAR(255) COMMENT '封面图URL',
+    `price` DECIMAL(10, 2) NOT NULL COMMENT '商品价格',
+    `merchant_id` INT COMMENT '商家ID',
+    `merchant_name` VARCHAR(50) COMMENT '商家名称',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB COMMENT='商品快照表';
+
+-- 9. 支付记录表
+CREATE TABLE `payments` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `order_no` VARCHAR(32) NOT NULL UNIQUE COMMENT '订单号',
+    `pay_no` VARCHAR(64) COMMENT '支付流水号',
+    `amount` DECIMAL(10, 2) NOT NULL COMMENT '支付金额',
+    `pay_method` ENUM('ALIPAY', 'WECHAT', 'BALANCE') COMMENT '支付方式',
+    `status` ENUM('PENDING', 'SUCCESS', 'FAILED', 'REFUNDED') NOT NULL DEFAULT 'PENDING' COMMENT '支付状态',
+    `paid_at` TIMESTAMP NULL COMMENT '支付时间',
+    `notify_data` TEXT COMMENT '支付回调数据',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB COMMENT='支付记录表';
+
+-- 10. 库存预占表
+CREATE TABLE `stock_reservations` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `order_no` VARCHAR(32) NOT NULL COMMENT '订单号',
+    `product_id` INT NOT NULL COMMENT '商品ID',
+    `quantity` INT NOT NULL COMMENT '预占数量',
+    `status` ENUM('RESERVED', 'CONFIRMED', 'RELEASED') NOT NULL DEFAULT 'RESERVED' COMMENT '预占状态',
+    `expire_at` TIMESTAMP NOT NULL COMMENT '过期时间',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB COMMENT='库存预占表';
+
+-- 11. 商品详情介绍表
+CREATE TABLE `product_descriptions` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL UNIQUE COMMENT '商品ID',
+    `content` TEXT NOT NULL COMMENT '详情介绍内容',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB COMMENT='商品详情介绍表';
+
+-- 12. 商品评价表
+CREATE TABLE `product_reviews` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` INT NOT NULL COMMENT '商品ID',
+    `user_id` INT NOT NULL COMMENT '用户ID',
+    `rating` TINYINT NOT NULL COMMENT '评分（1-5星）',
+    `title` VARCHAR(100) COMMENT '评价标题',
+    `content` TEXT COMMENT '评价内容',
+    `is_anonymous` TINYINT(1) DEFAULT 0 COMMENT '是否匿名',
+    `status` ENUM('APPROVED', 'PENDING', 'REJECTED') DEFAULT 'APPROVED' COMMENT '评价状态',
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB COMMENT='商品评价表';
+
 ## 后端接口文档
 
 ### 1. 全局说明
@@ -421,7 +533,10 @@ CREATE TABLE `hot_products` (
 #### 5.2 前端页面
 - 首页 (http://localhost/): 展示热门商品和导航
 - 商品列表页 (http://localhost/products): 支持分页、分类筛选、价格区间筛选、排序
+- 商品详情页 (http://localhost/products/:id): 商品信息、详情介绍、评价展示、加入购物车
 - 搜索页 (http://localhost/search): 关键词搜索商品
+- 购物车页 (http://localhost/cart): 商品选择、数量修改、结算
+- 订单确认页 (http://localhost/order/confirm): 地址选择、支付方式、订单创建
 - 登录页 (http://localhost/login): 用户登录，底部有注册入口
 - 注册页 (http://localhost/register): 用户注册，支持填写邮箱、手机号，可选择用户/商家身份
 - 个人中心 (http://localhost/profile): 用户信息（包括用户名、邮箱、手机号）、收货地址管理和订单管理
@@ -487,7 +602,121 @@ npm run dev
 
 ### 6. 最近更新
 
-#### 6.1 个人中心功能增强（2026-02-13）
+#### 6.1 购物车和订单系统（2026-02-28）
+
+**功能概述**:
+实现了完整的购物车到下单流程，包括购物车管理、订单创建、支付模拟、库存预占等核心电商功能。
+
+**主要特性**:
+1. **购物车功能**
+   - 商品添加/删除/数量修改
+   - 商品选择/全选功能
+   - 已选商品总价计算
+   - 结算跳转订单确认页
+
+2. **订单创建流程**
+   - 收货地址选择
+   - 订单商品展示（交易快照）
+   - 支付方式选择（支付宝/微信/银行卡）
+   - 订单金额汇总
+
+3. **库存预占机制**
+   - 下单时预占库存，防止超卖
+   - 订单超时自动释放库存
+   - 支付成功确认库存扣减
+
+4. **商品快照**
+   - 下单时保存商品信息快照
+   - 记录商品标题、价格、封面等
+   - 保证交易记录的完整性
+
+5. **订单定时任务**
+   - 每分钟检查超时订单
+   - 自动取消超时未支付订单
+   - 自动释放预占库存
+
+6. **雪花算法订单号**
+   - 生成全局唯一的64位订单号
+   - 支持分布式环境
+
+**数据库变更**:
+- 新增 `orders` 表：订单主表
+- 新增 `order_items` 表：订单项表
+- 新增 `payments` 表：支付记录表
+- 新增 `product_snapshots` 表：商品快照表
+- 新增 `stock_reservations` 表：库存预占表
+- 新增 `addresses` 表：收货地址表
+
+**相关文件**:
+- [Cart.vue](file:///d:/26bs/frontend/src/views/Cart.vue) - 购物车页面
+- [OrderConfirm.vue](file:///d:/26bs/frontend/src/views/OrderConfirm.vue) - 订单确认页面
+- [OrderController.java](file:///d:/26bs/backend/src/main/java/com/healthmall/controller/OrderController.java) - 订单控制器
+- [OrderService.java](file:///d:/26bs/backend/src/main/java/com/healthmall/service/OrderService.java) - 订单服务
+- [StockReservationService.java](file:///d:/26bs/backend/src/main/java/com/healthmall/service/StockReservationService.java) - 库存预占服务
+- [OrderScheduledTask.java](file:///d:/26bs/backend/src/main/java/com/healthmall/task/OrderScheduledTask.java) - 订单定时任务
+- [SnowflakeIdGenerator.java](file:///d:/26bs/backend/src/main/java/com/healthmall/util/SnowflakeIdGenerator.java) - 雪花算法ID生成器
+- [PAYMENT_ARCHITECTURE.md](file:///d:/26bs/docs/PAYMENT_ARCHITECTURE.md) - 支付功能技术文档
+
+#### 6.2 商品详情介绍和评价功能（2026-02-28）
+
+**功能概述**:
+新增了商品的文字详情介绍和用户评价功能，完善商品展示和互动能力。
+
+**主要特性**:
+1. **商品详情介绍功能**
+   - 支持为每个商品添加详细的文字介绍
+   - 每个商品只能有一条详情介绍记录
+   - 支持创建、更新、删除操作
+   - 详情介绍内容存储为 TEXT 类型，支持长文本
+   - 商品详情 API 自动包含详情介绍内容
+
+2. **商品评价功能**
+   - 用户可以对商品进行评价（1-5 星评分）
+   - 支持评价标题和详细内容
+   - 支持匿名评价功能
+   - 评价状态管理：已通过、待审核、已拒绝
+   - 自动计算商品的平均评分和评价数量
+   - 评价列表支持分页查询
+   - 评价列表自动过滤未通过审核的评价
+
+3. **评分统计功能**
+   - 商品表新增 `average_rating` 字段存储平均评分
+   - 商品表新增 `review_count` 字段存储评价数量
+   - 创建/删除评价时自动更新商品评分统计
+   - 商品列表和详情 API 均返回评分信息
+
+4. **API 接口**
+   - 商品详情介绍 API：
+     - `GET /v1/product/descriptions/{productId}` - 获取商品详情介绍
+     - `POST /v1/product/descriptions/{productId}` - 创建或更新详情介绍
+     - `DELETE /v1/product/descriptions/{productId}` - 删除详情介绍
+   - 商品评价 API：
+     - `GET /v1/product/reviews/{productId}` - 获取商品评价列表
+     - `GET /v1/product/reviews/detail/{reviewId}` - 获取评价详情
+     - `POST /v1/product/reviews/{productId}` - 创建商品评价
+     - `DELETE /v1/product/reviews/{reviewId}` - 删除商品评价
+   - 商品详情 API 增强：
+     - `GET /v1/products/{id}` - 新增返回 `descriptionContent`、`averageRating`、`reviewCount` 字段
+
+**数据库变更**:
+- 新增 `product_descriptions` 表：存储商品详情文字介绍
+- 新增 `product_reviews` 表：存储用户评价信息
+- 更新 `products` 表：新增 `average_rating` 和 `review_count` 字段
+
+**相关文件**:
+- [ProductDescription.java](file:///d:/26bs/backend/src/main/java/com/healthmall/entity/ProductDescription.java) - 商品详情介绍实体
+- [ProductReview.java](file:///d:/26bs/backend/src/main/java/com/healthmall/entity/ProductReview.java) - 商品评价实体
+- [ProductDescriptionController.java](file:///d:/26bs/backend/src/main/java/com/healthmall/controller/ProductDescriptionController.java) - 商品详情介绍控制器
+- [ProductReviewController.java](file:///d:/26bs/backend/src/main/java/com/healthmall/controller/ProductReviewController.java) - 商品评价控制器
+- [ProductDescriptionService.java](file:///d:/26bs/backend/src/main/java/com/healthmall/service/ProductDescriptionService.java) - 商品详情介绍服务
+- [ProductReviewService.java](file:///d:/26bs/backend/src/main/java/com/healthmall/service/ProductReviewService.java) - 商品评价服务
+- [ProductDescriptionRepository.java](file:///d:/26bs/backend/src/main/java/com/healthmall/repository/ProductDescriptionRepository.java) - 详情介绍数据访问层
+- [ProductReviewRepository.java](file:///d:/26bs/backend/src/main/java/com/healthmall/repository/ProductReviewRepository.java) - 评价数据访问层
+
+**数据库迁移**:
+- 执行 [database/schema_updates.sql](file:///d:/26bs/database/schema_updates.sql) 进行数据库结构更新
+
+#### 6.3 个人中心功能增强（2026-02-13）
 
 **功能概述**:
 完善了个人中心的订单管理和收货地址管理功能。
@@ -523,7 +752,7 @@ npm run dev
 - [Profile.vue](file:///d:/26bs/frontend/src/views/Profile.vue) - 个人中心页面
 - [api/index.js](file:///d:/26bs/frontend/src/api/index.js) - API接口封装
 
-#### 6.2 图片上传功能实现
+#### 6.4 图片上传功能实现
 
 **功能概述**:
 实现了完整的图片上传和管理功能，支持用户头像、商品封面图和商品详情图的上传。

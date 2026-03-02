@@ -140,6 +140,12 @@ public class OrderService {
                         orderNo, 
                         itemData.quantity
                 );
+                
+                Product product = productRepository.findById(itemData.product.getId()).orElse(null);
+                if (product != null) {
+                    product.setStock(product.getStock() - itemData.quantity);
+                    productRepository.save(product);
+                }
             } catch (Exception e) {
                 releaseAllStock(itemDataList, orderNo);
                 throw new BusinessException(400, "库存预占失败: " + e.getMessage());
@@ -154,6 +160,12 @@ public class OrderService {
                         itemData.product.getId(), 
                         orderNo
                 );
+                
+                Product product = productRepository.findById(itemData.product.getId()).orElse(null);
+                if (product != null) {
+                    product.setStock(product.getStock() + itemData.quantity);
+                    productRepository.save(product);
+                }
             } catch (Exception ignored) {
             }
         }
@@ -278,7 +290,6 @@ public class OrderService {
         for (StockReservation reservation : reservations) {
             Product product = productRepository.findById(reservation.getProductId()).orElse(null);
             if (product != null) {
-                product.setStock(product.getStock() - reservation.getQuantity());
                 product.setSales(product.getSales() + reservation.getQuantity());
                 productRepository.save(product);
             }
@@ -316,6 +327,12 @@ public class OrderService {
                 reservationRepository.save(reservation);
                 
                 stockReservationService.releaseReservation(reservation.getProductId(), orderNo);
+                
+                Product product = productRepository.findById(reservation.getProductId()).orElse(null);
+                if (product != null) {
+                    product.setStock(product.getStock() + reservation.getQuantity());
+                    productRepository.save(product);
+                }
             }
         }
     }

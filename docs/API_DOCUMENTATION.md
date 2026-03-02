@@ -45,9 +45,301 @@
   - [31. 更新地址](#31-更新地址)
   - [32. 删除地址](#32-删除地址)
   - [33. 设置默认地址](#33-设置默认地址)
+- [商品详情介绍 API](#商品详情介绍-api)
+  - [34. 获取商品详情介绍](#34-获取商品详情介绍)
+  - [35. 创建或更新商品详情介绍](#35-创建或更新商品详情介绍)
+  - [36. 删除商品详情介绍](#36-删除商品详情介绍)
+- [商品评价 API](#商品评价-api)
+  - [37. 获取商品评价列表](#37-获取商品评价列表)
+  - [38. 获取评价详情](#38-获取评价详情)
+  - [39. 创建商品评价](#39-创建商品评价)
+  - [40. 删除商品评价](#40-删除商品评价)
 - [测试用例 (cURL)](#测试用例-curl)
 - [状态码说明](#状态码说明)
 - [角色说明](#角色说明)
+
+---
+
+## 商品详情介绍 API
+
+### 34. 获取商品详情介绍
+
+**接口**: `GET /v1/product/descriptions/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "productId": 1,
+    "content": "这款天然维 C 片采用优质原料，每片含有 500mg 维生素 C，能够有效增强免疫力，抗氧化，促进胶原蛋白合成。适合日常保健，增强身体抵抗力。",
+    "createdAt": "2026-02-28T10:00:00",
+    "updatedAt": "2026-02-28T10:00:00"
+  }
+}
+```
+
+---
+
+### 35. 创建或更新商品详情介绍
+
+**接口**: `POST /v1/product/descriptions/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**请求体**:
+```json
+{
+  "content": "商品详细文字介绍内容..."
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| content | string | 是 | 商品详细文字介绍内容 |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "productId": 1,
+    "content": "商品详细文字介绍内容...",
+    "createdAt": "2026-02-28T10:00:00",
+    "updatedAt": "2026-02-28T10:00:00"
+  }
+}
+```
+
+---
+
+### 36. 删除商品详情介绍
+
+**接口**: `DELETE /v1/product/descriptions/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+---
+
+## 商品评价 API
+
+### 37. 获取商品评价列表
+
+**接口**: `GET /v1/product/reviews/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**查询参数**:
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| page | int | 否 | 1 | 页码 |
+| size | int | 否 | 10 | 每页数量 |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "list": [
+      {
+        "id": 1,
+        "productId": 1,
+        "userId": 1,
+        "username": "zhangsan",
+        "userAvatar": "http://example.com/avatar.jpg",
+        "rating": 5,
+        "title": "非常好的产品",
+        "content": "吃了两个月，感觉免疫力确实提高了，包装也很好，物流快！",
+        "isAnonymous": false,
+        "status": "APPROVED",
+        "createdAt": "2026-02-28T10:00:00"
+      }
+    ],
+    "averageRating": 4.5,
+    "reviewCount": 10,
+    "page": 1,
+    "size": 10
+  }
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| list | array | 评价列表 |
+| averageRating | double | 平均评分 (0-5) |
+| reviewCount | long | 评价总数 |
+| page | int | 当前页码 |
+| size | int | 每页数量 |
+
+---
+
+### 38. 获取评价详情
+
+**接口**: `GET /v1/product/reviews/detail/{reviewId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| reviewId | int | 评价 ID |
+
+**响应示例**: 同评价列表中的单条评价数据结构
+
+---
+
+### 39. 创建商品评价
+
+**接口**: `POST /v1/product/reviews/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**请求体**:
+```json
+{
+  "rating": 5,
+  "title": "非常好的产品",
+  "content": "吃了两个月，感觉免疫力确实提高了，包装也很好，物流快！",
+  "isAnonymous": false
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| rating | int | 是 | 评分 (1-5) |
+| title | string | 否 | 评价标题 |
+| content | string | 否 | 评价内容 |
+| isAnonymous | boolean | 否 | 是否匿名，默认 false |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "productId": 1,
+    "userId": 1,
+    "username": "zhangsan",
+    "userAvatar": "http://example.com/avatar.jpg",
+    "rating": 5,
+    "title": "非常好的产品",
+    "content": "吃了两个月，感觉免疫力确实提高了，包装也很好，物流快！",
+    "isAnonymous": false,
+    "status": "APPROVED",
+    "createdAt": "2026-02-28T10:00:00"
+  }
+}
+```
+
+---
+
+### 40. 删除商品评价
+
+**接口**: `DELETE /v1/product/reviews/{reviewId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| reviewId | int | 评价 ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+---
+
+## 测试用例 - 商品详情介绍和评价 (cURL)
+
+### 18. 获取商品详情介绍
+```bash
+curl -X GET http://localhost:8080/v1/product/descriptions/1
+```
+
+### 19. 创建或更新商品详情介绍
+```bash
+curl -X POST http://localhost:8080/v1/product/descriptions/1 \
+  -H "Authorization: Bearer {merchant_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "content": "这款天然维 C 片采用优质原料，每片含有 500mg 维生素 C，能够有效增强免疫力，抗氧化，促进胶原蛋白合成。"
+  }'
+```
+
+### 20. 删除商品详情介绍
+```bash
+curl -X DELETE http://localhost:8080/v1/product/descriptions/1 \
+  -H "Authorization: Bearer {merchant_token}"
+```
+
+### 21. 获取商品评价列表
+```bash
+curl -X GET "http://localhost:8080/v1/product/reviews/1?page=1&size=10"
+```
+
+### 22. 创建商品评价
+```bash
+curl -X POST http://localhost:8080/v1/product/reviews/1 \
+  -H "Authorization: Bearer {user_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "rating": 5,
+    "title": "非常好的产品",
+    "content": "吃了两个月，感觉免疫力确实提高了，包装也很好，物流快！",
+    "isAnonymous": false
+  }'
+```
+
+### 23. 删除商品评价
+```bash
+curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
+  -H "Authorization: Bearer {user_token}"
+```
 
 ---
 
@@ -378,12 +670,15 @@
     "merchantName": "健康商城",
     "title": "天然维C片500mg",
     "category": "保健品",
-    "description": "富含维生素C，增强免疫力，抗氧化",
+    "description": "富含维生素 C，增强免疫力，抗氧化",
+    "descriptionContent": "这款天然维 C 片采用优质原料，每片含有 500mg 维生素 C，能够有效增强免疫力，抗氧化，促进胶原蛋白合成。适合日常保健，增强身体抵抗力。",
     "coverUrl": "http://localhost:8080/v1/static/product/cover/2026/01/30/xxx.png",
     "features": "{\"brand\":\"健康品牌\",\"specification\":\"500mg/片\",\"origin\":\"中国\"}",
     "price": 999.00,
     "stock": 99,
     "sales": 0,
+    "averageRating": 4.5,
+    "reviewCount": 10,
     "status": "ON_SALE",
     "createdAt": "2026-01-30T01:03:40",
     "detailImages": [
@@ -403,13 +698,16 @@
 | merchantName | string | 商家名称 |
 | title | string | 商品标题 |
 | category | string | 商品分类 |
-| description | string | 商品描述 |
-| coverUrl | string | 封面图片URL |
+| description | string | 商品简短描述 |
+| descriptionContent | string | 商品详细文字介绍内容 |
+| coverUrl | string | 封面图片 URL |
 | features | string | 商品特性（JSON格式字符串） |
 | price | decimal | 价格 |
 | stock | int | 库存数量 |
 | sales | int | 销量 |
-| status | string | 商品状态: ON_SALE(在售), OFF_SALE(下架), OUT_OF_STOCK(缺货) |
+| averageRating | double | 平均评分 (0-5) |
+| reviewCount | int | 评价数量 |
+| status | string | 商品状态：ON_SALE(在售), OFF_SALE(下架), OUT_OF_STOCK(缺货) |
 | createdAt | datetime | 创建时间 |
 | detailImages | array | 详细介绍图片URL列表 |
 

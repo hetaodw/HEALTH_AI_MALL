@@ -45,6 +45,12 @@ public class Product {
     @Column
     private Integer sales = 0;
 
+    @Column(name = "average_rating")
+    private Double averageRating = 0.0;
+
+    @Column(name = "review_count")
+    private Integer reviewCount = 0;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ProductStatus status = ProductStatus.ON_SALE;
@@ -144,6 +150,22 @@ public class Product {
 
     public void setSales(Integer sales) {
         this.sales = sales;
+    }
+
+    public Double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating) {
+        this.averageRating = averageRating;
+    }
+
+    public Integer getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(Integer reviewCount) {
+        this.reviewCount = reviewCount;
     }
 
     public ProductStatus getStatus() {

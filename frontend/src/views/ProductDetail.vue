@@ -131,7 +131,11 @@
           <p class="desc-text">{{ product.description }}</p>
         </div>
 
-        <!-- 详细介绍图片 - 竖版全大小展示 -->
+        <div v-if="productDescription" class="product-description-section">
+          <h3 class="section-title">详细介绍</h3>
+          <div class="description-content">{{ productDescription.content }}</div>
+        </div>
+
         <div class="detail-images-section">
           <h3 class="section-title">详细展示</h3>
           <div class="detail-images-list">
@@ -193,9 +197,49 @@
 
       <!-- 用户评价 -->
       <div v-if="activeTab === 'review'" class="review-content skeuomorphic-card">
-        <h3 class="section-title">用户评价</h3>
-        <div class="review-placeholder">
+        <div class="review-header">
+          <h3 class="section-title">用户评价</h3>
+          <div class="review-stats">
+            <div class="average-rating">
+              <span class="rating-number">{{ averageRating.toFixed(1) }}</span>
+              <div class="rating-stars">
+                <span v-for="i in 5" :key="i" class="star" :class="{ filled: i <= Math.round(averageRating) }">★</span>
+              </div>
+              <span class="review-count">{{ reviewCount }} 条评价</span>
+            </div>
+          </div>
+        </div>
+
+        <button v-if="userStore.isLoggedIn()" class="btn-write-review" @click="showReviewForm = true">
+          写评价
+        </button>
+
+        <div v-if="reviews.length > 0" class="review-list">
+          <div v-for="review in reviews" :key="review.id" class="review-item">
+            <div class="review-user">
+              <img :src="review.userAvatar || defaultAvatar" :alt="review.username" class="user-avatar" />
+              <div class="user-info">
+                <span class="username">{{ review.isAnonymous ? '匿名用户' : review.username }}</span>
+                <div class="review-rating">
+                  <span v-for="i in 5" :key="i" class="star" :class="{ filled: i <= review.rating }">★</span>
+                </div>
+              </div>
+              <span class="review-date">{{ formatDate(review.createdAt) }}</span>
+            </div>
+            <div v-if="review.title" class="review-title">{{ review.title }}</div>
+            <div class="review-content-text">{{ review.content }}</div>
+          </div>
+        </div>
+
+        <div v-else class="review-placeholder">
           <p>暂无评价</p>
+          <p class="hint">购买商品后可以发表评价</p>
+        </div>
+
+        <div v-if="reviews.length > 0 && reviewCount > reviews.length" class="load-more">
+          <button class="btn-load-more" @click="loadMoreReviews" :disabled="loadingReviews">
+            {{ loadingReviews ? '加载中...' : '加载更多' }}
+          </button>
         </div>
       </div>
     </div>
@@ -215,16 +259,63 @@
         <button class="close-preview" @click="previewDetailImageUrl = null">×</button>
       </div>
     </div>
+
+    <!-- 评价表单弹窗 -->
+    <div v-if="showReviewForm" class="review-modal" @click.self="showReviewForm = false">
+      <div class="review-form-container skeuomorphic-card">
+        <div class="modal-header">
+          <h3>发表评价</h3>
+          <button class="close-btn" @click="showReviewForm = false">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>评分</label>
+            <div class="rating-selector">
+              <span 
+                v-for="i in 5" 
+                :key="i" 
+                class="star-select" 
+                :class="{ active: i <= newReview.rating }"
+                @click="newReview.rating = i"
+              >★</span>
+              <span class="rating-text">{{ ratingText[newReview.rating] || '请评分' }}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>评价标题（可选）</label>
+            <input v-model="newReview.title" type="text" placeholder="一句话概括您的评价" maxlength="100" />
+          </div>
+          <div class="form-group">
+            <label>评价内容（可选）</label>
+            <textarea v-model="newReview.content" placeholder="分享您的使用体验..." rows="4" maxlength="500"></textarea>
+          </div>
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox" v-model="newReview.isAnonymous" />
+              <span>匿名评价</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" @click="showReviewForm = false">取消</button>
+          <button class="btn-submit" @click="submitReview" :disabled="submittingReview || newReview.rating === 0">
+            {{ submittingReview ? '提交中...' : '提交评价' }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import api from '../api'
+import { useUserStore } from '../stores/user'
 
 const route = useRoute()
 const router = useRouter()
+const userStore = useUserStore()
 
 const product = ref({})
 const loading = ref(false)
@@ -234,14 +325,37 @@ const activeTab = ref('detail')
 const showImagePreview = ref(false)
 const previewDetailImageUrl = ref(null)
 
+const productDescription = ref(null)
+const reviews = ref([])
+const reviewPage = ref(1)
+const reviewCount = ref(0)
+const averageRating = ref(0)
+const loadingReviews = ref(false)
+const showReviewForm = ref(false)
+const submittingReview = ref(false)
+const newReview = ref({
+  rating: 0,
+  title: '',
+  content: '',
+  isAnonymous: false
+})
+
+const defaultAvatar = 'https://via.placeholder.com/50x50?text=User'
+
+const ratingText = {
+  1: '非常差',
+  2: '较差',
+  3: '一般',
+  4: '较好',
+  5: '非常好'
+}
+
 const placeholderImage = 'https://via.placeholder.com/600x600?text=Product'
 
-// 商家头像 - 使用API返回的头像或默认占位符
 const merchantAvatar = computed(() => {
   return product.value.merchantAvatar || 'https://via.placeholder.com/60x60?text=Shop'
 })
 
-// 所有图片（封面图 + 详情图）
 const allImages = computed(() => {
   const images = []
   if (product.value.coverUrl) {
@@ -253,7 +367,6 @@ const allImages = computed(() => {
   return images.length > 0 ? images : [placeholderImage]
 })
 
-// 获取商品详情
 const fetchProductDetail = async () => {
   const productId = route.params.id
   if (!productId) return
@@ -264,6 +377,15 @@ const fetchProductDetail = async () => {
     if (response.code === 200) {
       product.value = response.data
       currentImage.value = product.value.coverUrl || placeholderImage
+      
+      if (response.data.averageRating !== undefined) {
+        averageRating.value = response.data.averageRating || 0
+      }
+      if (response.data.reviewCount !== undefined) {
+        reviewCount.value = response.data.reviewCount || 0
+      }
+      
+      fetchProductDescription(productId)
     } else {
       console.error('获取商品详情失败:', response.msg)
       alert('获取商品详情失败: ' + response.msg)
@@ -276,7 +398,107 @@ const fetchProductDetail = async () => {
   }
 }
 
-// 数量控制
+const fetchProductDescription = async (productId) => {
+  try {
+    const response = await api.productDescription.get(productId)
+    if (response.code === 200 && response.data) {
+      productDescription.value = response.data
+    }
+  } catch (error) {
+    console.log('暂无商品详情介绍')
+  }
+}
+
+const fetchReviews = async (reset = false) => {
+  const productId = route.params.id
+  if (!productId) return
+  
+  if (reset) {
+    reviewPage.value = 1
+    reviews.value = []
+  }
+  
+  loadingReviews.value = true
+  try {
+    const response = await api.productReviews.getList(productId, {
+      page: reviewPage.value,
+      size: 10
+    })
+    if (response.code === 200) {
+      if (reset) {
+        reviews.value = response.data.list || []
+      } else {
+        reviews.value = [...reviews.value, ...(response.data.list || [])]
+      }
+      reviewCount.value = response.data.reviewCount || 0
+      averageRating.value = response.data.averageRating || 0
+    }
+  } catch (error) {
+    console.error('获取评价列表失败:', error)
+  } finally {
+    loadingReviews.value = false
+  }
+}
+
+const loadMoreReviews = () => {
+  reviewPage.value++
+  fetchReviews()
+}
+
+const submitReview = async () => {
+  if (newReview.value.rating === 0) {
+    alert('请选择评分')
+    return
+  }
+  
+  const productId = route.params.id
+  submittingReview.value = true
+  
+  try {
+    const response = await api.productReviews.create(productId, {
+      rating: newReview.value.rating,
+      title: newReview.value.title,
+      content: newReview.value.content,
+      isAnonymous: newReview.value.isAnonymous
+    })
+    
+    if (response.code === 200) {
+      alert('评价提交成功！')
+      showReviewForm.value = false
+      newReview.value = {
+        rating: 0,
+        title: '',
+        content: '',
+        isAnonymous: false
+      }
+      fetchReviews(true)
+    } else {
+      alert('评价提交失败: ' + response.msg)
+    }
+  } catch (error) {
+    console.error('提交评价失败:', error)
+    alert('提交评价失败，请稍后重试')
+  } finally {
+    submittingReview.value = false
+  }
+}
+
+const formatDate = (dateStr) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+watch(activeTab, (newTab) => {
+  if (newTab === 'review' && reviews.value.length === 0) {
+    fetchReviews(true)
+  }
+})
+
 const decreaseQty = () => {
   if (quantity.value > 1) quantity.value--
 }
@@ -285,7 +507,6 @@ const increaseQty = () => {
   if (quantity.value < product.value.stock) quantity.value++
 }
 
-// 立即购买
 const buyNow = () => {
   const token = localStorage.getItem('token')
   if (!token) {
@@ -294,7 +515,6 @@ const buyNow = () => {
     return
   }
   
-  // 跳转到确认订单页面
   router.push({
     name: 'OrderConfirm',
     query: {
@@ -304,7 +524,6 @@ const buyNow = () => {
   })
 }
 
-// 加入购物车
 const addToCart = () => {
   const token = localStorage.getItem('token')
   if (!token) {
@@ -314,14 +533,11 @@ const addToCart = () => {
   }
   
   try {
-    // 获取现有购物车
     const cart = JSON.parse(localStorage.getItem('cart') || '[]')
     
-    // 检查商品是否已在购物车中
     const existingItem = cart.find(item => item.productId === product.value.id)
     
     if (existingItem) {
-      // 更新数量
       const newQuantity = existingItem.quantity + quantity.value
       if (newQuantity > product.value.stock) {
         alert(`库存不足，最多可购买 ${product.value.stock} 件`)
@@ -329,7 +545,6 @@ const addToCart = () => {
       }
       existingItem.quantity = newQuantity
     } else {
-      // 添加新商品
       cart.push({
         productId: product.value.id,
         title: product.value.title,
@@ -341,10 +556,7 @@ const addToCart = () => {
       })
     }
     
-    // 保存到 localStorage
     localStorage.setItem('cart', JSON.stringify(cart))
-    
-    // 触发购物车更新事件
     window.dispatchEvent(new StorageEvent('storage', { key: 'cart' }))
     
     alert(`已将 ${quantity.value} 件 "${product.value.title}" 加入购物车`)
@@ -355,12 +567,10 @@ const addToCart = () => {
   }
 }
 
-// 预览详情图片
 const previewDetailImage = (url) => {
   previewDetailImageUrl.value = url
 }
 
-// 格式化状态
 const formatStatus = (status) => {
   const statusMap = {
     'ON_SALE': '在售',
@@ -886,6 +1096,357 @@ onMounted(() => {
   padding: 80px;
   color: #999;
   font-size: 16px;
+}
+
+.review-placeholder .hint {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #bbb;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.review-stats {
+  text-align: right;
+}
+
+.average-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.rating-number {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ff6b6b;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 18px;
+  color: #ddd;
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+.review-count {
+  font-size: 14px;
+  color: #666;
+}
+
+.btn-write-review {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+  box-shadow: 3px 3px 6px rgba(255, 107, 107, 0.3);
+}
+
+.btn-write-review:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 10px rgba(255, 107, 107, 0.4);
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-item {
+  padding: 20px;
+  background: linear-gradient(145deg, #f5f5f5, #e8e8e8);
+  border-radius: 16px;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05), inset -2px -2px 5px rgba(255,255,255,0.8);
+}
+
+.review-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.username {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+}
+
+.review-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.review-rating .star {
+  font-size: 14px;
+}
+
+.review-date {
+  font-size: 13px;
+  color: #999;
+}
+
+.review-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.review-content-text {
+  color: #555;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.load-more {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-load-more {
+  padding: 12px 30px;
+  background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 3px 3px 6px #bebebe, -3px -3px 6px #ffffff;
+}
+
+.btn-load-more:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.btn-load-more:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 评价弹窗 */
+.review-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.review-form-container {
+  width: 90%;
+  max-width: 500px;
+  padding: 0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  color: white;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.close-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.rating-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.star-select {
+  font-size: 32px;
+  color: #ddd;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.star-select:hover,
+.star-select.active {
+  color: #ffc107;
+  transform: scale(1.1);
+}
+
+.rating-text {
+  margin-left: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #f0f0f0, #e8e8e8);
+  font-size: 14px;
+  color: #333;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05), inset -2px -2px 5px rgba(255,255,255,0.8);
+  transition: all 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,0.08), inset -3px -3px 8px rgba(255,255,255,0.9);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 15px;
+  padding: 20px 25px;
+  background: linear-gradient(145deg, #f5f5f5, #e8e8e8);
+}
+
+.btn-cancel,
+.btn-submit {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cancel {
+  background: linear-gradient(145deg, #e0e0e0, #d0d0d0);
+  color: #666;
+}
+
+.btn-cancel:hover {
+  background: linear-gradient(145deg, #d0d0d0, #e0e0e0);
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+  color: white;
+  box-shadow: 3px 3px 6px rgba(255, 107, 107, 0.3);
+}
+
+.btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 10px rgba(255, 107, 107, 0.4);
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.description-content {
+  background: linear-gradient(145deg, #f5f5f5, #e8e8e8);
+  padding: 20px;
+  border-radius: 12px;
+  line-height: 1.8;
+  color: #555;
+  font-size: 15px;
+  margin-bottom: 30px;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,0.05), inset -2px -2px 5px rgba(255,255,255,0.8);
 }
 
 /* 图片预览弹窗 */
