@@ -181,7 +181,7 @@ public class OrderService {
         order.setReceiverPhone(address.getReceiverPhone());
         order.setReceiverAddress(address.getFullAddress());
         order.setRemark(request.getRemark());
-        order.setStatus(Order.OrderStatus.PENDING_PAYMENT);
+        order.setStatus(Order.OrderStatus.PENDING_CONFIRMATION);
         order.setPayExpireAt(LocalDateTime.now().plusMinutes(PAY_EXPIRE_MINUTES));
         order.setItemCount(itemDataList.size());
 
@@ -246,7 +246,8 @@ public class OrderService {
             throw new BusinessException(403, "无权操作此订单");
         }
 
-        if (order.getStatus() != Order.OrderStatus.PENDING_PAYMENT) {
+        if (order.getStatus() != Order.OrderStatus.PENDING_PAYMENT 
+                && order.getStatus() != Order.OrderStatus.CONFIRMED) {
             throw new BusinessException(400, "订单状态不允许支付");
         }
 
@@ -305,7 +306,8 @@ public class OrderService {
             throw new BusinessException(403, "无权操作此订单");
         }
 
-        if (order.getStatus() != Order.OrderStatus.PENDING_PAYMENT) {
+        if (order.getStatus() != Order.OrderStatus.PENDING_PAYMENT 
+                && order.getStatus() != Order.OrderStatus.PENDING_CONFIRMATION) {
             throw new BusinessException(400, "订单状态不允许取消");
         }
 
@@ -387,6 +389,10 @@ public class OrderService {
         response.setReceiverAddress(order.getReceiverAddress());
         response.setRemark(order.getRemark());
         response.setPaidAt(order.getPaidAt());
+        response.setConfirmedAt(order.getConfirmedAt());
+        response.setRejectedAt(order.getRejectedAt());
+        response.setRejectReason(order.getRejectReason());
+        response.setAutoConfirmed(order.getAutoConfirmed());
         response.setShippedAt(order.getShippedAt());
         response.setCompletedAt(order.getCompletedAt());
         response.setCancelledAt(order.getCancelledAt());
@@ -432,5 +438,164 @@ public class OrderService {
             this.quantity = quantity;
             this.merchantName = merchantName;
         }
+    }
+
+    @Transactional
+    public OrderResponse confirmOrder(Integer merchantId, Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BusinessException(404, "订单不存在"));
+
+        if (!isOrderBelongToMerchant(order, merchantId)) {
+            throw new BusinessException(403, "无权操作此订单");
+        }
+
+        if (order.getStatus() != Order.OrderStatus.PENDING_CONFIRMATION) {
+            throw new BusinessException(400, "订单状态不允许确认");
+        }
+
+        if (!checkStockAvailable(order)) {
+            throw new BusinessException(400, "库存不足，无法确认订单");
+        }
+
+        order.setStatus(Order.OrderStatus.CONFIRMED);
+        order.setConfirmedAt(LocalDateTime.now());
+        order.setAutoConfirmed(false);
+        orderRepository.save(order);
+
+        return convertToResponse(order, orderItemRepository.findByOrderId(orderId), 
+                snapshotRepository.findAllById(
+                        orderItemRepository.findByOrderId(orderId).stream()
+                                .map(OrderItem::getSnapshotId)
+                                .collect(Collectors.toList())
+                ));
+    }
+
+    @Transactional
+    public OrderResponse rejectOrder(Integer merchantId, Long orderId, String reason) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BusinessException(404, "订单不存在"));
+
+        if (!isOrderBelongToMerchant(order, merchantId)) {
+            throw new BusinessException(403, "无权操作此订单");
+        }
+
+        if (order.getStatus() != Order.OrderStatus.PENDING_CONFIRMATION) {
+            throw new BusinessException(400, "订单状态不允许拒绝");
+        }
+
+        releaseStockReservation(order.getOrderNo());
+
+        order.setStatus(Order.OrderStatus.REJECTED);
+        order.setRejectedAt(LocalDateTime.now());
+        order.setRejectReason(reason);
+        orderRepository.save(order);
+
+        return convertToResponse(order, orderItemRepository.findByOrderId(orderId), 
+                snapshotRepository.findAllById(
+                        orderItemRepository.findByOrderId(orderId).stream()
+                                .map(OrderItem::getSnapshotId)
+                                .collect(Collectors.toList())
+                ));
+    }
+
+    @Transactional
+    public void autoConfirmOrders() {
+        LocalDateTime expireTime = LocalDateTime.now().minusMinutes(5);
+        List<Order> pendingOrders = orderRepository.findByStatusAndCreatedAtBefore(
+                Order.OrderStatus.PENDING_CONFIRMATION, 
+                expireTime
+        );
+
+        for (Order order : pendingOrders) {
+            try {
+                if (checkStockAvailable(order)) {
+                    order.setStatus(Order.OrderStatus.CONFIRMED);
+                    order.setConfirmedAt(LocalDateTime.now());
+                    order.setAutoConfirmed(true);
+                    orderRepository.save(order);
+                }
+            } catch (Exception e) {
+                System.err.println("自动确认订单失败: " + order.getOrderNo() + ", " + e.getMessage());
+            }
+        }
+    }
+
+    @Transactional
+    public void autoRejectExpiredOrders() {
+        LocalDateTime expireTime = LocalDateTime.now().minusMinutes(30);
+        List<Order> pendingOrders = orderRepository.findByStatusAndCreatedAtBefore(
+                Order.OrderStatus.PENDING_CONFIRMATION, 
+                expireTime
+        );
+
+        for (Order order : pendingOrders) {
+            try {
+                if (order.getStatus() == Order.OrderStatus.PENDING_CONFIRMATION) {
+                    releaseStockReservation(order.getOrderNo());
+                    order.setStatus(Order.OrderStatus.REJECTED);
+                    order.setRejectedAt(LocalDateTime.now());
+                    order.setRejectReason("超时未确认");
+                    orderRepository.save(order);
+                }
+            } catch (Exception e) {
+                System.err.println("自动拒绝订单失败: " + order.getOrderNo() + ", " + e.getMessage());
+            }
+        }
+    }
+
+    private boolean isOrderBelongToMerchant(Order order, Integer merchantId) {
+        List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
+        if (items.isEmpty()) {
+            return false;
+        }
+        
+        Product product = productRepository.findById(items.get(0).getProductId()).orElse(null);
+        return product != null && product.getMerchantId() != null 
+                && product.getMerchantId().equals(merchantId);
+    }
+
+    private boolean checkStockAvailable(Order order) {
+        List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
+        for (OrderItem item : items) {
+            Product product = productRepository.findById(item.getProductId()).orElse(null);
+            if (product == null || product.getStock() < item.getQuantity()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<OrderResponse> getMerchantOrders(Integer merchantId, Order.OrderStatus status) {
+        List<Product> merchantProducts = productRepository.findByMerchantId(merchantId);
+        if (merchantProducts.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<Integer> productIds = merchantProducts.stream()
+                .map(Product::getId)
+                .collect(Collectors.toList());
+
+        List<OrderItem> allOrderItems = orderItemRepository.findByProductIdIn(productIds);
+        List<Integer> orderIds = allOrderItems.stream()
+                .map(OrderItem::getOrderId)
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<Order> orders;
+        if (status != null) {
+            orders = orderRepository.findByIdInAndStatus(orderIds, status);
+        } else {
+            orders = orderRepository.findByIdIn(orderIds);
+        }
+
+        return orders.stream()
+                .map(order -> {
+                    List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
+                    List<ProductSnapshot> snapshots = snapshotRepository.findAllById(
+                            items.stream().map(OrderItem::getSnapshotId).collect(Collectors.toList())
+                    );
+                    return convertToResponse(order, items, snapshots);
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -18,4 +18,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findByUserIdAndStatusOrderByCreatedAtDesc(Integer userId, Order.OrderStatus status);
     
     List<Order> findByStatusAndPayExpireAtBefore(Order.OrderStatus status, LocalDateTime payExpireAt);
+    
+    List<Order> findByStatusAndCreatedAtBefore(Order.OrderStatus status, LocalDateTime createdAt);
+    
+    List<Order> findByIdIn(List<Integer> ids);
+    
+    List<Order> findByIdInAndStatus(List<Integer> ids, Order.OrderStatus status);
 }

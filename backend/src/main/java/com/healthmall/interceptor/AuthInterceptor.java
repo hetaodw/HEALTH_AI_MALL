@@ -19,9 +19,14 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String requestUri = request.getRequestURI();
+        String method = request.getMethod();
+        logger.info("AuthInterceptor - {} {}", method, requestUri);
+        
         String token = request.getHeader("Authorization");
 
         if (token == null || !token.startsWith("Bearer ")) {
+            logger.warn("AuthInterceptor - No valid token found for {} {}", method, requestUri);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write("{\"code\":401,\"msg\":\"未登录或Token已过期\",\"data\":null}");
@@ -31,6 +36,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         token = token.substring(7);
 
         if (!jwtUtil.validateToken(token)) {
+            logger.warn("AuthInterceptor - Invalid token for {} {}", method, requestUri);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write("{\"code\":401,\"msg\":\"未登录或Token已过期\",\"data\":null}");
@@ -38,7 +44,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         Integer userId = jwtUtil.getUserIdFromToken(token);
-        logger.info("Token validated - userId: {}", userId);
+        logger.info("AuthInterceptor - Token validated - userId: {} for {} {}", userId, method, requestUri);
         request.setAttribute("userId", userId);
 
         return true;

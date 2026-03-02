@@ -9,6 +9,7 @@ import Cart from '../views/Cart.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import MerchantDashboard from '../views/MerchantDashboard.vue'
+import MerchantOrders from '../views/MerchantOrders.vue'
 
 const routes = [
   {
@@ -63,6 +64,12 @@ const routes = [
     path: '/merchant',
     name: 'MerchantDashboard',
     component: MerchantDashboard,
+    meta: { requiresAuth: true, requiresMerchant: true }
+  },
+  {
+    path: '/merchant/orders',
+    name: 'MerchantOrders',
+    component: MerchantOrders,
     meta: { requiresAuth: true, requiresMerchant: true }
   }
 ]

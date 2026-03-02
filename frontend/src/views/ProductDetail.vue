@@ -446,6 +446,12 @@ const loadMoreReviews = () => {
 }
 
 const submitReview = async () => {
+  if (!userStore.isLoggedIn()) {
+    alert('请先登录后再发表评价')
+    router.push('/login')
+    return
+  }
+  
   if (newReview.value.rating === 0) {
     alert('请选择评分')
     return
@@ -472,12 +478,22 @@ const submitReview = async () => {
         isAnonymous: false
       }
       fetchReviews(true)
+    } else if (response.code === 401) {
+      alert('登录已过期，请重新登录')
+      userStore.logout()
+      router.push('/login')
     } else {
       alert('评价提交失败: ' + response.msg)
     }
   } catch (error) {
     console.error('提交评价失败:', error)
-    alert('提交评价失败，请稍后重试')
+    if (error.response?.status === 401) {
+      alert('登录已过期，请重新登录')
+      userStore.logout()
+      router.push('/login')
+    } else {
+      alert('提交评价失败，请稍后重试')
+    }
   } finally {
     submittingReview.value = false
   }

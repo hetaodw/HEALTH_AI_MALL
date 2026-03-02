@@ -479,6 +479,7 @@ const payLoading = ref(false)
 
 const orderTabs = [
   { label: '全部订单', value: 'all' },
+  { label: '待确认', value: 'PENDING_CONFIRMATION' },
   { label: '待付款', value: 'PENDING_PAYMENT' },
   { label: '待发货', value: 'PAID' },
   { label: '待收货', value: 'SHIPPED' },
@@ -500,6 +501,9 @@ const filteredOrders = computed(() => {
 
 const getOrderStatusText = (status) => {
   const statusMap = {
+    'PENDING_CONFIRMATION': '待确认',
+    'CONFIRMED': '已确认',
+    'REJECTED': '已拒绝',
     'PENDING_PAYMENT': '待付款',
     'PAID': '待发货',
     'SHIPPED': '待收货',
@@ -1082,6 +1086,21 @@ onMounted(() => {
   font-weight: 600;
   padding: 4px 12px;
   border-radius: 8px;
+}
+
+.status-PENDING_CONFIRMATION {
+  background: linear-gradient(145deg, #fff3cd, #ffe69c);
+  color: #856404;
+}
+
+.status-CONFIRMED {
+  background: linear-gradient(145deg, #d4edda, #c3e6cb);
+  color: #155724;
+}
+
+.status-REJECTED {
+  background: linear-gradient(145deg, #f8d7da, #f5c6cb);
+  color: #721c24;
 }
 
 .status-PENDING_PAYMENT {

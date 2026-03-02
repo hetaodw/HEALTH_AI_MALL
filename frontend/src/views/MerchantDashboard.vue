@@ -12,6 +12,9 @@
           />
           <span class="merchant-name">{{ userProfile?.username || '商家' }}</span>
         </div>
+        <button @click="router.push('/merchant/orders')" class="skeuomorphic-button orders-button">
+          📋 订单管理
+        </button>
         <button @click="showAddModal = true" class="skeuomorphic-button primary add-button">
           + 添加商品
         </button>
@@ -344,6 +347,13 @@ onMounted(() => {
 .add-button {
   padding: 12px 24px;
   font-size: 16px;
+}
+
+.orders-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
 }
 
 .filters {

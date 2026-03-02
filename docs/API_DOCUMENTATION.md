@@ -28,32 +28,37 @@
   - [17. 获取商家商品详情](#17-获取商家商品详情)
   - [18. 更新商品状态](#18-更新商品状态)
   - [19. 更新商品库存](#19-更新商品库存)
+- [商家订单管理 API](#商家订单管理-api)
+  - [20. 获取待确认订单列表](#20-获取待确认订单列表)
+  - [21. 获取商家订单列表](#21-获取商家订单列表)
+  - [22. 确认订单](#22-确认订单)
+  - [23. 拒绝订单](#23-拒绝订单)
 - [管理员 API](#管理员-api)
-  - [20. 创建商品 (管理员)](#20-创建商品-管理员)
-  - [21. 删除商品 (管理员)](#21-删除商品-管理员)
+  - [24. 创建商品 (管理员)](#24-创建商品-管理员)
+  - [25. 删除商品 (管理员)](#25-删除商品-管理员)
 - [订单 API](#订单-api)
-  - [22. 创建订单](#22-创建订单)
-  - [23. 查询我的订单列表](#23-查询我的订单列表)
-  - [24. 查询订单详情](#24-查询订单详情)
-  - [25. 取消订单](#25-取消订单)
-  - [26. 支付订单](#26-支付订单)
+  - [26. 创建订单](#26-创建订单)
+  - [27. 查询我的订单列表](#27-查询我的订单列表)
+  - [28. 查询订单详情](#28-查询订单详情)
+  - [29. 取消订单](#29-取消订单)
+  - [30. 支付订单](#30-支付订单)
 - [地址管理 API](#地址管理-api)
-  - [27. 获取用户地址列表](#27-获取用户地址列表)
-  - [28. 获取默认地址](#28-获取默认地址)
-  - [29. 获取地址详情](#29-获取地址详情)
-  - [30. 创建地址](#30-创建地址)
-  - [31. 更新地址](#31-更新地址)
-  - [32. 删除地址](#32-删除地址)
-  - [33. 设置默认地址](#33-设置默认地址)
+  - [31. 获取用户地址列表](#31-获取用户地址列表)
+  - [32. 获取默认地址](#32-获取默认地址)
+  - [33. 获取地址详情](#33-获取地址详情)
+  - [34. 创建地址](#34-创建地址)
+  - [35. 更新地址](#35-更新地址)
+  - [36. 删除地址](#36-删除地址)
+  - [37. 设置默认地址](#37-设置默认地址)
 - [商品详情介绍 API](#商品详情介绍-api)
-  - [34. 获取商品详情介绍](#34-获取商品详情介绍)
-  - [35. 创建或更新商品详情介绍](#35-创建或更新商品详情介绍)
-  - [36. 删除商品详情介绍](#36-删除商品详情介绍)
+  - [38. 获取商品详情介绍](#38-获取商品详情介绍)
+  - [39. 创建或更新商品详情介绍](#39-创建或更新商品详情介绍)
+  - [40. 删除商品详情介绍](#40-删除商品详情介绍)
 - [商品评价 API](#商品评价-api)
-  - [37. 获取商品评价列表](#37-获取商品评价列表)
-  - [38. 获取评价详情](#38-获取评价详情)
-  - [39. 创建商品评价](#39-创建商品评价)
-  - [40. 删除商品评价](#40-删除商品评价)
+  - [41. 获取商品评价列表](#41-获取商品评价列表)
+  - [42. 获取评价详情](#42-获取评价详情)
+  - [43. 创建商品评价](#43-创建商品评价)
+  - [44. 删除商品评价](#44-删除商品评价)
 - [测试用例 (cURL)](#测试用例-curl)
 - [状态码说明](#状态码说明)
 - [角色说明](#角色说明)
@@ -62,7 +67,7 @@
 
 ## 商品详情介绍 API
 
-### 34. 获取商品详情介绍
+### 38. 获取商品详情介绍
 
 **接口**: `GET /v1/product/descriptions/{productId}`
 
@@ -88,7 +93,7 @@
 
 ---
 
-### 35. 创建或更新商品详情介绍
+### 39. 创建或更新商品详情介绍
 
 **接口**: `POST /v1/product/descriptions/{productId}`
 
@@ -128,7 +133,7 @@
 
 ---
 
-### 36. 删除商品详情介绍
+### 40. 删除商品详情介绍
 
 **接口**: `DELETE /v1/product/descriptions/{productId}`
 
@@ -152,7 +157,7 @@
 
 ## 商品评价 API
 
-### 37. 获取商品评价列表
+### 41. 获取商品评价列表
 
 **接口**: `GET /v1/product/reviews/{productId}`
 
@@ -207,7 +212,7 @@
 
 ---
 
-### 38. 获取评价详情
+### 42. 获取评价详情
 
 **接口**: `GET /v1/product/reviews/detail/{reviewId}`
 
@@ -220,7 +225,7 @@
 
 ---
 
-### 39. 创建商品评价
+### 43. 创建商品评价
 
 **接口**: `POST /v1/product/reviews/{productId}`
 
@@ -272,7 +277,7 @@
 
 ---
 
-### 40. 删除商品评价
+### 44. 删除商品评价
 
 **接口**: `DELETE /v1/product/reviews/{reviewId}`
 
@@ -296,12 +301,12 @@
 
 ## 测试用例 - 商品详情介绍和评价 (cURL)
 
-### 18. 获取商品详情介绍
+### 22. 获取商品详情介绍
 ```bash
 curl -X GET http://localhost:8080/v1/product/descriptions/1
 ```
 
-### 19. 创建或更新商品详情介绍
+### 23. 创建或更新商品详情介绍
 ```bash
 curl -X POST http://localhost:8080/v1/product/descriptions/1 \
   -H "Authorization: Bearer {merchant_token}" \
@@ -311,18 +316,18 @@ curl -X POST http://localhost:8080/v1/product/descriptions/1 \
   }'
 ```
 
-### 20. 删除商品详情介绍
+### 24. 删除商品详情介绍
 ```bash
 curl -X DELETE http://localhost:8080/v1/product/descriptions/1 \
   -H "Authorization: Bearer {merchant_token}"
 ```
 
-### 21. 获取商品评价列表
+### 25. 获取商品评价列表
 ```bash
 curl -X GET "http://localhost:8080/v1/product/reviews/1?page=1&size=10"
 ```
 
-### 22. 创建商品评价
+### 26. 创建商品评价
 ```bash
 curl -X POST http://localhost:8080/v1/product/reviews/1 \
   -H "Authorization: Bearer {user_token}" \
@@ -335,7 +340,7 @@ curl -X POST http://localhost:8080/v1/product/reviews/1 \
   }'
 ```
 
-### 23. 删除商品评价
+### 27. 删除商品评价
 ```bash
 curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
   -H "Authorization: Bearer {user_token}"
@@ -960,9 +965,155 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
 
 ---
 
+## 商家订单管理 API
+
+### 20. 获取待确认订单列表
+
+**接口**: `GET /v1/merchant/orders/pending`
+
+**请求头**: `Authorization: Bearer {token}` (需要MERCHANT角色)
+
+**说明**: 获取当前商家所有状态为"待确认"的订单
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": [
+    {
+      "id": 1,
+      "orderNo": "280686617910448128",
+      "userId": 8,
+      "totalAmount": 1998.00,
+      "itemCount": 2,
+      "status": "PENDING_CONFIRMATION",
+      "receiverName": "张三",
+      "receiverPhone": "13800138001",
+      "receiverAddress": "北京市北京市朝阳区建国路88号",
+      "remark": "请尽快发货",
+      "createdAt": "2026-02-13T13:08:24.86944",
+      "items": [
+        {
+          "id": 1,
+          "productId": 1,
+          "productTitle": "维生素C片",
+          "productCoverUrl": "/v1/static/product/cover/2026/01/30/xxx.png",
+          "category": "保健品",
+          "merchantName": "MALL",
+          "quantity": 2,
+          "unitPrice": 999.00,
+          "totalPrice": 1998.00
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+### 21. 获取商家订单列表
+
+**接口**: `GET /v1/merchant/orders`
+
+**请求头**: `Authorization: Bearer {token}` (需要MERCHANT角色)
+
+**请求参数**:
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| status | string | 否 | 订单状态筛选，不传则返回所有订单 |
+
+**说明**: 获取当前商家的所有订单
+
+**响应示例**: 同获取待确认订单列表
+
+---
+
+### 22. 确认订单
+
+**接口**: `POST /v1/merchant/orders/{orderId}/confirm`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| orderId | long | 订单ID |
+
+**请求头**: `Authorization: Bearer {token}` (需要MERCHANT角色)
+
+**说明**: 
+- 只能确认状态为"待确认"的订单
+- 确认前会检查库存是否充足
+- 确认成功后订单状态变为"已确认"，用户可以进行支付
+- 5分钟未确认的订单会自动确认（如果库存充足）
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "orderNo": "280686617910448128",
+    "status": "CONFIRMED",
+    "confirmedAt": "2026-02-13T13:15:00",
+    "autoConfirmed": false,
+    "items": [...]
+  }
+}
+```
+
+---
+
+### 23. 拒绝订单
+
+**接口**: `POST /v1/merchant/orders/{orderId}/reject`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| orderId | long | 订单ID |
+
+**请求体**:
+```json
+{
+  "rejectReason": "库存不足"
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| rejectReason | string | 是 | 拒绝原因 |
+
+**请求头**: `Authorization: Bearer {token}` (需要MERCHANT角色)
+
+**说明**: 
+- 只能拒绝状态为"待确认"的订单
+- 拒绝后会释放预占的库存
+- 30分钟未处理的订单会自动拒绝
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "orderNo": "280686617910448128",
+    "status": "REJECTED",
+    "rejectedAt": "2026-02-13T13:15:00",
+    "rejectReason": "库存不足",
+    "items": [...]
+  }
+}
+```
+
+---
+
 ## 管理员 API
 
-### 20. 创建商品 (管理员)
+### 24. 创建商品 (管理员)
 
 **接口**: `POST /v1/admin/products`
 
@@ -992,7 +1143,7 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
 
 ---
 
-### 21. 删除商品 (管理员)
+### 25. 删除商品 (管理员)
 
 **接口**: `DELETE /v1/admin/products/{id}`
 
@@ -1106,7 +1257,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ## 订单 API
 
-### 22. 创建订单
+### 26. 创建订单
 
 **接口**: `POST /v1/orders`
 
@@ -1193,6 +1344,9 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 **订单状态说明**:
 | 状态 | 说明 |
 |------|------|
+| PENDING_CONFIRMATION | 待商家确认 |
+| CONFIRMED | 商家已确认 |
+| REJECTED | 商家已拒绝 |
 | PENDING_PAYMENT | 待付款 |
 | PAID | 已付款 |
 | SHIPPED | 已发货 |
@@ -1203,7 +1357,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
-### 23. 查询我的订单列表
+### 27. 查询我的订单列表
 
 **接口**: `GET /v1/orders/my`
 
@@ -1231,7 +1385,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
-### 24. 查询订单详情
+### 28. 查询订单详情
 
 **接口**: `GET /v1/orders/{id}`
 
@@ -1246,7 +1400,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
-### 25. 取消订单
+### 29. 取消订单
 
 **接口**: `POST /v1/orders/{id}/cancel`
 
@@ -1275,7 +1429,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ---
 
-### 26. 支付订单
+### 30. 支付订单
 
 **接口**: `POST /v1/orders/{orderNo}/pay`
 
@@ -1356,9 +1510,41 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ---
 
+## 测试用例 - 商家订单管理 (cURL)
+
+### 16. 获取待确认订单列表
+```bash
+curl -X GET http://localhost:8080/v1/merchant/orders/pending \
+  -H "Authorization: Bearer {merchant_token}"
+```
+
+### 17. 获取商家订单列表
+```bash
+curl -X GET "http://localhost:8080/v1/merchant/orders?status=PENDING_CONFIRMATION" \
+  -H "Authorization: Bearer {merchant_token}"
+```
+
+### 18. 确认订单
+```bash
+curl -X POST http://localhost:8080/v1/merchant/orders/1/confirm \
+  -H "Authorization: Bearer {merchant_token}"
+```
+
+### 19. 拒绝订单
+```bash
+curl -X POST http://localhost:8080/v1/merchant/orders/1/reject \
+  -H "Authorization: Bearer {merchant_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "rejectReason": "库存不足"
+  }'
+```
+
+---
+
 ## 地址管理 API
 
-### 26. 获取用户地址列表
+### 31. 获取用户地址列表
 
 **接口**: `GET /v1/addresses`
 
@@ -1390,7 +1576,7 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ---
 
-### 27. 获取默认地址
+### 32. 获取默认地址
 
 **接口**: `GET /v1/addresses/default`
 
@@ -1400,7 +1586,7 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ---
 
-### 28. 获取地址详情
+### 33. 获取地址详情
 
 **接口**: `GET /v1/addresses/{id}`
 
@@ -1435,7 +1621,7 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ---
 
-### 29. 创建地址
+### 34. 创建地址
 
 **接口**: `POST /v1/addresses`
 
@@ -1469,7 +1655,7 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ---
 
-### 30. 更新地址
+### 35. 更新地址
 
 **接口**: `PUT /v1/addresses/{id}`
 
@@ -1486,7 +1672,7 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ---
 
-### 31. 删除地址
+### 36. 删除地址
 
 **接口**: `DELETE /v1/addresses/{id}`
 
@@ -1508,7 +1694,7 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ---
 
-### 32. 设置默认地址
+### 37. 设置默认地址
 
 **接口**: `POST /v1/addresses/{id}/default`
 
@@ -1525,7 +1711,7 @@ curl -X POST "http://localhost:8080/v1/orders/1/cancel?reason=不想要了" \
 
 ## 测试用例 - 地址管理 (cURL)
 
-### 15. 创建地址
+### 28. 创建地址
 ```bash
 curl -X POST http://localhost:8080/v1/addresses \
   -H "Authorization: Bearer {user_token}" \
@@ -1541,13 +1727,13 @@ curl -X POST http://localhost:8080/v1/addresses \
   }'
 ```
 
-### 16. 获取地址列表
+### 29. 获取地址列表
 ```bash
 curl -X GET http://localhost:8080/v1/addresses \
   -H "Authorization: Bearer {user_token}"
 ```
 
-### 17. 设置默认地址
+### 30. 设置默认地址
 ```bash
 curl -X POST http://localhost:8080/v1/addresses/1/default \
   -H "Authorization: Bearer {user_token}"

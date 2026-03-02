@@ -11,7 +11,10 @@ import java.util.List;
 public class Order {
     
     public enum OrderStatus {
-        PENDING_PAYMENT,    // 待付款
+        PENDING_CONFIRMATION, // 待商家确认
+        CONFIRMED,           // 商家已确认
+        REJECTED,            // 商家已拒绝
+        PENDING_PAYMENT,     // 待付款
         PAID,               // 已付款
         SHIPPED,            // 已发货
         DELIVERED,          // 已送达
@@ -41,7 +44,7 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
-    private OrderStatus status = OrderStatus.PENDING_PAYMENT;
+    private OrderStatus status = OrderStatus.PENDING_CONFIRMATION;
 
     @Column(name = "pay_expire_at")
     private LocalDateTime payExpireAt;
@@ -60,6 +63,18 @@ public class Order {
 
     @Column(name = "paid_at")
     private LocalDateTime paidAt;
+
+    @Column(name = "confirmed_at")
+    private LocalDateTime confirmedAt;
+
+    @Column(name = "rejected_at")
+    private LocalDateTime rejectedAt;
+
+    @Column(name = "reject_reason", length = 255)
+    private String rejectReason;
+
+    @Column(name = "auto_confirmed")
+    private Boolean autoConfirmed = false;
 
     @Column(name = "shipped_at")
     private LocalDateTime shippedAt;
@@ -199,6 +214,38 @@ public class Order {
 
     public void setPaidAt(LocalDateTime paidAt) {
         this.paidAt = paidAt;
+    }
+
+    public LocalDateTime getConfirmedAt() {
+        return confirmedAt;
+    }
+
+    public void setConfirmedAt(LocalDateTime confirmedAt) {
+        this.confirmedAt = confirmedAt;
+    }
+
+    public LocalDateTime getRejectedAt() {
+        return rejectedAt;
+    }
+
+    public void setRejectedAt(LocalDateTime rejectedAt) {
+        this.rejectedAt = rejectedAt;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public void setRejectReason(String rejectReason) {
+        this.rejectReason = rejectReason;
+    }
+
+    public Boolean getAutoConfirmed() {
+        return autoConfirmed;
+    }
+
+    public void setAutoConfirmed(Boolean autoConfirmed) {
+        this.autoConfirmed = autoConfirmed;
     }
 
     public LocalDateTime getShippedAt() {

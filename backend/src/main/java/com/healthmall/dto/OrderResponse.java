@@ -21,6 +21,10 @@ public class OrderResponse {
     private String receiverAddress;
     private String remark;
     private LocalDateTime paidAt;
+    private LocalDateTime confirmedAt;
+    private LocalDateTime rejectedAt;
+    private String rejectReason;
+    private Boolean autoConfirmed;
     private LocalDateTime shippedAt;
     private LocalDateTime completedAt;
     private LocalDateTime cancelledAt;
@@ -122,6 +126,38 @@ public class OrderResponse {
 
     public void setPaidAt(LocalDateTime paidAt) {
         this.paidAt = paidAt;
+    }
+
+    public LocalDateTime getConfirmedAt() {
+        return confirmedAt;
+    }
+
+    public void setConfirmedAt(LocalDateTime confirmedAt) {
+        this.confirmedAt = confirmedAt;
+    }
+
+    public LocalDateTime getRejectedAt() {
+        return rejectedAt;
+    }
+
+    public void setRejectedAt(LocalDateTime rejectedAt) {
+        this.rejectedAt = rejectedAt;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public void setRejectReason(String rejectReason) {
+        this.rejectReason = rejectReason;
+    }
+
+    public Boolean getAutoConfirmed() {
+        return autoConfirmed;
+    }
+
+    public void setAutoConfirmed(Boolean autoConfirmed) {
+        this.autoConfirmed = autoConfirmed;
     }
 
     public LocalDateTime getShippedAt() {

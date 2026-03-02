@@ -6,6 +6,7 @@ import com.healthmall.entity.StockReservation;
 import com.healthmall.repository.OrderRepository;
 import com.healthmall.repository.ProductRepository;
 import com.healthmall.repository.StockReservationRepository;
+import com.healthmall.service.OrderService;
 import com.healthmall.service.StockReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,9 @@ public class OrderScheduledTask {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     @Scheduled(fixedRate = 60000)
     @Transactional
@@ -118,5 +122,27 @@ public class OrderScheduledTask {
         }
         
         logger.info("过期预占记录清理完成，共处理 {} 条记录", expiredReservations.size());
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public void autoConfirmPendingOrders() {
+        logger.info("开始自动确认订单...");
+        try {
+            orderService.autoConfirmOrders();
+            logger.info("自动确认订单任务完成");
+        } catch (Exception e) {
+            logger.error("自动确认订单任务失败: {}", e.getMessage());
+        }
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public void autoRejectExpiredOrders() {
+        logger.info("开始自动拒绝超时订单...");
+        try {
+            orderService.autoRejectExpiredOrders();
+            logger.info("自动拒绝超时订单任务完成");
+        } catch (Exception e) {
+            logger.error("自动拒绝超时订单任务失败: {}", e.getMessage());
+        }
     }
 }

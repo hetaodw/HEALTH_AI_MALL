@@ -77,7 +77,24 @@
       </div>
 
       <div class="success-actions">
+        <div v-if="createdOrder.status === 'PENDING_CONFIRMATION'" class="status-message pending">
+          <p>⏳ 等待商家确认订单</p>
+          <p class="status-hint">商家将在30分钟内确认您的订单</p>
+        </div>
+        <div v-else-if="createdOrder.status === 'CONFIRMED'" class="status-message confirmed">
+          <p>✓ 商家已确认订单</p>
+          <p v-if="createdOrder.autoConfirmed" class="status-hint">订单已自动确认</p>
+        </div>
+        <div v-else-if="createdOrder.status === 'REJECTED'" class="status-message rejected">
+          <p>✕ 订单已被商家拒绝</p>
+          <p v-if="createdOrder.rejectReason" class="status-hint">拒绝原因：{{ createdOrder.rejectReason }}</p>
+        </div>
         <button v-if="createdOrder.status === 'PENDING_PAYMENT'" 
+                @click="showPayModal = true" 
+                class="skeuomorphic-button primary">
+          立即支付
+        </button>
+        <button v-if="createdOrder.status === 'CONFIRMED'" 
                 @click="showPayModal = true" 
                 class="skeuomorphic-button primary">
           立即支付
@@ -652,6 +669,40 @@ onMounted(() => {
   box-shadow: 
     5px 5px 10px rgba(74, 222, 128, 0.3),
     -2px -2px 5px rgba(255, 255, 255, 0.5);
+}
+
+.status-message {
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.status-message.pending {
+  background: linear-gradient(145deg, #fef3c7, #fde68a);
+  color: #92400e;
+}
+
+.status-message.confirmed {
+  background: linear-gradient(145deg, #d1fae5, #a7f3d0);
+  color: #065f46;
+}
+
+.status-message.rejected {
+  background: linear-gradient(145deg, #fee2e2, #fecaca);
+  color: #991b1b;
+}
+
+.status-message p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.status-hint {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  margin-top: 8px !important;
 }
 
 .order-success h2 {
