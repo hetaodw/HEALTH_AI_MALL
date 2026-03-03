@@ -10,6 +10,7 @@ public class CreateOrderRequest {
     private Integer addressId;
     private List<OrderItemRequest> items;
     private String remark;
+    private Boolean autoConfirm;
 
     public Integer getAddressId() {
         return addressId;
@@ -33,6 +34,14 @@ public class CreateOrderRequest {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Boolean getAutoConfirm() {
+        return autoConfirm;
+    }
+
+    public void setAutoConfirm(Boolean autoConfirm) {
+        this.autoConfirm = autoConfirm;
     }
 
     public static class OrderItemRequest {

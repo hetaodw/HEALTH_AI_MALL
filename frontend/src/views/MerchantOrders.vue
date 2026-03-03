@@ -18,9 +18,29 @@
           全部订单
         </button>
       </div>
+      
+      <div v-if="activeTab === 'all'" class="status-filter">
+        <select v-model="selectedStatus" @change="fetchOrders" class="skeuomorphic-select">
+          <option value="">全部状态</option>
+          <option value="PENDING_CONFIRMATION">待确认</option>
+          <option value="CONFIRMED">已确认</option>
+          <option value="SHIPPED">已发货</option>
+          <option value="COMPLETED">已完成</option>
+          <option value="CANCELLED">已取消</option>
+          <option value="REJECTED">已拒绝</option>
+        </select>
+      </div>
     </div>
 
     <div class="orders-container">
+      <div v-if="errorMessage" class="alert alert-error">
+        {{ errorMessage }}
+      </div>
+      
+      <div v-if="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      
       <div v-if="loading" class="loading">加载中...</div>
       
       <div v-else-if="orders.length === 0" class="empty">
@@ -51,6 +71,18 @@
               </div>
               <div class="item-quantity">x{{ item.quantity }}</div>
               <div class="item-price">¥{{ item.unitPrice?.toFixed(2) }}</div>
+            </div>
+          </div>
+
+          <div class="order-receiver">
+            <div class="receiver-info">
+              <span class="receiver-label">收货人:</span>
+              <span class="receiver-value">{{ order.receiverName }}</span>
+              <span class="receiver-phone">{{ order.receiverPhone }}</span>
+            </div>
+            <div class="receiver-address">
+              <span class="address-label">收货地址:</span>
+              <span class="address-value">{{ order.receiverAddress }}</span>
             </div>
           </div>
 
@@ -125,31 +157,47 @@ import { ref, onMounted, watch } from 'vue'
 import api from '../api'
 
 const activeTab = ref('pending')
+const selectedStatus = ref('')
 const orders = ref([])
 const loading = ref(false)
 const processing = ref(false)
 const showRejectModal = ref(false)
 const rejectReason = ref('')
 const currentOrder = ref(null)
+const errorMessage = ref('')
+const successMessage = ref('')
 
 const fetchOrders = async () => {
   loading.value = true
+  errorMessage.value = ''
   try {
     let response
     if (activeTab.value === 'pending') {
       response = await api.merchant.getPendingOrders()
     } else {
-      response = await api.merchant.getOrders()
+      const params = selectedStatus.value ? { status: selectedStatus.value } : {}
+      response = await api.merchant.getOrders(params)
     }
     
     if (response.code === 200) {
       orders.value = response.data || []
     } else {
-      alert('获取订单列表失败: ' + response.msg)
+      errorMessage.value = '获取订单列表失败: ' + response.msg
+      setTimeout(() => errorMessage.value = '', 5000)
     }
   } catch (error) {
     console.error('获取订单列表失败:', error)
-    alert('获取订单列表失败')
+    if (error.response?.status === 401) {
+      errorMessage.value = '登录已过期,请重新登录'
+      setTimeout(() => {
+        window.location.href = '/login'
+      }, 2000)
+    } else if (error.response?.status === 403) {
+      errorMessage.value = '无权访问此资源'
+    } else {
+      errorMessage.value = '获取订单列表失败,请稍后重试'
+    }
+    setTimeout(() => errorMessage.value = '', 5000)
   } finally {
     loading.value = false
   }
@@ -161,17 +209,27 @@ const confirmOrder = async (orderId) => {
   }
 
   processing.value = true
+  errorMessage.value = ''
   try {
     const response = await api.merchant.confirmOrder(orderId)
     if (response.code === 200) {
-      alert('订单已确认')
+      successMessage.value = '订单已确认'
+      setTimeout(() => successMessage.value = '', 3000)
       fetchOrders()
     } else {
-      alert('确认订单失败: ' + response.msg)
+      errorMessage.value = '确认订单失败: ' + response.msg
+      setTimeout(() => errorMessage.value = '', 5000)
     }
   } catch (error) {
     console.error('确认订单失败:', error)
-    alert('确认订单失败')
+    if (error.response?.status === 404) {
+      errorMessage.value = '订单不存在'
+    } else if (error.response?.status === 400) {
+      errorMessage.value = '参数错误: ' + (error.response?.data?.msg || '订单ID格式错误')
+    } else {
+      errorMessage.value = '确认订单失败,请稍后重试'
+    }
+    setTimeout(() => errorMessage.value = '', 5000)
   } finally {
     processing.value = false
   }
@@ -185,22 +243,34 @@ const showRejectDialog = (order) => {
 
 const submitReject = async () => {
   if (!currentOrder.value || !rejectReason.value) {
+    errorMessage.value = '请输入拒绝原因'
+    setTimeout(() => errorMessage.value = '', 3000)
     return
   }
 
   processing.value = true
+  errorMessage.value = ''
   try {
     const response = await api.merchant.rejectOrder(currentOrder.value.id, rejectReason.value)
     if (response.code === 200) {
-      alert('订单已拒绝')
+      successMessage.value = '订单已拒绝'
+      setTimeout(() => successMessage.value = '', 3000)
       showRejectModal.value = false
       fetchOrders()
     } else {
-      alert('拒绝订单失败: ' + response.msg)
+      errorMessage.value = '拒绝订单失败: ' + response.msg
+      setTimeout(() => errorMessage.value = '', 5000)
     }
   } catch (error) {
     console.error('拒绝订单失败:', error)
-    alert('拒绝订单失败')
+    if (error.response?.status === 404) {
+      errorMessage.value = '订单不存在'
+    } else if (error.response?.status === 400) {
+      errorMessage.value = error.response?.data?.msg || '拒绝原因不能为空'
+    } else {
+      errorMessage.value = '拒绝订单失败,请稍后重试'
+    }
+    setTimeout(() => errorMessage.value = '', 5000)
   } finally {
     processing.value = false
   }
@@ -311,6 +381,69 @@ onMounted(() => {
   font-weight: 600;
 }
 
+.status-filter {
+  margin-top: 15px;
+}
+
+.skeuomorphic-select {
+  padding: 10px 16px;
+  border: none;
+  background: linear-gradient(145deg, #f0f0f0, #cacaca);
+  border-radius: 10px;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 
+    3px 3px 6px rgba(0,0,0,0.1),
+    -3px -3px 6px rgba(255,255,255,0.8);
+  min-width: 150px;
+}
+
+.skeuomorphic-select:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    5px 5px 10px rgba(0,0,0,0.15),
+    -5px -5px 10px rgba(255,255,255,0.9);
+}
+
+.skeuomorphic-select:focus {
+  outline: none;
+  border-color: #ff6b6b;
+}
+
+.alert {
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-error {
+  background: linear-gradient(145deg, #fee2e2, #fecaca);
+  color: #dc2626;
+  border-left: 4px solid #dc2626;
+}
+
+.alert-success {
+  background: linear-gradient(145deg, #d1fae5, #a7f3d0);
+  color: #059669;
+  border-left: 4px solid #059669;
+}
+
 .orders-container {
   min-height: 400px;
 }
@@ -396,6 +529,50 @@ onMounted(() => {
   flex-direction: column;
   gap: 15px;
   margin-bottom: 20px;
+}
+
+.order-receiver {
+  padding: 15px;
+  background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.receiver-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.receiver-label {
+  font-weight: 600;
+  color: #666;
+}
+
+.receiver-value {
+  font-weight: 600;
+  color: #333;
+}
+
+.receiver-phone {
+  color: #666;
+  font-size: 14px;
+}
+
+.receiver-address {
+  display: flex;
+  gap: 10px;
+}
+
+.address-label {
+  font-weight: 600;
+  color: #666;
+}
+
+.address-value {
+  color: #666;
+  flex: 1;
 }
 
 .order-item {

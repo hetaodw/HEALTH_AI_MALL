@@ -1277,7 +1277,8 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
       "quantity": 1
     }
   ],
-  "remark": "请尽快发货"
+  "remark": "请尽快发货",
+  "autoConfirm": true
 }
 ```
 
@@ -1289,6 +1290,13 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 | items[].productId | int | 是 | 商品ID |
 | items[].quantity | int | 是 | 购买数量 |
 | remark | string | 否 | 订单备注 |
+| autoConfirm | boolean | 否 | 是否自动确认订单，默认false。当设置为true且商品库存充足时，订单将自动跳过"待商家确认"状态，直接进入"待付款"状态 |
+
+**说明**:
+- 当 `autoConfirm` 设置为 `true` 时，系统会检查所有商品的库存是否充足
+- 如果所有商品库存充足，订单将自动确认，状态直接变为 `PENDING_PAYMENT`（待付款）
+- 如果任一商品库存不足，订单仍需商家手动确认，状态为 `PENDING_CONFIRMATION`（待商家确认）
+- 默认情况下（`autoConfirm` 为 `false`），订单需要商家手动确认
 
 **响应示例**:
 ```json
@@ -1483,6 +1491,23 @@ curl -X POST http://localhost:8080/v1/orders \
     "remark": "请尽快发货"
   }'
 ```
+
+### 11.1 创建订单（自动确认）
+```bash
+curl -X POST http://localhost:8080/v1/orders \
+  -H "Authorization: Bearer {user_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "addressId": 1,
+    "items": [
+      {"productId": 1, "quantity": 2},
+      {"productId": 2, "quantity": 1}
+    ],
+    "remark": "请尽快发货",
+    "autoConfirm": true
+  }'
+```
+**说明**: 当设置 `autoConfirm: true` 且商品库存充足时，订单将自动跳过商家确认环节，直接进入待付款状态。
 
 ### 12. 查询我的订单
 ```bash
@@ -1758,3 +1783,26 @@ curl -X POST http://localhost:8080/v1/addresses/1/default \
 | USER | 普通用户，可浏览商品、管理个人信息 |
 | MERCHANT | 商家，可管理自己的商品 |
 | ADMIN | 管理员，可管理所有商品和用户 |
+
+---
+
+## 测试账号
+
+以下账号用于 API 测试和开发调试：
+
+### 用户账号
+
+| 用户名 | 密码 | 角色 | 邮箱 | 手机号 |
+|-------|------|------|------|--------|
+| testuser1 | Test123456 | USER | testuser1@example.com | 13800138001 |
+| testuser2 | Test123456 | USER | testuser2@example.com | 13800138002 |
+| testuser3 | Test123456 | USER | testuser3@example.com | 13800138003 |
+
+### 商家账号
+
+| 用户名 | 密码 | 角色 | 邮箱 | 手机号 |
+|-------|------|------|------|--------|
+| testmerchant1 | Test123456 | MERCHANT | testmerchant1@example.com | 13800138004 |
+| testmerchant2 | Test123456 | MERCHANT | testmerchant2@example.com | 13800138005 |
+
+**注意**: 这些是测试账号，仅用于开发和测试环境。请勿在生产环境中使用。

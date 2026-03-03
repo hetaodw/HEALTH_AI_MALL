@@ -181,7 +181,15 @@ public class OrderService {
         order.setReceiverPhone(address.getReceiverPhone());
         order.setReceiverAddress(address.getFullAddress());
         order.setRemark(request.getRemark());
-        order.setStatus(Order.OrderStatus.PENDING_CONFIRMATION);
+        
+        if (Boolean.TRUE.equals(request.getAutoConfirm()) && checkAllStockAvailable(itemDataList)) {
+            order.setStatus(Order.OrderStatus.PENDING_PAYMENT);
+            order.setAutoConfirmed(true);
+        } else {
+            order.setStatus(Order.OrderStatus.PENDING_CONFIRMATION);
+            order.setAutoConfirmed(false);
+        }
+        
         order.setPayExpireAt(LocalDateTime.now().plusMinutes(PAY_EXPIRE_MINUTES));
         order.setItemCount(itemDataList.size());
 
@@ -191,6 +199,16 @@ public class OrderService {
         order.setTotalAmount(totalAmount);
 
         return orderRepository.save(order);
+    }
+
+    private boolean checkAllStockAvailable(List<OrderItemData> itemDataList) {
+        for (OrderItemData itemData : itemDataList) {
+            Product product = productRepository.findById(itemData.product.getId()).orElse(null);
+            if (product == null || product.getStock() < itemData.quantity) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private List<ProductSnapshot> createAndSaveSnapshots(List<OrderItemData> itemDataList) {
@@ -472,6 +490,10 @@ public class OrderService {
 
     @Transactional
     public OrderResponse rejectOrder(Integer merchantId, Integer orderId, String reason) {
+        if (reason == null || reason.trim().isEmpty()) {
+            throw new BusinessException(400, "拒绝原因不能为空");
+        }
+
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BusinessException(404, "订单不存在"));
 

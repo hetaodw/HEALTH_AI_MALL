@@ -1,0 +1,20 @@
+﻿"TestCase","Endpoint","Status","Response"
+"Get User Profile","GET /v1/user/profile","PASS","User ID: 15, Username: testuser1"
+"Update User Profile (avatarUrl)","PUT /v1/user/profile/update","PASS","{
+    ""code"":  200,
+    ""msg"":  ""æä½æå"",
+    ""data"":  null
+}"
+"Update User Profile (remarks)","PUT /v1/user/profile/update","PASS","{
+    ""code"":  200,
+    ""msg"":  ""æä½æå"",
+    ""data"":  null
+}"
+"Update User Profile (both fields)","PUT /v1/user/profile/update","PASS","{
+    ""code"":  200,
+    ""msg"":  ""æä½æå"",
+    ""data"":  null
+}"
+"Upload User Avatar","POST /v1/user/avatar/upload","PASS","Avatar URL: /v1/static/user/avatar/2026/03/03/21493bebd3b341e9ba08fa01fbe036c3.jpg"
+"Get User Profile After Update","GET /v1/user/profile","PASS","Avatar: /v1/static/user/avatar/2026/03/03/21493bebd3b341e9ba08fa01fbe036c3.jpg, Remarks: "
+"Access Without Token","GET /v1/user/profile","PASS (correctly failed)","远程服务器返回错误: (401) 未经授权。"

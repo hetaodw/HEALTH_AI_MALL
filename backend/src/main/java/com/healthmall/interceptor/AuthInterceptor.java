@@ -1,5 +1,6 @@
 package com.healthmall.interceptor;
 
+import com.healthmall.entity.User;
 import com.healthmall.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -44,8 +45,27 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         Integer userId = jwtUtil.getUserIdFromToken(token);
-        logger.info("AuthInterceptor - Token validated - userId: {} for {} {}", userId, method, requestUri);
+        String role = jwtUtil.getRoleFromToken(token);
+        
+        logger.info("AuthInterceptor - Token validated - userId: {}, role: {} for {} {}", userId, role, method, requestUri);
         request.setAttribute("userId", userId);
+        request.setAttribute("role", role);
+
+        if (requestUri.contains("/merchant/") && !User.Role.MERCHANT.name().equals(role)) {
+            logger.warn("AuthInterceptor - User with role {} attempted to access merchant endpoint {}", role, requestUri);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write("{\"code\":403,\"msg\":\"无权访问此资源\",\"data\":null}");
+            return false;
+        }
+
+        if (requestUri.contains("/admin/") && !User.Role.MERCHANT.name().equals(role)) {
+            logger.warn("AuthInterceptor - User with role {} attempted to access admin endpoint {}", role, requestUri);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write("{\"code\":403,\"msg\":\"无权访问此资源\",\"data\":null}");
+            return false;
+        }
 
         return true;
     }

@@ -68,8 +68,8 @@ public class MerchantOrderController {
     public ApiResponse<OrderResponse> rejectOrder(
             @PathVariable Integer orderId,
             @RequestBody ConfirmOrderRequest request,
-            HttpServletRequest request) {
-        Integer merchantId = (Integer) request.getAttribute("userId");
+            HttpServletRequest httpRequest) {
+        Integer merchantId = (Integer) httpRequest.getAttribute("userId");
         if (merchantId == null) {
             return ApiResponse.error(401, "请先登录");
         }
