@@ -53,7 +53,7 @@ public class MerchantOrderController {
 
     @PostMapping("/{orderId}/confirm")
     public ApiResponse<OrderResponse> confirmOrder(
-            @PathVariable Long orderId,
+            @PathVariable Integer orderId,
             HttpServletRequest request) {
         Integer merchantId = (Integer) request.getAttribute("userId");
         if (merchantId == null) {
@@ -66,7 +66,7 @@ public class MerchantOrderController {
 
     @PostMapping("/{orderId}/reject")
     public ApiResponse<OrderResponse> rejectOrder(
-            @PathVariable Long orderId,
+            @PathVariable Integer orderId,
             @RequestBody ConfirmOrderRequest request,
             HttpServletRequest request) {
         Integer merchantId = (Integer) request.getAttribute("userId");

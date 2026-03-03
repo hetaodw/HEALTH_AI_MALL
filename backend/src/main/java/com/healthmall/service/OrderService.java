@@ -441,7 +441,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse confirmOrder(Integer merchantId, Long orderId) {
+    public OrderResponse confirmOrder(Integer merchantId, Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BusinessException(404, "订单不存在"));
 
@@ -471,7 +471,7 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse rejectOrder(Integer merchantId, Long orderId, String reason) {
+    public OrderResponse rejectOrder(Integer merchantId, Integer orderId, String reason) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BusinessException(404, "订单不存在"));
 
@@ -549,9 +549,14 @@ public class OrderService {
             return false;
         }
         
-        Product product = productRepository.findById(items.get(0).getProductId()).orElse(null);
-        return product != null && product.getMerchantId() != null 
-                && product.getMerchantId().equals(merchantId);
+        for (OrderItem item : items) {
+            Product product = productRepository.findById(item.getProductId()).orElse(null);
+            if (product != null && product.getMerchantId() != null 
+                    && product.getMerchantId().equals(merchantId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean checkStockAvailable(Order order) {
@@ -576,6 +581,10 @@ public class OrderService {
                 .collect(Collectors.toList());
 
         List<OrderItem> allOrderItems = orderItemRepository.findByProductIdIn(productIds);
+        if (allOrderItems.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         List<Integer> orderIds = allOrderItems.stream()
                 .map(OrderItem::getOrderId)
                 .distinct()
