@@ -29,6 +29,7 @@ public class AdminProductController {
             @RequestParam("description") String description,
             @RequestParam("coverImage") MultipartFile coverImage,
             @RequestParam(value = "features", required = false) String features,
+            @RequestParam(value = "descriptionContent", required = false) String descriptionContent,
             HttpServletRequest httpRequest) {
         
         try {
@@ -42,7 +43,8 @@ public class AdminProductController {
                     stock,
                     description,
                     coverUrl,
-                    features
+                    features,
+                    descriptionContent
             );
             return ApiResponse.success(productId);
         } catch (Exception e) {

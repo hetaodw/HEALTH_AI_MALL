@@ -20,8 +20,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class OrderService {
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     private static final int PAY_EXPIRE_MINUTES = 15;
 
@@ -182,7 +186,9 @@ public class OrderService {
         order.setReceiverAddress(address.getFullAddress());
         order.setRemark(request.getRemark());
         
-        if (Boolean.TRUE.equals(request.getAutoConfirm()) && checkAllStockAvailable(itemDataList)) {
+        boolean shouldAutoConfirm = shouldAutoConfirm(order, itemDataList);
+        
+        if (shouldAutoConfirm) {
             order.setStatus(Order.OrderStatus.PENDING_PAYMENT);
             order.setAutoConfirmed(true);
         } else {
@@ -209,6 +215,55 @@ public class OrderService {
             }
         }
         return true;
+    }
+
+    private boolean shouldAutoConfirm(Order order, List<OrderItemData> itemDataList) {
+        for (OrderItemData itemData : itemDataList) {
+            Product product = itemData.product;
+            
+            if (product.getAutoConfirmMode() == Product.AutoConfirmMode.MANUAL) {
+                return false;
+            }
+            
+            if (product.getAutoConfirmMode() == Product.AutoConfirmMode.AUTO) {
+                if (product.getStock() < itemData.quantity) {
+                    return false;
+                }
+            }
+            
+            if (product.getAutoConfirmMode() == Product.AutoConfirmMode.SMART) {
+                if (!checkSmartConfirmCondition(order, product, itemData)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean checkSmartConfirmCondition(Order order, Product product, OrderItemData itemData) {
+        try {
+            String conditionJson = product.getAutoConfirmCondition();
+            if (conditionJson == null || conditionJson.trim().isEmpty()) {
+                return false;
+            }
+            
+            if (conditionJson.contains("minOrderAmount") || conditionJson.contains("maxOrderAmount")) {
+                if (order.getTotalAmount().compareTo(BigDecimal.valueOf(100)) < 0) {
+                    return false;
+                }
+            }
+            
+            if (conditionJson.contains("stockThreshold")) {
+                if (product.getStock() < 10) {
+                    return false;
+                }
+            }
+            
+            return true;
+        } catch (Exception e) {
+            logger.error("检查智能确认条件失败", e);
+            return false;
+        }
     }
 
     private List<ProductSnapshot> createAndSaveSnapshots(List<OrderItemData> itemDataList) {

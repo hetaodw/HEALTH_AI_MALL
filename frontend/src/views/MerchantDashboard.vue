@@ -12,6 +12,9 @@
           />
           <span class="merchant-name">{{ userProfile?.username || '商家' }}</span>
         </div>
+        <button @click="showBatchUpdateModal = true" class="skeuomorphic-button batch-button">
+          🔄 批量更新
+        </button>
         <button @click="router.push('/merchant/orders')" class="skeuomorphic-button orders-button">
           📋 订单管理
         </button>
@@ -55,13 +58,16 @@
         </div>
         <div class="product-info">
           <h3 class="product-title">{{ product.title }}</h3>
-          <p class="product-category">{{ product.category }}</p>
+          <p class="product-category">{{ getCategoryLabel(product.category) }}</p>
           <p class="product-price">¥{{ product.price }}</p>
           <div class="product-stats">
             <span class="stat">库存: {{ product.stock }}</span>
             <span class="stat">销量: {{ product.sales }}</span>
             <span class="stat status" :class="product.status.toLowerCase()">
               {{ getStatusText(product.status) }}
+            </span>
+            <span class="stat auto-confirm" :class="getAutoConfirmModeClass(product.autoConfirmMode)">
+              {{ getAutoConfirmModeText(product.autoConfirmMode) }}
             </span>
           </div>
         </div>
@@ -97,6 +103,47 @@
         @cancel="closeModals"
         @close="closeModals"
       />
+    </div>
+
+    <div v-if="showBatchUpdateModal" class="modal-overlay" @click.self="showBatchUpdateModal = false">
+      <div class="skeuomorphic-modal batch-update-modal">
+        <h2>批量更新自动确认模式</h2>
+        <div class="form-group">
+          <label>选择商品:</label>
+          <div class="product-selection">
+            <label class="checkbox-item">
+              <input type="checkbox" v-model="selectAll" @change="toggleSelectAll" />
+              <span>全选</span>
+            </label>
+            <div class="product-checkbox-list">
+              <label v-for="product in products" :key="product.id" class="checkbox-item">
+                <input type="checkbox" v-model="selectedProductIds" :value="product.id" />
+                <span>{{ product.title }}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="batchAutoConfirmMode">自动确认模式:</label>
+          <select
+            id="batchAutoConfirmMode"
+            v-model="batchAutoConfirmMode"
+            class="skeuomorphic-input"
+          >
+            <option value="MANUAL">手动确认</option>
+            <option value="AUTO">自动确认</option>
+            <option value="SMART">智能确认</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button @click="showBatchUpdateModal = false" class="skeuomorphic-button">
+            取消
+          </button>
+          <button @click="handleBatchUpdate" class="skeuomorphic-button primary" :disabled="selectedProductIds.length === 0">
+            更新 ({{ selectedProductIds.length }})
+          </button>
+        </div>
+      </div>
     </div>
 
     <div v-if="showStockModalFlag" class="modal-overlay" @click.self="showStockModalFlag = false">
@@ -136,6 +183,7 @@ import api from '../api'
 import Pagination from '../components/Pagination.vue'
 import ProductForm from '../components/ProductForm.vue'
 import AvatarUpload from '../components/AvatarUpload.vue'
+import { getCategoryLabel } from '../constants/productCategories'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -160,10 +208,14 @@ const filters = ref({
 const showAddModal = ref(false)
 const showEditModal = ref(false)
 const showStockModalFlag = ref(false)
+const showBatchUpdateModal = ref(false)
 const editingProduct = ref(null)
 const currentProduct = ref(null)
 const newStock = ref(0)
 const userProfile = ref(null)
+const selectedProductIds = ref([])
+const selectAll = ref(false)
+const batchAutoConfirmMode = ref('MANUAL')
 
 const loadUserProfile = async () => {
   try {
@@ -285,6 +337,67 @@ const getStatusText = (status) => {
   return statusMap[status] || status
 }
 
+const getAutoConfirmModeText = (mode) => {
+  const modeMap = {
+    'MANUAL': '手动',
+    'AUTO': '自动',
+    'SMART': '智能'
+  }
+  return modeMap[mode] || mode
+}
+
+const getAutoConfirmModeClass = (mode) => {
+  return mode ? mode.toLowerCase() : 'manual'
+}
+
+const toggleSelectAll = () => {
+  if (selectAll.value) {
+    selectedProductIds.value = products.value.map(p => p.id)
+  } else {
+    selectedProductIds.value = []
+  }
+}
+
+const handleBatchUpdate = async () => {
+  if (selectedProductIds.value.length === 0) {
+    alert('请选择至少一个商品')
+    return
+  }
+
+  try {
+    const response = await api.merchant.batchUpdateAutoConfirmMode({
+      productIds: selectedProductIds.value,
+      autoConfirmMode: batchAutoConfirmMode.value
+    })
+
+    if (response.code === 200) {
+      const { successCount, failedCount, failedProducts } = response.data
+      let message = `批量更新完成！成功: ${successCount}`
+      
+      if (failedCount > 0) {
+        message += `，失败: ${failedCount}`
+        if (failedProducts && failedProducts.length > 0) {
+          message += '\n失败详情:\n'
+          failedProducts.forEach(fp => {
+            message += `商品ID ${fp.productId}: ${fp.reason}\n`
+          })
+        }
+      }
+      
+      alert(message)
+      showBatchUpdateModal.value = false
+      selectedProductIds.value = []
+      selectAll.value = false
+      loadProducts()
+    } else {
+      alert('批量更新失败: ' + response.msg)
+    }
+  } catch (error) {
+    console.error('批量更新失败:', error)
+    alert('批量更新失败: ' + (error.response?.data?.msg || '未知错误'))
+  }
+}
+
 onMounted(() => {
   loadUserProfile()
   loadProducts()
@@ -347,6 +460,13 @@ onMounted(() => {
 .add-button {
   padding: 12px 24px;
   font-size: 16px;
+}
+
+.batch-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  color: white;
 }
 
 .orders-button {
@@ -492,6 +612,22 @@ onMounted(() => {
   color: #ef4444;
 }
 
+.stat.auto-confirm {
+  font-weight: 600;
+}
+
+.stat.auto-confirm.manual {
+  color: #f59e0b;
+}
+
+.stat.auto-confirm.auto {
+  color: #10b981;
+}
+
+.stat.auto-confirm.smart {
+  color: #667eea;
+}
+
 .product-actions {
   display: flex;
   flex-direction: column;
@@ -542,6 +678,53 @@ onMounted(() => {
   margin: 0 0 24px 0;
   font-size: 24px;
   color: #333;
+}
+
+.batch-update-modal {
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.batch-update-modal .product-selection {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+  background: linear-gradient(145deg, #ffffff, #f8f9fa);
+}
+
+.batch-update-modal .checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.batch-update-modal .checkbox-item:hover {
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+}
+
+.batch-update-modal .checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.batch-update-modal .checkbox-item span {
+  font-size: 14px;
+  color: #333;
+}
+
+.batch-update-modal .product-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
 }
 
 .stock-modal .form-group {

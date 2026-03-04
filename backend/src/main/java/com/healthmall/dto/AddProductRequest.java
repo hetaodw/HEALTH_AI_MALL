@@ -10,6 +10,7 @@ public class AddProductRequest {
     private String description;
     private String coverUrl;
     private String features;
+    private String descriptionContent;
 
     public String getName() {
         return name;
@@ -65,5 +66,13 @@ public class AddProductRequest {
 
     public void setFeatures(String features) {
         this.features = features;
+    }
+
+    public String getDescriptionContent() {
+        return descriptionContent;
+    }
+
+    public void setDescriptionContent(String descriptionContent) {
+        this.descriptionContent = descriptionContent;
     }
 }

@@ -27,11 +27,7 @@
             class="skeuomorphic-input"
           >
             <option value="">请选择分类</option>
-            <option value="保健品">保健品</option>
-            <option value="医疗器械">医疗器械</option>
-            <option value="健康食品">健康食品</option>
-            <option value="运动健身">运动健身</option>
-            <option value="母婴用品">母婴用品</option>
+            <option v-for="cat in PRODUCT_CATEGORIES" :key="cat.value" :value="cat.value">{{ cat.label }}</option>
           </select>
         </div>
 
@@ -115,14 +111,59 @@
         </div>
 
         <div class="form-group">
-          <label for="features">商品介绍</label>
+          <label for="descriptionContent">商品详细介绍</label>
+          <textarea
+            id="descriptionContent"
+            v-model="formData.descriptionContent"
+            class="skeuomorphic-input"
+            rows="6"
+            placeholder='请输入商品详细文字介绍，如：产品特点、使用方法、注意事项等'
+          ></textarea>
+        </div>
+
+        <div class="form-group" style="display: none;">
+          <label for="features">商品特性（隐藏）</label>
           <textarea
             id="features"
             v-model="formData.features"
             class="skeuomorphic-input"
             rows="4"
-            placeholder='请输入商品详细介绍，如：品牌、规格、产地、适用人群等'
           ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="autoConfirmMode">自动确认模式 *</label>
+          <select
+            id="autoConfirmMode"
+            v-model="formData.autoConfirmMode"
+            required
+            class="skeuomorphic-input"
+            @change="handleAutoConfirmModeChange"
+          >
+            <option value="MANUAL">手动确认</option>
+            <option value="AUTO">自动确认</option>
+            <option value="SMART">智能确认</option>
+          </select>
+          <p class="field-hint">选择订单自动确认策略</p>
+        </div>
+
+        <div v-if="formData.autoConfirmMode === 'SMART'" class="form-group">
+          <label for="autoConfirmCondition">智能确认条件</label>
+          <textarea
+            id="autoConfirmCondition"
+            v-model="formData.autoConfirmCondition"
+            class="skeuomorphic-input"
+            rows="6"
+            placeholder='请输入智能确认条件（JSON格式），例如：
+{
+  "minOrderAmount": 100,
+  "maxOrderAmount": 1000,
+  "minUserRating": 4.0,
+  "minUserOrders": 5,
+  "stockThreshold": 10
+}'
+          ></textarea>
+          <p class="field-hint">仅在SMART模式下生效，留空则不自动确认</p>
         </div>
 
         <div class="form-group">
@@ -169,6 +210,7 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { PRODUCT_CATEGORIES } from '../constants/productCategories'
 
 const props = defineProps({
   product: {
@@ -193,7 +235,9 @@ const formData = ref({
   price: 0,
   stock: 0,
   status: 'ON_SALE',
-  features: ''
+  features: '',
+  autoConfirmMode: 'MANUAL',
+  autoConfirmCondition: ''
 })
 
 const isValid = computed(() => {
@@ -214,7 +258,10 @@ watch(() => props.product, (newProduct) => {
       price: newProduct.price || 0,
       stock: newProduct.stock || 0,
       status: newProduct.status || 'ON_SALE',
-      features: newProduct.features || ''
+      features: newProduct.features || '',
+      descriptionContent: newProduct.descriptionContent || '',
+      autoConfirmMode: newProduct.autoConfirmMode || 'MANUAL',
+      autoConfirmCondition: newProduct.autoConfirmCondition || ''
     }
     if (newProduct.coverUrl) {
       previewUrl.value = newProduct.coverUrl
@@ -222,9 +269,9 @@ watch(() => props.product, (newProduct) => {
     // 加载详情图片
     if (newProduct.detailImages && newProduct.detailImages.length > 0) {
       detailImages.value = newProduct.detailImages.map((url, index) => ({
-        file: null, // 已有图片没有文件对象
+        file: null,
         preview: url,
-        isExisting: true, // 标记为已存在的图片
+        isExisting: true,
         url: url
       }))
     } else {
@@ -243,7 +290,10 @@ const resetForm = () => {
     price: 0,
     stock: 0,
     status: 'ON_SALE',
-    features: ''
+    features: '',
+    descriptionContent: '',
+    autoConfirmMode: 'MANUAL',
+    autoConfirmCondition: ''
   }
   selectedFile.value = null
   previewUrl.value = ''
@@ -340,6 +390,12 @@ const removeDetailImage = (index) => {
   detailImages.value.splice(index, 1)
 }
 
+const handleAutoConfirmModeChange = () => {
+  if (formData.value.autoConfirmMode !== 'SMART') {
+    formData.value.autoConfirmCondition = ''
+  }
+}
+
 const handleSubmit = () => {
   try {
     if (!selectedFile.value && !props.product) {
@@ -359,8 +415,13 @@ const handleSubmit = () => {
       submitData.append('coverImage', selectedFile.value)
     }
 
-    // 处理商品介绍（作为普通文本）
     submitData.append('features', formData.value.features || '')
+    submitData.append('descriptionContent', formData.value.descriptionContent || '')
+    submitData.append('autoConfirmMode', formData.value.autoConfirmMode)
+    
+    if (formData.value.autoConfirmMode === 'SMART' && formData.value.autoConfirmCondition) {
+      submitData.append('autoConfirmCondition', formData.value.autoConfirmCondition)
+    }
 
     // 分离已有图片和新上传的图片
     const existingImages = []
@@ -470,6 +531,13 @@ const handleSubmit = () => {
   font-weight: 600;
   color: #666;
   font-size: 14px;
+}
+
+.field-hint {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
 }
 
 .form-group .skeuomorphic-input {

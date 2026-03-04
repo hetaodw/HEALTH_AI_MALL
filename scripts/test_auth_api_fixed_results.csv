@@ -1,0 +1,24 @@
+﻿"TestCase","Endpoint","Status","Response"
+"User Registration","POST /v1/auth/register","PASS","{
+    ""code"":  200,
+    ""msg"":  ""æä½æå"",
+    ""data"":  null
+}"
+"Duplicate Registration","POST /v1/auth/register","PASS (correctly failed)","{
+    ""code"":  400,
+    ""msg"":  ""ç¨æ·åå·²å­å¨"",
+    ""data"":  null
+}"
+"User Login","POST /v1/auth/login","PASS","Token obtained, User ID: 22"
+"Wrong Password Login","POST /v1/auth/login","PASS (correctly failed)","{
+    ""code"":  401,
+    ""msg"":  ""ç¨æ·åæå¯ç éè¯¯"",
+    ""data"":  null
+}"
+"User Logout","POST /v1/auth/logout","PASS","{
+    ""code"":  200,
+    ""msg"":  ""æä½æå"",
+    ""data"":  null
+}"
+"Existing Account Login","POST /v1/auth/login","PASS","Token obtained, User ID: 15, Role: USER"
+"Merchant Account Login","POST /v1/auth/login","PASS","Token obtained, User ID: 18, Role: MERCHANT"

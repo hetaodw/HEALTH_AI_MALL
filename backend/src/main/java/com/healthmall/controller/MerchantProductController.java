@@ -4,6 +4,7 @@ import com.healthmall.common.ApiResponse;
 import com.healthmall.dto.MerchantProductRequest;
 import com.healthmall.dto.MerchantProductResponse;
 import com.healthmall.dto.PageResponse;
+import com.healthmall.dto.BatchUpdateAutoConfirmModeRequest;
 import com.healthmall.entity.Product;
 import com.healthmall.service.FileUploadService;
 import com.healthmall.service.MerchantProductService;
@@ -36,16 +37,17 @@ public class MerchantProductController {
             @RequestParam("description") String description,
             @RequestParam("coverImage") MultipartFile coverImage,
             @RequestParam(value = "features", required = false) String features,
+            @RequestParam(value = "descriptionContent", required = false) String descriptionContent,
             @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "autoConfirmMode", required = false) String autoConfirmMode,
+            @RequestParam(value = "autoConfirmCondition", required = false) String autoConfirmCondition,
             @RequestParam(value = "detailImages", required = false) List<MultipartFile> detailImages) {
         
         Integer merchantId = (Integer) request.getAttribute("userId");
         
         try {
-            // 上传封面图片
             String coverUrl = fileUploadService.uploadImage(coverImage, "product-cover");
             
-            // 上传详细介绍图片
             List<String> detailImageUrls = new java.util.ArrayList<>();
             if (detailImages != null && !detailImages.isEmpty()) {
                 for (MultipartFile image : detailImages) {
@@ -56,7 +58,6 @@ public class MerchantProductController {
                 }
             }
             
-            // 构建请求对象
             MerchantProductRequest productRequest = new MerchantProductRequest();
             productRequest.setTitle(title);
             productRequest.setCategory(category);
@@ -65,10 +66,15 @@ public class MerchantProductController {
             productRequest.setDescription(description);
             productRequest.setCoverUrl(coverUrl);
             productRequest.setFeatures(features);
+            productRequest.setDescriptionContent(descriptionContent);
             productRequest.setDetailImages(detailImageUrls);
-            if (status != null) {
-                productRequest.setStatus(Product.ProductStatus.valueOf(status.toUpperCase()));
+            if (status != null && !status.isEmpty()) {
+                productRequest.setStatus(Product.ProductStatus.valueOf(status));
             }
+            if (autoConfirmMode != null && !autoConfirmMode.isEmpty()) {
+                productRequest.setAutoConfirmMode(Product.AutoConfirmMode.valueOf(autoConfirmMode));
+            }
+            productRequest.setAutoConfirmCondition(autoConfirmCondition);
             
             MerchantProductResponse response = merchantProductService.addProduct(merchantId, productRequest);
             return ApiResponse.success(response);
@@ -88,14 +94,16 @@ public class MerchantProductController {
             @RequestParam("description") String description,
             @RequestParam(value = "coverImage", required = false) MultipartFile coverImage,
             @RequestParam(value = "features", required = false) String features,
+            @RequestParam(value = "descriptionContent", required = false) String descriptionContent,
             @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "autoConfirmMode", required = false) String autoConfirmMode,
+            @RequestParam(value = "autoConfirmCondition", required = false) String autoConfirmCondition,
             @RequestParam(value = "detailImages", required = false) List<MultipartFile> detailImages,
             @RequestParam(value = "existingDetailImages", required = false) List<String> existingDetailImages) {
 
         Integer merchantId = (Integer) request.getAttribute("userId");
 
         try {
-            // 构建请求对象
             MerchantProductRequest productRequest = new MerchantProductRequest();
             productRequest.setTitle(title);
             productRequest.setCategory(category);
@@ -103,9 +111,14 @@ public class MerchantProductController {
             productRequest.setStock(stock);
             productRequest.setDescription(description);
             productRequest.setFeatures(features);
+            productRequest.setDescriptionContent(descriptionContent);
             if (status != null) {
                 productRequest.setStatus(Product.ProductStatus.valueOf(status.toUpperCase()));
             }
+            if (autoConfirmMode != null) {
+                productRequest.setAutoConfirmMode(Product.AutoConfirmMode.valueOf(autoConfirmMode.toUpperCase()));
+            }
+            productRequest.setAutoConfirmCondition(autoConfirmCondition);
 
             // 如果有新封面图片则上传
             if (coverImage != null && !coverImage.isEmpty()) {
@@ -193,5 +206,21 @@ public class MerchantProductController {
         Integer merchantId = (Integer) request.getAttribute("userId");
         merchantProductService.updateProductStock(merchantId, id, stock);
         return ApiResponse.success();
+    }
+
+    @PatchMapping("/auto-confirm-mode")
+    public ApiResponse<com.healthmall.dto.BatchUpdateResponse> batchUpdateAutoConfirmMode(
+            HttpServletRequest request,
+            @RequestBody BatchUpdateAutoConfirmModeRequest batchRequest) {
+        
+        Integer merchantId = (Integer) request.getAttribute("userId");
+        
+        try {
+            com.healthmall.dto.BatchUpdateResponse response = merchantProductService
+                .batchUpdateAutoConfirmMode(merchantId, batchRequest);
+            return ApiResponse.success(response);
+        } catch (Exception e) {
+            return ApiResponse.error(500, "批量更新失败: " + e.getMessage());
+        }
     }
 }

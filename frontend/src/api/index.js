@@ -43,22 +43,17 @@ export default {
   },
   merchant: {
     addProduct: (data) => {
-      const isFormData = data instanceof FormData
-      return api.post('/merchant/products', data, {
-        headers: isFormData ? {} : {}
-      })
+      return api.post('/merchant/products', data)
     },
     updateProduct: (id, data) => {
-      const isFormData = data instanceof FormData
-      return api.put(`/merchant/products/${id}`, data, {
-        headers: isFormData ? {} : {}
-      })
+      return api.put(`/merchant/products/${id}`, data)
     },
     deleteProduct: (id) => api.delete(`/merchant/products/${id}`),
     getProductList: (params) => api.get('/merchant/products', { params }),
     getProductDetail: (id) => api.get(`/merchant/products/${id}`),
     updateProductStatus: (id, status) => api.patch(`/merchant/products/${id}/status`, null, { params: { status } }),
     updateProductStock: (id, stock) => api.patch(`/merchant/products/${id}/stock`, null, { params: { stock } }),
+    batchUpdateAutoConfirmMode: (data) => api.patch('/merchant/products/auto-confirm-mode', data),
     getPendingOrders: () => api.get('/merchant/orders/pending'),
     getOrders: (params) => api.get('/merchant/orders', { params }),
     confirmOrder: (orderId) => api.post(`/merchant/orders/${orderId}/confirm`),
@@ -66,10 +61,7 @@ export default {
   },
   admin: {
     createProduct: (data) => {
-      const isFormData = data instanceof FormData
-      return api.post('/admin/products', data, {
-        headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
-      })
+      return api.post('/admin/products', data)
     },
     deleteProduct: (id) => api.delete(`/admin/products/${id}`)
   },

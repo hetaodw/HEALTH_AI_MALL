@@ -118,7 +118,7 @@
           <img :src="product.coverUrl" :alt="product.title" class="product-image" />
           <div class="product-details">
             <h3 class="product-title">{{ product.title }}</h3>
-            <p class="product-category">{{ product.category }}</p>
+            <p class="product-category">{{ getCategoryLabel(product.category) }}</p>
             <p class="product-merchant">商家：{{ product.merchantName }}</p>
             <div class="product-price-row">
               <span class="price-label">单价：</span>
@@ -186,8 +186,8 @@
 
     </div>
 
-    <!-- 订单汇总 - 固定底部 -->
-    <div class="order-summary-bar">
+    <!-- 订单汇总 - 固定底部 (仅在未创建订单时显示) -->
+    <div v-if="!orderCreated" class="order-summary-bar">
       <div class="summary-content-wrapper">
         <div class="summary-left">
           <span class="summary-label">应付总额：</span>
@@ -198,8 +198,9 @@
         </div>
         <div class="summary-right">
           <button @click="submitOrder" 
-                  :disabled="!canSubmit || submitting" 
-                  class="submit-order-btn">
+                  :disabled="!canSubmit" 
+                  class="submit-order-btn"
+                  :class="{ disabled: !canSubmit }">
             {{ submitting ? '提交中...' : '提交订单' }}
           </button>
         </div>
@@ -308,6 +309,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 import api from '../api'
+import { getCategoryLabel } from '../constants/productCategories'
 
 const route = useRoute()
 const router = useRouter()
@@ -522,6 +524,8 @@ const submitOrder = async () => {
       orderCreated.value = true
       // 清空购物车中该商品（如果存在）
       removeFromCart(product.value.id)
+      // 滚动到顶部
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
       alert('创建订单失败：' + res.msg)
     }

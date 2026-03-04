@@ -20,7 +20,14 @@
 | `product_details_images` | 商品详情图片表 | 万级 |
 | `product_descriptions` | 商品详情文字介绍表 | 千级 |
 | `product_reviews` | 商品评价表 | 万级 |
+| `product_discussions` | 商品讨论表 | 万级 |
 | `hot_products` | 首页热门商品推荐表 | 十级 |
+| `addresses` | 用户收货地址表 | 万级 |
+| `product_snapshots` | 商品快照表 | 十万级 |
+| `orders` | 订单表 | 十万级 |
+| `order_items` | 订单项表 | 十万级 |
+| `stock_reservations` | 库存预占记录表 | 十万级 |
+| `payments` | 支付记录表 | 十万级 |
 
 ---
 
@@ -57,6 +64,7 @@
 | `id` | INT | PRIMARY KEY, AUTO_INCREMENT | - | 商品唯一标识 |
 | `merchant_id` | INT | FOREIGN KEY | NULL | 商家用户ID，关联users表 |
 | `title` | VARCHAR(100) | NOT NULL | - | 商品名称 |
+| `category` | VARCHAR(50) | NULL | NULL | 商品分类 |
 | `description` | TEXT | NULL | NULL | 商品详细描述 |
 | `cover_url` | VARCHAR(255) | NOT NULL | - | 商品封面图片URL |
 | `features` | JSON | NULL | NULL | 商品特征（JSON格式，便于扩展） |
@@ -66,6 +74,8 @@
 | `average_rating` | DECIMAL(3,2) | NULL | 0.00 | 商品平均评分 (0-5) |
 | `review_count` | INT | NULL | 0 | 评价数量 |
 | `status` | ENUM | NULL | 'ON_SALE' | 商品状态：ON_SALE-在售，OFF_SALE-下架，OUT_OF_STOCK-缺货 |
+| `auto_confirm_mode` | ENUM | NULL | 'MANUAL' | 订单确认模式：AUTO-自动确认，MANUAL-手动确认，SMART-智能确认 |
+| `auto_confirm_condition` | TEXT | NULL | NULL | 自动确认条件（JSON格式） |
 | `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 商品创建时间 |
 | `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 商品更新时间 |
 
@@ -74,6 +84,8 @@
 - 外键索引: `merchant_id` → `users(id)`
 - 建议索引: `status` + `created_at`（商品列表查询）
 - 建议索引: `merchant_id` + `status`（商家商品管理）
+- 建议索引: `category`（分类查询）
+- 建议索引: `average_rating`（评分排序）
 
 **外键约束**:
 ```sql
@@ -151,7 +163,6 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 - 外键索引：`product_id` → `products(id)`
 - 外键索引：`user_id` → `users(id)`
 - 建议索引：`product_id` + `status` + `created_at`（商品评价列表查询）
-- 建议索引：`user_id`（用户评价查询）
 - 建议索引：`status`（评价审核查询）
 
 **外键约束**:
@@ -182,6 +193,228 @@ FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 ```sql
 FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 ```
+
+---
+
+### 7.1. product_discussions - 商品讨论表
+
+存储用户对商品的讨论和问答信息，支持回复和点赞功能。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | INT | PRIMARY KEY, AUTO_INCREMENT | - | 讨论ID |
+| `product_id` | INT | FOREIGN KEY, NOT NULL | - | 商品ID，关联 products 表 |
+| `user_id` | INT | FOREIGN KEY | NULL | 用户ID，关联 users 表 |
+| `user_name` | VARCHAR(255) | NULL | NULL | 用户名快照 |
+| `user_avatar` | VARCHAR(255) | NULL | NULL | 用户头像快照 |
+| `parent_id` | INT | NULL | NULL | 父评论ID（用于回复） |
+| `root_id` | INT | NULL | NULL | 根评论ID（用于评论树） |
+| `content` | TEXT | NOT NULL | - | 讨论内容 |
+| `like_count` | INT | NULL | NULL | 点赞数 |
+| `reply_count` | INT | NULL | NULL | 回复数 |
+| `status` | ENUM | NULL | NULL | 状态：APPROVED-已通过，PENDING-待审核，REJECTED-已拒绝 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 更新时间 |
+
+**索引**:
+- 主键索引: `id`
+- 外键索引: `product_id` → `products(id)`
+- 外键索引: `user_id` → `users(id)`
+- 建议索引: `product_id` + `status` + `created_at`（商品讨论列表查询）
+- 建议索引: `parent_id`（回复查询）
+- 建议索引: `root_id`（评论树查询）
+- 建议索引: `status`（讨论审核查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL
+```
+
+---
+
+### 8. addresses - 用户收货地址表
+
+存储用户的收货地址信息，支持设置默认地址。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | INT | PRIMARY KEY, AUTO_INCREMENT | - | 地址ID |
+| `user_id` | INT | FOREIGN KEY, NOT NULL | - | 用户ID |
+| `receiver_name` | VARCHAR(50) | NOT NULL | - | 收货人姓名 |
+| `receiver_phone` | VARCHAR(20) | NOT NULL | - | 收货人电话 |
+| `province` | VARCHAR(50) | NULL | NULL | 省份 |
+| `city` | VARCHAR(50) | NULL | NULL | 城市 |
+| `district` | VARCHAR(50) | NULL | NULL | 区/县 |
+| `detail_address` | VARCHAR(255) | NOT NULL | - | 详细地址 |
+| `is_default` | BOOLEAN | NULL | FALSE | 是否默认地址 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 更新时间 |
+
+**索引**:
+- 主键索引: `id`
+- 外键索引: `user_id` → `users(id)`
+- 建议索引: `user_id` + `is_default`（用户默认地址查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+```
+
+---
+
+### 9. product_snapshots - 商品快照表
+
+保存下单时的商品信息快照，确保订单历史数据不受商品信息变更影响。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | - | 快照ID |
+| `product_id` | INT | FOREIGN KEY, NOT NULL | - | 原商品ID |
+| `title` | VARCHAR(100) | NOT NULL | - | 商品名称快照 |
+| `category` | VARCHAR(50) | NULL | NULL | 分类快照 |
+| `cover_url` | VARCHAR(255) | NULL | NULL | 封面图快照 |
+| `price` | DECIMAL(10,2) | NOT NULL | - | 价格快照 |
+| `merchant_id` | INT | NULL | NULL | 商家ID快照 |
+| `merchant_name` | VARCHAR(50) | NULL | NULL | 商家名称快照 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+
+**索引**:
+- 主键索引: `id`
+- 外键索引: `product_id` → `products(id)`
+- 建议索引: `created_at`（快照时间查询）
+
+---
+
+### 10. orders - 订单表
+
+存储订单的基本信息，支持多种订单状态和商家确认模式。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | INT | PRIMARY KEY, AUTO_INCREMENT | - | 订单ID |
+| `order_no` | VARCHAR(32) | NOT NULL, UNIQUE | - | 订单号 |
+| `user_id` | INT | FOREIGN KEY, NOT NULL | - | 用户ID |
+| `address_id` | INT | FOREIGN KEY | NULL | 收货地址ID |
+| `total_amount` | DECIMAL(10,2) | NOT NULL | - | 订单总金额 |
+| `item_count` | INT | NULL | 0 | 商品种类数 |
+| `status` | ENUM | NOT NULL | 'PENDING_CONFIRMATION' | 订单状态：PENDING_CONFIRMATION-待确认，CONFIRMED-已确认，REJECTED-已拒绝，PENDING_PAYMENT-待付款，PAID-已付款，SHIPPED-已发货，DELIVERED-已送达，COMPLETED-已完成，CANCELLED-已取消，REFUNDED-已退款 |
+| `pay_expire_at` | TIMESTAMP | NULL | NULL | 支付过期时间 |
+| `receiver_name` | VARCHAR(50) | NULL | NULL | 收货人姓名 |
+| `receiver_phone` | VARCHAR(20) | NULL | NULL | 收货人电话 |
+| `receiver_address` | VARCHAR(255) | NULL | NULL | 收货地址 |
+| `remark` | VARCHAR(500) | NULL | NULL | 订单备注 |
+| `paid_at` | TIMESTAMP | NULL | NULL | 支付时间 |
+| `confirmed_at` | TIMESTAMP | NULL | NULL | 确认时间 |
+| `rejected_at` | TIMESTAMP | NULL | NULL | 拒绝时间 |
+| `reject_reason` | VARCHAR(255) | NULL | NULL | 拒绝原因 |
+| `auto_confirmed` | BOOLEAN | NULL | FALSE | 是否自动确认 |
+| `shipped_at` | TIMESTAMP | NULL | NULL | 发货时间 |
+| `completed_at` | TIMESTAMP | NULL | NULL | 完成时间 |
+| `cancelled_at` | TIMESTAMP | NULL | NULL | 取消时间 |
+| `cancel_reason` | VARCHAR(255) | NULL | NULL | 取消原因 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 更新时间 |
+
+**索引**:
+- 主键索引: `id`
+- 唯一索引: `order_no`
+- 外键索引: `user_id` → `users(id)`
+- 外键索引: `address_id` → `addresses(id)`
+- 建议索引: `user_id` + `status` + `created_at`（用户订单列表查询）
+- 建议索引: `status` + `created_at`（订单状态查询）
+- 建议索引: `created_at`（订单时间查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+FOREIGN KEY (`address_id`) REFERENCES `addresses`(`id`) ON DELETE SET NULL
+```
+
+---
+
+### 11. order_items - 订单项表
+
+存储订单中的商品明细，支持一个订单包含多个商品。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | - | 订单项ID |
+| `order_id` | INT | FOREIGN KEY, NOT NULL | - | 订单ID |
+| `product_id` | INT | FOREIGN KEY, NOT NULL | - | 商品ID |
+| `snapshot_id` | BIGINT | FOREIGN KEY, NOT NULL | - | 商品快照ID |
+| `quantity` | INT | NOT NULL | - | 购买数量 |
+| `unit_price` | DECIMAL(10,2) | NOT NULL | - | 单价（快照价格） |
+| `total_price` | DECIMAL(10,2) | NOT NULL | - | 小计金额 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+
+**索引**:
+- 主键索引: `id`
+- 外键索引: `order_id` → `orders(id)`
+- 外键索引: `product_id` → `products(id)`
+- 外键索引: `snapshot_id` → `product_snapshots(id)`
+- 建议索引: `order_id`（订单明细查询）
+- 建议索引: `product_id`（商品订单查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`order_id`) REFERENCES `orders`(`id`) ON DELETE CASCADE
+FOREIGN KEY (`snapshot_id`) REFERENCES `product_snapshots`(`id`)
+```
+
+---
+
+### 12. stock_reservations - 库存预占记录表
+
+记录订单创建时的库存预占信息，防止超卖。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | - | 预占ID |
+| `order_no` | VARCHAR(32) | NOT NULL | - | 订单号 |
+| `product_id` | INT | FOREIGN KEY, NOT NULL | - | 商品ID |
+| `quantity` | INT | NOT NULL | - | 预占数量 |
+| `status` | ENUM | NOT NULL | 'RESERVED' | 状态：RESERVED-已预占，CONFIRMED-已确认，RELEASED-已释放 |
+| `expire_at` | TIMESTAMP | NOT NULL | - | 过期时间 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 更新时间 |
+
+**索引**:
+- 主键索引: `id`
+- 唯一索引: `order_no` + `product_id`
+- 外键索引: `product_id` → `products(id)`
+- 建议索引: `expire_at`（过期预占清理）
+- 建议索引: `status`（状态查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
+```
+
+---
+
+### 13. payments - 支付记录表
+
+存储订单的支付信息，支持多种支付方式。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | - | 支付ID |
+| `order_no` | VARCHAR(32) | NOT NULL, UNIQUE | - | 订单号 |
+| `pay_no` | VARCHAR(64) | NULL | NULL | 支付流水号 |
+| `amount` | DECIMAL(10,2) | NOT NULL | - | 支付金额 |
+| `pay_method` | ENUM | NULL | NULL | 支付方式：ALIPAY-支付宝，WECHAT-微信支付，BALANCE-余额支付 |
+| `status` | ENUM | NOT NULL | 'PENDING' | 支付状态：PENDING-待支付，SUCCESS-支付成功，FAILED-支付失败，REFUNDED-已退款 |
+| `paid_at` | TIMESTAMP | NULL | NULL | 支付时间 |
+| `notify_data` | TEXT | NULL | NULL | 支付回调数据 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 更新时间 |
+
+**索引**:
+- 主键索引: `id`
+- 唯一索引: `order_no`
+- 建议索引: `pay_no`（支付流水号查询）
+- 建议索引: `status`（支付状态查询）
 
 ---
 
@@ -228,6 +461,62 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
          │              │    rating               │
          │              │    content              │
          │              └─────────────────────────┘
+         │                       │
+         │                       │ 1:N
+         │                       │
+         │              ┌─────────────────────────┐
+         │              │ product_discussions    │
+         │              ├─────────────────────────┤
+         │              │ PK id                   │
+         │              │ FK product_id           │
+         │              │ FK user_id              │
+         │              │    content              │
+         │              │    like_count           │
+         │              └─────────────────────────┘
+         │                       │
+         │                       │ 1:N
+         │                       │
+         │              ┌─────────────────────────┐
+         │              │ product_snapshots       │
+         │              ├─────────────────────────┤
+         │              │ PK id                   │
+         │              │ FK product_id           │
+         │              │    title                │
+         │              │    price                │
+         │              └─────────────────────────┘
+         │                       │
+         │                       │ 1:N
+         │                       │
+         │              ┌─────────────────────────┐
+         │              │    stock_reservations    │
+         │              ├─────────────────────────┤
+         │              │ PK id                   │
+         │              │ FK product_id           │
+         │              │    quantity             │
+         │              │    status               │
+         │              └─────────────────────────┘
+         │
+         │ 1:N
+         │
+         │  ┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐
+         │  │    addresses    │         │     orders      │         │   order_items   │
+         │  ├─────────────────┤         ├─────────────────┤         ├─────────────────┤
+         │  │ PK id           │◄────────┤ FK user_id      │◄────────┤ FK order_id     │
+         │  │ FK user_id      │   1:N   │    order_no     │   1:N   │ FK product_id   │
+         │  │    receiver     │         │    total_amount │         │ FK snapshot_id  │
+         │  └─────────────────┘         │    status       │         │    quantity     │
+         │                              └─────────────────┘         └─────────────────┘
+         │                                       │
+         │                                       │ 1:1
+         │                                       │
+         │                              ┌─────────────────┐
+         │                              │    payments     │
+         │                              ├─────────────────┤
+         │                              │ PK id           │
+         │                              │    order_no     │
+         │                              │    amount       │
+         │                              │    status       │
+         │                              └─────────────────┘
 ```
 
 ---
@@ -241,157 +530,22 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
 | products | hot_products | 1:1 | products.id = hot_products.product_id | ON DELETE CASCADE |
 | products | product_descriptions | 1:1 | products.id = product_descriptions.product_id | ON DELETE CASCADE |
 | products | product_reviews | 1:N | products.id = product_reviews.product_id | ON DELETE CASCADE |
+| products | product_discussions | 1:N | products.id = product_discussions.product_id | ON DELETE CASCADE |
+| products | product_snapshots | 1:N | products.id = product_snapshots.product_id | - |
+| products | stock_reservations | 1:N | products.id = stock_reservations.product_id | - |
 | users | product_reviews | 1:N | users.id = product_reviews.user_id | ON DELETE CASCADE |
+| users | product_discussions | 1:N | users.id = product_discussions.user_id | ON DELETE SET NULL |
+| users | addresses | 1:N | users.id = addresses.user_id | ON DELETE CASCADE |
+| users | orders | 1:N | users.id = orders.user_id | ON DELETE CASCADE |
+| addresses | orders | 1:N | addresses.id = orders.address_id | ON DELETE SET NULL |
+| orders | order_items | 1:N | orders.id = order_items.order_id | ON DELETE CASCADE |
+| product_snapshots | order_items | 1:N | product_snapshots.id = order_items.snapshot_id | - |
+| orders | payments | 1:1 | orders.order_no = payments.order_no | - |
 
 ---
 
-## 常用查询示例
 
-### 查询商品列表（带商家信息）
-```sql
-SELECT 
-    p.id,
-    p.title,
-    p.price,
-    p.stock,
-    p.status,
-    p.cover_url,
-    u.username as merchant_name
-FROM products p
-LEFT JOIN users u ON p.merchant_id = u.id
-WHERE p.status = 'ON_SALE'
-ORDER BY p.created_at DESC;
-```
 
-### 查询商品详情（含详情图片）
-```sql
-SELECT 
-    p.*,
-    u.username as merchant_name,
-    u.avatar_url as merchant_avatar
-FROM products p
-LEFT JOIN users u ON p.merchant_id = u.id
-WHERE p.id = ?;
-
--- 查询详情图片
-SELECT image_url, sort_order 
-FROM product_details_images 
-WHERE product_id = ? 
-ORDER BY sort_order;
-```
-
-### 查询热门商品
-```sql
-SELECT 
-    p.id,
-    p.title,
-    p.price,
-    p.cover_url,
-    h.hot_score
-FROM hot_products h
-JOIN products p ON h.product_id = p.id
-WHERE p.status = 'ON_SALE'
-ORDER BY h.hot_score DESC;
-```
-
-### 查询商品详情介绍
-```sql
-SELECT 
-    pd.id,
-    pd.product_id,
-    pd.content,
-    pd.created_at,
-    pd.updated_at
-FROM product_descriptions pd
-WHERE pd.product_id = ?;
-```
-
-### 查询商品评价列表（带用户信息）
-```sql
-SELECT 
-    pr.id,
-    pr.product_id,
-    pr.user_id,
-    pr.rating,
-    pr.title,
-    pr.content,
-    pr.is_anonymous,
-    pr.status,
-    pr.created_at,
-    u.username,
-    u.avatar_url
-FROM product_reviews pr
-LEFT JOIN users u ON pr.user_id = u.id
-WHERE pr.product_id = ? 
-  AND pr.status = 'APPROVED'
-ORDER BY pr.created_at DESC
-LIMIT ? OFFSET ?;
-```
-
-### 查询商品评分统计
-```sql
-SELECT 
-    AVG(rating) as average_rating,
-    COUNT(*) as review_count
-FROM product_reviews
-WHERE product_id = ? 
-  AND status = 'APPROVED';
-```
-
-### 更新商品评分统计
-```sql
-UPDATE products p
-SET 
-    average_rating = (
-        SELECT AVG(rating) 
-        FROM product_reviews 
-        WHERE product_id = p.id AND status = 'APPROVED'
-    ),
-    review_count = (
-        SELECT COUNT(*) 
-        FROM product_reviews 
-        WHERE product_id = p.id AND status = 'APPROVED'
-    )
-WHERE p.id = ?;
-```
-
----
-
-## 数据库初始化
-
-系统使用 Docker Compose 自动初始化数据库：
-
-1. **启动时自动执行**: [Start.sql](../Start.sql)
-2. **增量更新脚本**: [UpdateSchema.sql](../UpdateSchema.sql)
-
-### 初始化配置（docker-compose.yml）
-
-```yaml
-mall-mysql:
-  image: mysql:8.0
-  environment:
-    MYSQL_ROOT_PASSWORD: root123456
-    MYSQL_DATABASE: health_mall_system
-    MYSQL_USER: mall_user
-    MYSQL_PASSWORD: mall_password
-  volumes:
-    - mysql-data:/var/lib/mysql
-    - ./Start.sql:/docker-entrypoint-initdb.d/init.sql
-  command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-```
-
----
-
-## 维护建议
-
-1. **定期备份**: 建议每日备份数据库
-2. **索引优化**: 根据查询日志定期优化索引
-3. **数据清理**: 定期清理已下架商品的详情图片
-4. **监控告警**: 监控库存预警和热门商品变化
-5. **评价管理**: 定期审核用户评价，清理虚假评价
-
----
-
-*文档版本：2.0*
-*最后更新：2026-02-28*
-*更新内容：新增商品详情介绍表、商品评价表，更新商品表评分统计字段*
+*文档版本：3.1*
+*最后更新：2026-03-03*
+*更新内容：新增 product_discussions 表（商品讨论表），修正 users.role 字段说明（包含 admin 角色），修正 product_reviews 表索引说明，更新 ER 关系图和关系说明，新增商品讨论相关查询示例*

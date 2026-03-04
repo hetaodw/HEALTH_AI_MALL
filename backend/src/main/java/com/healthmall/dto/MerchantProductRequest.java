@@ -9,10 +9,13 @@ public class MerchantProductRequest {
     private String description;
     private String coverUrl;
     private String features;
+    private String descriptionContent;
     private java.math.BigDecimal price;
     private Integer stock;
     private Product.ProductStatus status;
     private List<String> detailImages;
+    private Product.AutoConfirmMode autoConfirmMode;
+    private String autoConfirmCondition;
 
     public String getTitle() {
         return title;
@@ -54,6 +57,14 @@ public class MerchantProductRequest {
         this.features = features;
     }
 
+    public String getDescriptionContent() {
+        return descriptionContent;
+    }
+
+    public void setDescriptionContent(String descriptionContent) {
+        this.descriptionContent = descriptionContent;
+    }
+
     public java.math.BigDecimal getPrice() {
         return price;
     }
@@ -84,5 +95,21 @@ public class MerchantProductRequest {
 
     public void setDetailImages(List<String> detailImages) {
         this.detailImages = detailImages;
+    }
+
+    public Product.AutoConfirmMode getAutoConfirmMode() {
+        return autoConfirmMode;
+    }
+
+    public void setAutoConfirmMode(Product.AutoConfirmMode autoConfirmMode) {
+        this.autoConfirmMode = autoConfirmMode;
+    }
+
+    public String getAutoConfirmCondition() {
+        return autoConfirmCondition;
+    }
+
+    public void setAutoConfirmCondition(String autoConfirmCondition) {
+        this.autoConfirmCondition = autoConfirmCondition;
     }
 }

@@ -28,37 +28,38 @@
   - [17. 获取商家商品详情](#17-获取商家商品详情)
   - [18. 更新商品状态](#18-更新商品状态)
   - [19. 更新商品库存](#19-更新商品库存)
+  - [20. 批量更新自动确认模式](#20-批量更新自动确认模式)
 - [商家订单管理 API](#商家订单管理-api)
-  - [20. 获取待确认订单列表](#20-获取待确认订单列表)
-  - [21. 获取商家订单列表](#21-获取商家订单列表)
-  - [22. 确认订单](#22-确认订单)
-  - [23. 拒绝订单](#23-拒绝订单)
+  - [21. 获取待确认订单列表](#21-获取待确认订单列表)
+  - [22. 获取商家订单列表](#22-获取商家订单列表)
+  - [23. 确认订单](#23-确认订单)
+  - [24. 拒绝订单](#24-拒绝订单)
 - [管理员 API](#管理员-api)
-  - [24. 创建商品 (管理员)](#24-创建商品-管理员)
-  - [25. 删除商品 (管理员)](#25-删除商品-管理员)
+  - [25. 创建商品 (管理员)](#25-创建商品-管理员)
+  - [26. 删除商品 (管理员)](#26-删除商品-管理员)
 - [订单 API](#订单-api)
-  - [26. 创建订单](#26-创建订单)
-  - [27. 查询我的订单列表](#27-查询我的订单列表)
-  - [28. 查询订单详情](#28-查询订单详情)
-  - [29. 取消订单](#29-取消订单)
-  - [30. 支付订单](#30-支付订单)
+  - [27. 创建订单](#27-创建订单)
+  - [28. 查询我的订单列表](#28-查询我的订单列表)
+  - [29. 查询订单详情](#29-查询订单详情)
+  - [30. 取消订单](#30-取消订单)
+  - [31. 支付订单](#31-支付订单)
 - [地址管理 API](#地址管理-api)
-  - [31. 获取用户地址列表](#31-获取用户地址列表)
-  - [32. 获取默认地址](#32-获取默认地址)
-  - [33. 获取地址详情](#33-获取地址详情)
-  - [34. 创建地址](#34-创建地址)
-  - [35. 更新地址](#35-更新地址)
-  - [36. 删除地址](#36-删除地址)
-  - [37. 设置默认地址](#37-设置默认地址)
+  - [32. 获取用户地址列表](#32-获取用户地址列表)
+  - [33. 获取默认地址](#33-获取默认地址)
+  - [34. 获取地址详情](#34-获取地址详情)
+  - [35. 创建地址](#35-创建地址)
+  - [36. 更新地址](#36-更新地址)
+  - [37. 删除地址](#37-删除地址)
+  - [38. 设置默认地址](#38-设置默认地址)
 - [商品详情介绍 API](#商品详情介绍-api)
-  - [38. 获取商品详情介绍](#38-获取商品详情介绍)
-  - [39. 创建或更新商品详情介绍](#39-创建或更新商品详情介绍)
-  - [40. 删除商品详情介绍](#40-删除商品详情介绍)
+  - [39. 获取商品详情介绍](#39-获取商品详情介绍)
+  - [40. 创建或更新商品详情介绍](#40-创建或更新商品详情介绍)
+  - [41. 删除商品详情介绍](#41-删除商品详情介绍)
 - [商品评价 API](#商品评价-api)
-  - [41. 获取商品评价列表](#41-获取商品评价列表)
-  - [42. 获取评价详情](#42-获取评价详情)
-  - [43. 创建商品评价](#43-创建商品评价)
-  - [44. 删除商品评价](#44-删除商品评价)
+  - [42. 获取商品评价列表](#42-获取商品评价列表)
+  - [43. 获取评价详情](#43-获取评价详情)
+  - [44. 创建商品评价](#44-创建商品评价)
+  - [45. 删除商品评价](#45-删除商品评价)
 - [测试用例 (cURL)](#测试用例-curl)
 - [状态码说明](#状态码说明)
 - [角色说明](#角色说明)
@@ -67,7 +68,7 @@
 
 ## 商品详情介绍 API
 
-### 38. 获取商品详情介绍
+### 39. 获取商品详情介绍
 
 **接口**: `GET /v1/product/descriptions/{productId}`
 
@@ -93,7 +94,7 @@
 
 ---
 
-### 39. 创建或更新商品详情介绍
+### 40. 创建或更新商品详情介绍
 
 **接口**: `POST /v1/product/descriptions/{productId}`
 
@@ -133,7 +134,7 @@
 
 ---
 
-### 40. 删除商品详情介绍
+### 41. 删除商品详情介绍
 
 **接口**: `DELETE /v1/product/descriptions/{productId}`
 
@@ -157,7 +158,7 @@
 
 ## 商品评价 API
 
-### 41. 获取商品评价列表
+### 42. 获取商品评价列表
 
 **接口**: `GET /v1/product/reviews/{productId}`
 
@@ -212,7 +213,7 @@
 
 ---
 
-### 42. 获取评价详情
+### 43. 获取评价详情
 
 **接口**: `GET /v1/product/reviews/detail/{reviewId}`
 
@@ -225,7 +226,7 @@
 
 ---
 
-### 43. 创建商品评价
+### 44. 创建商品评价
 
 **接口**: `POST /v1/product/reviews/{productId}`
 
@@ -277,7 +278,7 @@
 
 ---
 
-### 44. 删除商品评价
+### 45. 删除商品评价
 
 **接口**: `DELETE /v1/product/reviews/{reviewId}`
 
@@ -594,7 +595,7 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
         "coverUrl": "http://example.com/product1.jpg",
         "price": 59.90,
         "stock": 100,
-        "category": "保健品",
+        "category": "HEALTH_PRODUCTS",
         "isHot": true
       }
     ],
@@ -644,7 +645,7 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
       "coverUrl": "http://example.com/product1.jpg",
       "price": 59.90,
       "stock": 100,
-      "category": "保健品",
+      "category": "HEALTH_PRODUCTS",
       "isHot": true
     }
   ]
@@ -674,7 +675,7 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
     "merchantId": 3,
     "merchantName": "健康商城",
     "title": "天然维C片500mg",
-    "category": "保健品",
+    "category": "HEALTH_PRODUCTS",
     "description": "富含维生素 C，增强免疫力，抗氧化",
     "descriptionContent": "这款天然维 C 片采用优质原料，每片含有 500mg 维生素 C，能够有效增强免疫力，抗氧化，促进胶原蛋白合成。适合日常保健，增强身体抵抗力。",
     "coverUrl": "http://localhost:8080/v1/static/product/cover/2026/01/30/xxx.png",
@@ -772,33 +773,57 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
 
 **接口**: `POST /v1/merchant/products`
 
-**请求头**: `Authorization: Bearer {token}` (需要MERCHANT角色)
+**请求头**: 
+- `Authorization: Bearer {token}` (需要MERCHANT角色)
+- `Content-Type: multipart/form-data`
 
-**请求体**:
-```json
-{
-  "title": "维生素C片",
-  "category": "保健品",
-  "description": "提高免疫力",
-  "coverUrl": "http://example.com/cover.jpg",
-  "features": "天然提取",
-  "price": 59.90,
-  "stock": 100,
-  "status": "ACTIVE"
-}
-```
-
-**字段说明**:
-| 字段 | 类型 | 必填 | 说明 |
+**请求参数**:
+| 参数 | 类型 | 必填 | 说明 |
 |------|------|------|------|
 | title | string | 是 | 商品标题 |
 | category | string | 是 | 商品分类 |
-| description | string | 否 | 商品描述 |
-| coverUrl | string | 否 | 封面图URL |
-| features | string | 否 | 商品特点 |
+| description | string | 是 | 商品描述 |
+| coverImage | file | 是 | 封面图片文件 |
+| features | string | 否 | 商品特性（JSON格式字符串） |
+| descriptionContent | string | 否 | 商品详细文字介绍内容 |
 | price | decimal | 是 | 价格 |
 | stock | int | 是 | 库存 |
-| status | string | 否 | 状态: ACTIVE/INACTIVE/PENDING |
+| status | string | 否 | 状态: ON_SALE(在售)/OFF_SALE(下架)/OUT_OF_STOCK(缺货)，默认ON_SALE |
+| autoConfirmMode | string | 否 | 自动确认模式: AUTO-自动确认, MANUAL-手动确认, SMART-智能确认（默认MANUAL） |
+| autoConfirmCondition | string | 否 | 智能确认条件（JSON格式），仅在SMART模式下有效 |
+| detailImages | file[] | 否 | 商品详情图片列表（可选） |
+
+**商品分类枚举值**:
+- HEALTH_PRODUCTS - 保健品
+- MEDICAL_DEVICES - 医疗器械
+- HEALTH_FOOD - 健康食品
+- SPORTS_FITNESS - 运动健身
+- MATERNAL_BABY - 母婴用品
+
+**商品特性 (features) 格式示例**:
+```json
+{
+  "brand": "品牌名称",
+  "specification": "规格说明",
+  "origin": "产地",
+  "shelfLife": "保质期"
+}
+```
+
+**请求示例 (cURL)**:
+```bash
+curl -X POST http://localhost:8080/v1/merchant/products \
+  -H "Authorization: Bearer {token}" \
+  -F "title=维生素C片" \
+  -F "category=HEALTH_PRODUCTS" \
+  -F "description=提高免疫力" \
+  -F "price=59.90" \
+  -F "stock=100" \
+  -F "status=ON_SALE" \
+  -F "autoConfirmMode=MANUAL" \
+  -F "features={\"brand\":\"健康品牌\",\"specification\":\"500mg/片\",\"origin\":\"中国\"}" \
+  -F "coverImage=@/path/to/cover.jpg"
+```
 
 **响应示例**:
 ```json
@@ -808,10 +833,13 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
   "data": {
     "id": 1,
     "title": "维生素C片",
-    "category": "保健品",
+    "category": "HEALTH_PRODUCTS",
     "price": 59.90,
     "stock": 100,
-    "status": "ACTIVE",
+    "status": "ON_SALE",
+    "autoConfirmMode": "MANUAL",
+    "autoConfirmCondition": null,
+    "descriptionContent": "这款天然维 C 片采用优质原料，每片含有 500mg 维生素 C，能够有效增强免疫力，抗氧化，促进胶原蛋白合成。",
     "createdAt": "2024-01-15 10:30:00"
   }
 }
@@ -830,7 +858,23 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
 
 **请求头**: `Authorization: Bearer {token}`
 
-**请求体**: 同添加商品
+**请求参数**: 同添加商品（所有字段可选）
+
+**字段说明**:
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| title | string | 否 | 商品标题 |
+| category | string | 否 | 商品分类 |
+| description | string | 否 | 商品描述 |
+| coverImage | file | 否 | 封面图片文件 |
+| features | string | 否 | 商品特性（JSON格式字符串） |
+| descriptionContent | string | 否 | 商品详细文字介绍内容 |
+| price | decimal | 否 | 价格 |
+| stock | int | 否 | 库存 |
+| status | string | 否 | 状态: ON_SALE(在售)/OFF_SALE(下架)/OUT_OF_STOCK(缺货) |
+| autoConfirmMode | string | 否 | 自动确认模式: AUTO-自动确认, MANUAL-手动确认, SMART-智能确认 |
+| autoConfirmCondition | string | 否 | 智能确认条件（JSON格式），仅在SMART模式下有效 |
+| detailImages | file[] | 否 | 商品详情图片列表 |
 
 **响应示例**: 同添加商品响应
 
@@ -882,10 +926,10 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
       {
         "id": 1,
         "title": "维生素C片",
-        "category": "保健品",
+        "category": "HEALTH_PRODUCTS",
         "price": 59.90,
         "stock": 100,
-        "status": "ACTIVE",
+        "status": "ON_SALE",
         "createdAt": "2024-01-15 10:30:00"
       }
     ],
@@ -925,7 +969,7 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
 **请求参数**:
 | 参数 | 类型 | 必填 | 说明 |
 |------|------|------|------|
-| status | string | 是 | 状态: ACTIVE/INACTIVE/PENDING |
+| status | string | 是 | 状态: ON_SALE(在售)/OFF_SALE(下架)/OUT_OF_STOCK(缺货) |
 
 **响应示例**:
 ```json
@@ -965,9 +1009,56 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
 
 ---
 
+### 20. 批量更新自动确认模式
+
+**接口**: `PATCH /v1/merchant/products/auto-confirm-mode`
+
+**请求头**: `Authorization: Bearer {token}` (需要MERCHANT角色)
+
+**请求体**:
+```json
+{
+  "productIds": [1, 2, 3],
+  "autoConfirmMode": "AUTO"
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| productIds | array | 是 | 商品ID列表 |
+| autoConfirmMode | string | 是 | 自动确认模式: AUTO-自动确认, MANUAL-手动确认, SMART-智能确认 |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "successCount": 2,
+    "failedCount": 1,
+    "failedProducts": [
+      {
+        "productId": 3,
+        "reason": "商品不存在"
+      }
+    ]
+  }
+}
+```
+
+**响应字段说明**:
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| successCount | int | 成功更新的商品数量 |
+| failedCount | int | 更新失败的商品数量 |
+| failedProducts | array | 失败的商品列表，包含商品ID和失败原因 |
+
+---
+
 ## 商家订单管理 API
 
-### 20. 获取待确认订单列表
+### 21. 获取待确认订单列表
 
 **接口**: `GET /v1/merchant/orders/pending`
 
@@ -999,7 +1090,7 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
           "productId": 1,
           "productTitle": "维生素C片",
           "productCoverUrl": "/v1/static/product/cover/2026/01/30/xxx.png",
-          "category": "保健品",
+          "category": "HEALTH_PRODUCTS",
           "merchantName": "MALL",
           "quantity": 2,
           "unitPrice": 999.00,
@@ -1123,14 +1214,27 @@ curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
 ```json
 {
   "name": "维生素C片",
-  "category": "保健品",
+  "category": "HEALTH_PRODUCTS",
   "price": 59.90,
   "stock": 100,
   "description": "提高免疫力",
   "coverUrl": "http://example.com/cover.jpg",
-  "features": "天然提取"
+  "features": "天然提取",
+  "descriptionContent": "这款天然维 C 片采用优质原料，每片含有 500mg 维生素 C，能够有效增强免疫力，抗氧化，促进胶原蛋白合成。"
 }
 ```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| name | string | 是 | 商品名称 |
+| category | string | 是 | 商品分类 |
+| price | decimal | 是 | 价格 |
+| stock | int | 是 | 库存 |
+| description | string | 是 | 商品描述 |
+| coverUrl | string | 否 | 封面图片URL |
+| features | string | 否 | 商品特性（JSON格式字符串） |
+| descriptionContent | string | 否 | 商品详细文字介绍内容 |
 
 **响应示例**:
 ```json
@@ -1198,7 +1302,7 @@ curl -X GET http://localhost:8080/v1/user/profile \
 
 ### 4. 获取商品列表
 ```bash
-curl -X GET "http://localhost:8080/v1/products?page=1&size=10&category=保健品"
+curl -X GET "http://localhost:8080/v1/products?page=1&size=10&category=HEALTH_PRODUCTS"
 ```
 
 ### 5. 搜索商品
@@ -1235,15 +1339,16 @@ curl -X POST http://localhost:8080/v1/merchant/products \
     "title": "蛋白粉",
     "category": "健身补剂",
     "description": "增肌必备",
+    "descriptionContent": "这款蛋白粉采用优质乳清蛋白，每份含有25g蛋白质，能够有效促进肌肉生长和恢复。适合健身人群日常补充。",
     "price": 199.00,
     "stock": 50,
-    "status": "ACTIVE"
+    "status": "ON_SALE"
   }'
 ```
 
 ### 10. 商家更新商品状态
 ```bash
-curl -X PATCH "http://localhost:8080/v1/merchant/products/1/status?status=INACTIVE" \
+curl -X PATCH "http://localhost:8080/v1/merchant/products/1/status?status=OFF_SALE" \
   -H "Authorization: Bearer {merchant_token}"
 ```
 
@@ -1257,7 +1362,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 
 ## 订单 API
 
-### 26. 创建订单
+### 27. 创建订单
 
 **接口**: `POST /v1/orders`
 
@@ -1277,8 +1382,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
       "quantity": 1
     }
   ],
-  "remark": "请尽快发货",
-  "autoConfirm": true
+  "remark": "请尽快发货"
 }
 ```
 
@@ -1290,13 +1394,32 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
 | items[].productId | int | 是 | 商品ID |
 | items[].quantity | int | 是 | 购买数量 |
 | remark | string | 否 | 订单备注 |
-| autoConfirm | boolean | 否 | 是否自动确认订单，默认false。当设置为true且商品库存充足时，订单将自动跳过"待商家确认"状态，直接进入"待付款"状态 |
+
+**订单自动确认规则**:
+订单是否自动确认取决于订单中所有商品的 `autoConfirmMode` 设置：
+
+1. **AUTO（自动确认）模式**：
+   - 当商品库存充足时，订单自动确认
+   - 库存不足时，订单需要商家手动确认
+
+2. **MANUAL（手动确认）模式**：
+   - 所有订单都需要商家手动确认
+   - 订单状态为 `PENDING_CONFIRMATION`（待商家确认）
+
+3. **SMART（智能确认）模式**：
+   - 根据订单条件智能判断是否自动确认
+   - 支持的条件包括：订单金额、用户评分、库存阈值等
+   - 条件在商品的 `autoConfirmCondition` 字段中配置（JSON格式）
+
+**订单状态说明**:
+- `PENDING_CONFIRMATION`（待商家确认）：订单需要商家手动确认
+- `PENDING_PAYMENT`（待付款）：订单已确认，等待用户付款
 
 **说明**:
-- 当 `autoConfirm` 设置为 `true` 时，系统会检查所有商品的库存是否充足
-- 如果所有商品库存充足，订单将自动确认，状态直接变为 `PENDING_PAYMENT`（待付款）
-- 如果任一商品库存不足，订单仍需商家手动确认，状态为 `PENDING_CONFIRMATION`（待商家确认）
-- 默认情况下（`autoConfirm` 为 `false`），订单需要商家手动确认
+- 如果订单中任一商品为 `MANUAL` 模式，则整个订单需要商家手动确认
+- 如果订单中所有商品为 `AUTO` 模式且库存充足，则订单自动确认
+- `SMART` 模式的商品根据配置的条件判断是否自动确认
+- 商家可以在添加或编辑商品时设置 `autoConfirmMode` 和 `autoConfirmCondition`
 
 **响应示例**:
 ```json
@@ -1310,6 +1433,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
     "totalAmount": 2064.00,
     "itemCount": 2,
     "status": "PENDING_PAYMENT",
+    "autoConfirmed": true,
     "payExpireAt": "2026-02-13T13:23:24.865534",
     "receiverName": "张三",
     "receiverPhone": "13800138001",
@@ -1327,7 +1451,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
         "productId": 1,
         "productTitle": "test",
         "productCoverUrl": "/v1/static/product/cover/2026/01/30/xxx.png",
-        "category": "保健品",
+        "category": "HEALTH_PRODUCTS",
         "merchantName": "MALL",
         "quantity": 2,
         "unitPrice": 999.00,
@@ -1338,7 +1462,7 @@ curl -X PATCH "http://localhost:8080/v1/merchant/products/1/stock?stock=200" \
         "productId": 2,
         "productTitle": "测试商品",
         "productCoverUrl": "/v1/static/product/cover/2026/01/30/xxx.png",
-        "category": "保健品",
+        "category": "HEALTH_PRODUCTS",
         "merchantName": "MALL",
         "quantity": 1,
         "unitPrice": 66.00,

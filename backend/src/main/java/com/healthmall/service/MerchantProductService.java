@@ -3,12 +3,15 @@ package com.healthmall.service;
 import com.healthmall.dto.MerchantProductRequest;
 import com.healthmall.dto.MerchantProductResponse;
 import com.healthmall.dto.PageResponse;
+import com.healthmall.dto.BatchUpdateAutoConfirmModeRequest;
+import com.healthmall.dto.BatchUpdateResponse;
 import com.healthmall.entity.Product;
 import com.healthmall.entity.ProductDetailsImage;
 import com.healthmall.entity.User;
 import com.healthmall.repository.ProductDetailsImageRepository;
 import com.healthmall.repository.ProductRepository;
 import com.healthmall.repository.UserRepository;
+import com.healthmall.constants.ProductCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -48,17 +51,36 @@ public class MerchantProductService {
             throw new RuntimeException("只有商家才能添加商品");
         }
 
+        if (!ProductCategory.isValidCategory(request.getCategory())) {
+            throw new RuntimeException("无效的商品分类");
+        }
+
         Product product = new Product();
         product.setMerchantId(merchantId);
         product.setTitle(request.getTitle());
         product.setCategory(request.getCategory());
         product.setDescription(request.getDescription());
         product.setCoverUrl(request.getCoverUrl());
-        product.setFeatures(request.getFeatures());
+        product.setDescriptionContent(request.getDescriptionContent());
+        
+        String features = request.getFeatures();
+        if (features != null && !features.trim().isEmpty()) {
+            try {
+                com.alibaba.fastjson2.JSON.parse(features);
+                product.setFeatures(features);
+            } catch (Exception e) {
+                product.setFeatures(null);
+            }
+        } else {
+            product.setFeatures(null);
+        }
+        
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
         product.setSales(0);
         product.setStatus(request.getStatus() != null ? request.getStatus() : Product.ProductStatus.ON_SALE);
+        product.setAutoConfirmMode(request.getAutoConfirmMode() != null ? request.getAutoConfirmMode() : Product.AutoConfirmMode.MANUAL);
+        product.setAutoConfirmCondition(request.getAutoConfirmCondition());
 
         Product savedProduct = productRepository.save(product);
         
@@ -86,19 +108,40 @@ public class MerchantProductService {
             throw new RuntimeException("无权修改此商品");
         }
 
+        if (!ProductCategory.isValidCategory(request.getCategory())) {
+            throw new RuntimeException("无效的商品分类");
+        }
+
         product.setTitle(request.getTitle());
         product.setCategory(request.getCategory());
         product.setDescription(request.getDescription());
+        product.setDescriptionContent(request.getDescriptionContent());
         // 只有传入新的coverUrl时才更新，否则保留原值
         if (request.getCoverUrl() != null && !request.getCoverUrl().isEmpty()) {
             product.setCoverUrl(request.getCoverUrl());
         }
-        product.setFeatures(request.getFeatures());
+        
+        String features = request.getFeatures();
+        if (features != null && !features.trim().isEmpty()) {
+            try {
+                com.alibaba.fastjson2.JSON.parse(features);
+                product.setFeatures(features);
+            } catch (Exception e) {
+                product.setFeatures(null);
+            }
+        } else {
+            product.setFeatures(null);
+        }
+        
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
         if (request.getStatus() != null) {
             product.setStatus(request.getStatus());
         }
+        if (request.getAutoConfirmMode() != null) {
+            product.setAutoConfirmMode(request.getAutoConfirmMode());
+        }
+        product.setAutoConfirmCondition(request.getAutoConfirmCondition());
 
         Product updatedProduct = productRepository.save(product);
         
@@ -243,6 +286,52 @@ public class MerchantProductService {
                 .collect(Collectors.toList());
         response.setDetailImages(imageUrls);
         
+        return response;
+    }
+
+    @Transactional
+    public BatchUpdateResponse batchUpdateAutoConfirmMode(Integer merchantId, BatchUpdateAutoConfirmModeRequest request) {
+        logger.info("Batch update auto-confirm mode - merchantId: {}, productIds: {}, mode: {}", 
+                    merchantId, request.getProductIds(), request.getAutoConfirmMode());
+
+        BatchUpdateResponse response = new BatchUpdateResponse();
+
+        if (request.getProductIds() == null || request.getProductIds().isEmpty()) {
+            throw new RuntimeException("商品ID列表不能为空");
+        }
+
+        if (request.getAutoConfirmMode() == null) {
+            throw new RuntimeException("自动确认模式不能为空");
+        }
+
+        for (Integer productId : request.getProductIds()) {
+            try {
+                Product product = productRepository.findById(productId)
+                        .orElse(null);
+
+                if (product == null) {
+                    response.addFailedProduct(productId, "商品不存在");
+                    continue;
+                }
+
+                if (!product.getMerchantId().equals(merchantId)) {
+                    response.addFailedProduct(productId, "无权修改此商品");
+                    continue;
+                }
+
+                product.setAutoConfirmMode(request.getAutoConfirmMode());
+                productRepository.save(product);
+                response.incrementSuccess();
+
+            } catch (Exception e) {
+                logger.error("更新商品自动确认模式失败 - productId: {}", productId, e);
+                response.addFailedProduct(productId, "更新失败: " + e.getMessage());
+            }
+        }
+
+        logger.info("Batch update completed - success: {}, failed: {}", 
+                    response.getSuccessCount(), response.getFailedCount());
+
         return response;
     }
 }

@@ -131,7 +131,7 @@ public class ProductService {
     }
 
     public Integer createProduct(String name, String category, BigDecimal price,
-                                 Integer stock, String description, String coverUrl, String features) {
+                                 Integer stock, String description, String coverUrl, String features, String descriptionContent) {
         Product product = new Product();
         product.setTitle(name);
         product.setCategory(category);
@@ -140,6 +140,7 @@ public class ProductService {
         product.setDescription(description);
         product.setCoverUrl(coverUrl != null ? coverUrl : "https://via.placeholder.com/300");
         product.setFeatures(features);
+        product.setDescriptionContent(descriptionContent);
 
         Product savedProduct = productRepository.save(product);
         return savedProduct.getId();

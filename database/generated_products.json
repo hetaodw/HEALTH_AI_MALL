@@ -1,0 +1,4212 @@
+{
+  "total_products": 210,
+  "categories_summary": {
+    "HEALTH_PRODUCTS": 50,
+    "MEDICAL_DEVICES": 40,
+    "HEALTH_FOOD": 40,
+    "SPORTS_FITNESS": 40,
+    "MATERNAL_BABY": 40
+  },
+  "products": [
+    {
+      "title": "天然维生素 C 咀嚼片增强免疫力成人儿童适用橙味 100 片",
+      "description": "补充维 C 增强抵抗力，酸甜橙味",
+      "description_content": "精选天然针叶樱桃提取，每片含维生素 C 丰富，有助于维持免疫系统健康。适合成人及儿童日常补充，酸甜橙味易于接受，每日咀嚼即可。",
+      "features": {
+        "brand": "健康之源",
+        "specification": "100 片/瓶",
+        "origin": "中国"
+      },
+      "price": 59.9,
+      "stock": 320,
+      "sales": 1580,
+      "average_rating": 4.8,
+      "review_count": 156,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "深海鱼油软胶囊高纯度 Omega-3 辅助降血脂中老年保健品",
+      "description": "高纯度鱼油，呵护心脑血管健康",
+      "description_content": "源自深海纯净鱼油，富含 Omega-3 脂肪酸，有助于调节血脂，维护心血管健康。特别适合中老年人群日常保养，无腥味易吞咽，建议随餐服用。",
+      "features": {
+        "brand": "海洋之心",
+        "specification": "60 粒/瓶",
+        "origin": "新西兰"
+      },
+      "price": 128.0,
+      "stock": 150,
+      "sales": 890,
+      "average_rating": 4.7,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "液体钙软胶囊维生素 D3 配合吸收骨骼健康成人老年人补钙",
+      "description": "液体钙易吸收，添加维 D 助钙质",
+      "description_content": "采用液体钙配方，比固体钙更易吸收利用。特别添加维生素 D3，促进钙质沉积于骨骼。适合骨质流失人群及老年人，预防骨质疏松，每日两粒。",
+      "features": {
+        "brand": "骨力壮",
+        "specification": "90 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 89.5,
+      "stock": 200,
+      "sales": 1200,
+      "average_rating": 4.6,
+      "review_count": 98,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "成人益生菌粉调理肠道菌群改善便秘腹泻冻干粉技术存活率高",
+      "description": "调理肠道菌群，改善消化问题",
+      "description_content": "采用冻干技术锁定益生菌活性，直达肠道。含有多种有益菌株，帮助平衡肠道菌群，缓解便秘或腹泻不适。独立包装方便携带，温水冲服即可。",
+      "features": {
+        "brand": "肠乐舒",
+        "specification": "30 袋/盒",
+        "origin": "中国"
+      },
+      "price": 199.0,
+      "stock": 80,
+      "sales": 650,
+      "average_rating": 4.9,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "胶原蛋白肽粉美容养颜保湿紧致肌肤女性口服营养补充剂",
+      "description": "补充胶原蛋白，保持肌肤弹性",
+      "description_content": "小分子胶原蛋白肽，易于人体吸收利用。有助于改善皮肤水分，增加弹性，减少细纹。适合爱美女性日常内服保养，搭配维生素 C 效果更佳，无味易溶。",
+      "features": {
+        "brand": "美丽密码",
+        "specification": "200g/罐",
+        "origin": "日本"
+      },
+      "price": 258.0,
+      "stock": 120,
+      "sales": 430,
+      "average_rating": 4.5,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "男士复合维生素矿物质片多种营养补充抗疲劳增强体力精力",
+      "description": "专为男士设计，补充多种营养",
+      "description_content": "针对男性生理特点配方，含有多种维生素及矿物质，如锌、硒等。有助于缓解工作压力带来的疲劳感，增强体力与精力。每日一片，方便简单。",
+      "features": {
+        "brand": "劲能士",
+        "specification": "60 片/瓶",
+        "origin": "澳大利亚"
+      },
+      "price": 145.0,
+      "stock": 250,
+      "sales": 980,
+      "average_rating": 4.7,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "女士复合维生素铁叶酸补充经期营养面色红润健康备孕可用",
+      "description": "补充铁质叶酸，呵护女性健康",
+      "description_content": "特别添加铁元素和叶酸，帮助改善面色苍白，补充经期流失营养。适合备孕及日常女性保养，维持身体代谢正常。温和配方，不刺激肠胃，每日推荐。",
+      "features": {
+        "brand": "丽人行",
+        "specification": "90 片/瓶",
+        "origin": "德国"
+      },
+      "price": 168.0,
+      "stock": 180,
+      "sales": 760,
+      "average_rating": 4.8,
+      "review_count": 145,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "褪黑素维生素 B6 片改善睡眠质量缓解失眠多梦成人非处方",
+      "description": "辅助改善睡眠，缓解失眠困扰",
+      "description_content": "科学配比褪黑素与维生素 B6，有助于缩短入睡时间，改善睡眠质量。适合作息不规律或轻度失眠人群。非药物依赖，建议睡前半小时服用，不宜过量。",
+      "features": {
+        "brand": "安睡宝",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 79.0,
+      "stock": 300,
+      "sales": 1100,
+      "average_rating": 4.4,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "辅酶 Q10 软胶囊保护心脏健康抗氧化中老年心血管营养补充",
+      "description": "呵护心脏健康，强效抗氧化",
+      "description_content": "高含量辅酶 Q10，为心脏提供动力，有助于维护心血管系统健康。具有抗氧化作用，延缓细胞衰老。适合中老年人群及工作压力大者，随餐服用吸收好。",
+      "features": {
+        "brand": "心动力",
+        "specification": "50 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 299.0,
+      "stock": 90,
+      "sales": 320,
+      "average_rating": 4.9,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "氨糖软骨素钙片修复关节磨损缓解疼痛中老年父母关节健康",
+      "description": "修复关节软骨，缓解关节疼痛",
+      "description_content": "含有氨基葡萄糖和软骨素，有助于修复受损关节软骨，增加关节滑液。适合关节磨损、疼痛的中老年人群。配合钙质补充，增强骨骼强度，每日两次。",
+      "features": {
+        "brand": "关节灵",
+        "specification": "120 片/瓶",
+        "origin": "加拿大"
+      },
+      "price": 218.0,
+      "stock": 140,
+      "sales": 550,
+      "average_rating": 4.6,
+      "review_count": 92,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_1_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "天然维生素 C 咀嚼片增强免疫力成人儿童适用",
+      "description": "补充维 C 提升抵抗力酸甜口味",
+      "description_content": "富含天然维生素 C，有助于增强免疫系统功能，适合成人及儿童日常补充。咀嚼片设计，口感酸甜，易于吸收，每日一片即可满足需求。",
+      "features": {
+        "brand": "汤臣倍健",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 59.9,
+      "stock": 300,
+      "sales": 1500,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "深海鱼油软胶囊 Omega-3 辅助降血脂中老年保健品",
+      "description": "纯净鱼油呵护心血管健康",
+      "description_content": "精选深海鱼油提取，富含 Omega-3 不饱和脂肪酸，辅助调节血脂，维护心血管健康。适合中老年人群日常保健，无腥味易吞咽。",
+      "features": {
+        "brand": "Swisse",
+        "specification": "90 粒/瓶",
+        "origin": "澳大利亚"
+      },
+      "price": 128.0,
+      "stock": 150,
+      "sales": 800,
+      "average_rating": 4.7,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "液体钙软胶囊维生素 D 搭配促进吸收骨骼健康",
+      "description": "钙 D 同补强健骨骼防骨质疏松",
+      "description_content": "特别添加维生素 D，促进钙质吸收，液体钙形式更易消化。适合中老年人及需要补钙人群，预防骨质疏松，维持骨骼密度。",
+      "features": {
+        "brand": "钙尔奇",
+        "specification": "100 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 89.5,
+      "stock": 200,
+      "sales": 1200,
+      "average_rating": 4.9,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "成人益生菌粉调理肠胃改善便秘腹泻肠道健康",
+      "description": "百亿活性菌株平衡肠道菌群",
+      "description_content": "含有多种活性益生菌株，耐胃酸直达肠道，有效调理肠胃功能，改善便秘腹泻问题。独立包装，方便携带，冷水可冲服。",
+      "features": {
+        "brand": "合生元",
+        "specification": "30 袋/盒",
+        "origin": "中国"
+      },
+      "price": 198.0,
+      "stock": 100,
+      "sales": 600,
+      "average_rating": 4.6,
+      "review_count": 80,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "胶原蛋白肽粉美容养颜保湿抗衰老女性口服饮品",
+      "description": "小分子肽易吸收肌肤弹润",
+      "description_content": "采用小分子胶原蛋白肽，吸收率高，有助于改善肌肤弹性，保湿抗衰老。适合女性日常美容保养，搭配维生素 C 效果更佳。",
+      "features": {
+        "brand": "Fancl",
+        "specification": "30 支/盒",
+        "origin": "日本"
+      },
+      "price": 258.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.5,
+      "review_count": 65,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "复合维生素矿物质片男女通用多种营养全面补充",
+      "description": "一片满足每日所需多种营养素",
+      "description_content": "涵盖多种维生素和矿物质，全面补充日常营养缺失，增强体力精力。适合工作压力大及饮食不规律人群，每日一片方便省心。",
+      "features": {
+        "brand": "21 金维他",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 45.0,
+      "stock": 400,
+      "sales": 1800,
+      "average_rating": 4.7,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "褪黑素维生素 B6 片改善睡眠质量缓解失眠多梦",
+      "description": "科学配方辅助入睡安神助眠",
+      "description_content": "特别添加维生素 B6，协同褪黑素调节生物钟，改善睡眠质量，缓解失眠多梦。适合睡眠障碍人群，建议睡前半小时服用。",
+      "features": {
+        "brand": "紫光古汉",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 68.0,
+      "stock": 250,
+      "sales": 900,
+      "average_rating": 4.4,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "氨糖软骨素钙片修复关节软骨缓解关节疼痛中老年",
+      "description": "养护关节灵活行走上下楼梯",
+      "description_content": "富含氨糖和软骨素，修复受损关节软骨，补充关节滑液，缓解关节疼痛。适合中老年及运动人群，保护关节健康灵活。",
+      "features": {
+        "brand": "Move Free",
+        "specification": "80 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 159.0,
+      "stock": 120,
+      "sales": 700,
+      "average_rating": 4.8,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "富马酸亚铁口服液补铁补血改善贫血女性孕期适用",
+      "description": "温和补铁不易便秘吸收率高",
+      "description_content": "采用富马酸亚铁配方，温和不刺激肠胃，有效改善缺铁性贫血。适合女性孕期及经期补充，口感好，无铁腥味，吸收效率高。",
+      "features": {
+        "brand": "红桃 K",
+        "specification": "10 支/盒",
+        "origin": "中国"
+      },
+      "price": 79.9,
+      "stock": 180,
+      "sales": 550,
+      "average_rating": 4.6,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "大豆卵磷脂软胶囊清理血管垃圾辅助降血脂三高",
+      "description": "血管清道夫维护心脑血管健康",
+      "description_content": "提取自非转基因大豆，富含磷脂酰胆碱，有助于清理血管垃圾，辅助调节血脂血压。适合三高人群及脑力劳动者日常保健。",
+      "features": {
+        "brand": "康恩贝",
+        "specification": "100 粒/瓶",
+        "origin": "中国"
+      },
+      "price": 99.0,
+      "stock": 220,
+      "sales": 1100,
+      "average_rating": 4.7,
+      "review_count": 140,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_2_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "天然维生素 C 咀嚼片增强免疫力成人儿童通用 100 片",
+      "description": "补充维 C 增强抵抗力，天然提取口感好",
+      "description_content": "精选天然针叶樱桃提取，每片含维生素 C 丰富，适合日常补充。酸甜口味，成人儿童均可食用，帮助增强免疫力，促进胶原蛋白合成，维护身体健康。",
+      "features": {
+        "brand": "汤臣倍健",
+        "specification": "100 片/瓶",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 350,
+      "sales": 1500,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "深海鱼油软胶囊富含 EPA DHA 中老年心血管健康保养",
+      "description": "深海提取鱼油，辅助调节血脂健康",
+      "description_content": "源自秘鲁深海鱼油，富含 Omega-3 不饱和脂肪酸。有助于维护心血管健康，辅助调节血脂，适合中老年人群日常保健。无腥味，易吞咽，每日两粒即可。",
+      "features": {
+        "brand": "Swisse",
+        "specification": "90 粒/瓶",
+        "origin": "澳大利亚"
+      },
+      "price": 159.0,
+      "stock": 200,
+      "sales": 800,
+      "average_rating": 4.7,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "液体钙软胶囊维生素 D 同补中老年成人补钙骨骼健康",
+      "description": "钙维 D 同补，吸收更好骨骼更强健",
+      "description_content": "特别添加维生素 D，促进钙质吸收。液体钙形式，更易吞咽消化。适合中老年人及需要补钙的成人，预防骨质疏松，维护骨骼密度，让行动更灵活。",
+      "features": {
+        "brand": "钙尔奇",
+        "specification": "60 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 128.0,
+      "stock": 450,
+      "sales": 1200,
+      "average_rating": 4.9,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "复合维生素矿物质片男女通用多种营养每日补充",
+      "description": "多种维生素矿物质，一瓶满足每日需求",
+      "description_content": "含多种必需维生素及矿物质，科学配比。适合工作忙碌人群，弥补饮食营养不足。每日一片，方便携带，帮助维持身体正常代谢，提升精力状态。",
+      "features": {
+        "brand": "21 金维他",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 65.0,
+      "stock": 300,
+      "sales": 950,
+      "average_rating": 4.6,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "胶原蛋白肽粉小分子易吸收美容养颜护肤女性专用",
+      "description": "小分子胶原肽，滋养肌肤延缓衰老",
+      "description_content": "选用深海鱼胶原蛋白肽，分子量小易吸收。富含弹性蛋白，帮助改善肌肤弹性，减少细纹。适合女性日常美容保养，冲泡方便，口感清淡无腥味。",
+      "features": {
+        "brand": "同仁堂",
+        "specification": "300g/罐",
+        "origin": "中国"
+      },
+      "price": 299.0,
+      "stock": 150,
+      "sales": 600,
+      "average_rating": 4.5,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "成人益生菌粉调理肠胃肠道健康平衡菌群冻干粉",
+      "description": "高活性益生菌，调节肠道平衡助消化",
+      "description_content": "含有多种高活性益生菌株，耐胃酸直达肠道。帮助调节肠道菌群平衡，改善便秘或腹泻，增强肠道免疫力。独立包装，方便携带，冷水即可冲泡。",
+      "features": {
+        "brand": "合生元",
+        "specification": "30 袋/盒",
+        "origin": "中国"
+      },
+      "price": 198.0,
+      "stock": 280,
+      "sales": 1100,
+      "average_rating": 4.8,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "辅酶 Q10 软胶囊保护心脏心肌营养中老年保健用品",
+      "description": "心脏保护神，补充辅酶 Q10 活力满满",
+      "description_content": "高纯度辅酶 Q10，为心脏提供动力。适合中老年人及工作压力大人群，保护心肌健康，缓解疲劳。抗氧化能力强，有助于延缓细胞衰老，维持身体活力。",
+      "features": {
+        "brand": "金达威",
+        "specification": "60 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 258.0,
+      "stock": 120,
+      "sales": 450,
+      "average_rating": 4.7,
+      "review_count": 80,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "褪黑素维生素 B6 片改善睡眠质量辅助入睡成人",
+      "description": "科学配比褪黑素，帮助改善睡眠质量",
+      "description_content": "特别添加维生素 B6，协同作用改善睡眠。适合入睡困难或睡眠质量差的人群。非药物依赖，帮助调节生物钟，让夜晚睡眠更深沉，白天精神更饱满。",
+      "features": {
+        "brand": "康恩贝",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 400,
+      "sales": 1800,
+      "average_rating": 4.4,
+      "review_count": 200,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "氨糖软骨素钙片中老年关节健康养护修复磨损",
+      "description": "氨糖加软骨素，滋养关节灵活运动",
+      "description_content": "富含氨基葡萄糖和软骨素，修复关节软骨。适合关节磨损的中老年人，缓解关节疼痛，增加关节润滑液。配合钙质，全面维护骨骼关节健康，行动更自如。",
+      "features": {
+        "brand": "健力多",
+        "specification": "40 片/瓶",
+        "origin": "中国"
+      },
+      "price": 189.0,
+      "stock": 220,
+      "sales": 750,
+      "average_rating": 4.6,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "富马酸亚铁口服液补铁补血女性孕期贫血营养品",
+      "description": "液体补铁易吸收，改善贫血面色红润",
+      "description_content": "采用富马酸亚铁配方，吸收率高且不易刺激肠胃。适合女性及孕期人群补充铁质，改善缺铁性贫血，令面色红润。独立小瓶装，卫生方便，口感适中。",
+      "features": {
+        "brand": "红桃 K",
+        "specification": "10 支/盒",
+        "origin": "中国"
+      },
+      "price": 78.0,
+      "stock": 350,
+      "sales": 500,
+      "average_rating": 4.5,
+      "review_count": 70,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_3_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "天然维生素 C 咀嚼片增强免疫力成人儿童通用",
+      "description": "天然提取维 C 酸甜可口增强抵抗力",
+      "description_content": "选用天然针叶樱桃提取，不含人工色素。适合免疫力低下人群，每日咀嚼两片，补充日常所需维生素 C，促进胶原蛋白合成，呵护身体健康。",
+      "features": {
+        "brand": "汤臣倍健",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 300,
+      "sales": 1500,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "深海鱼油软胶囊中老年心血管健康辅助调节血脂",
+      "description": "高纯度 Omega-3 呵护心脑血管健康",
+      "description_content": "源自秘鲁深海鱼油，富含 EPA 和 DHA。适合中老年人日常保健，辅助调节血脂，维护心血管健康。建议随餐服用，每日两粒，易吞咽设计。",
+      "features": {
+        "brand": "Swisse",
+        "specification": "100 粒/瓶",
+        "origin": "澳大利亚"
+      },
+      "price": 159.0,
+      "stock": 200,
+      "sales": 800,
+      "average_rating": 4.7,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "液体钙软胶囊添加维生素 D3 促进吸收成人补钙",
+      "description": "钙维 D 同补骨骼健康不易流失",
+      "description_content": "特别添加维生素 D3，促进钙质吸收。适合缺钙人群及老年人，预防骨质疏松。液体钙形式更易吸收，不伤肠胃，每日建议服用两粒。",
+      "features": {
+        "brand": "钙尔奇",
+        "specification": "90 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 128.0,
+      "stock": 150,
+      "sales": 600,
+      "average_rating": 4.6,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "成人益生菌粉调理肠胃改善便秘腹泻肠道健康",
+      "description": "高活性益生菌平衡肠道菌群",
+      "description_content": "含有多种活性益生菌株，耐酸耐碱。适合肠胃不适、便秘或腹泻人群。独立包装方便携带，温水冲服，帮助恢复肠道微生态平衡。",
+      "features": {
+        "brand": "合生元",
+        "specification": "30 袋/盒",
+        "origin": "中国"
+      },
+      "price": 258.0,
+      "stock": 100,
+      "sales": 450,
+      "average_rating": 4.9,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "胶原蛋白肽粉美容养颜保湿抗衰老女性口服饮品",
+      "description": "小分子肽易吸收滋润肌肤",
+      "description_content": "采用深海鱼胶原蛋白肽，分子量小易吸收。适合关注肌肤状态的女性，帮助改善皮肤弹性，保湿补水。建议睡前服用，搭配维生素 C 效果更佳。",
+      "features": {
+        "brand": "Fancl",
+        "specification": "30 支/盒",
+        "origin": "日本"
+      },
+      "price": 399.0,
+      "stock": 80,
+      "sales": 300,
+      "average_rating": 4.5,
+      "review_count": 80,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "复合维生素矿物质片男女通用全面营养补充剂",
+      "description": "多种维生素矿物质一瓶搞定",
+      "description_content": "涵盖多种必需维生素和矿物质，满足日常营养需求。适合工作忙碌、饮食不规律人群。每日一片，方便简单，增强体力，缓解疲劳。",
+      "features": {
+        "brand": "21 金维他",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 69.0,
+      "stock": 400,
+      "sales": 1200,
+      "average_rating": 4.4,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "褪黑素维生素 B6 片改善睡眠质量缓解失眠多梦",
+      "description": "科学配比辅助入睡安睡整晚",
+      "description_content": "特别添加维生素 B6，协同作用改善睡眠。适合入睡困难、睡眠质量差的人群。建议睡前半小时服用，不宜长期依赖，帮助调节生物钟。",
+      "features": {
+        "brand": "康恩贝",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 250,
+      "sales": 900,
+      "average_rating": 4.3,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "氨糖软骨素钙片中老年关节健康修复磨损保护",
+      "description": "修复关节软骨缓解疼痛僵硬",
+      "description_content": "含有氨基葡萄糖和软骨素，帮助修复关节软骨。适合关节磨损、疼痛的中老年人。每日两次，随餐服用，增加关节润滑液，行动更灵活。",
+      "features": {
+        "brand": "Move Free",
+        "specification": "80 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 219.0,
+      "stock": 120,
+      "sales": 550,
+      "average_rating": 4.7,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "血红素铁胶囊女性补血益气改善贫血面色红润",
+      "description": "温和补铁不刺激肠胃吸收好",
+      "description_content": "采用血红素铁源，吸收率高且不刺激肠胃。适合缺铁性贫血女性及孕妇。帮助改善面色苍白、乏力症状，每日一片，补充气血。",
+      "features": {
+        "brand": "红桃 K",
+        "specification": "30 粒/盒",
+        "origin": "中国"
+      },
+      "price": 98.0,
+      "stock": 180,
+      "sales": 400,
+      "average_rating": 4.6,
+      "review_count": 70,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "乳清蛋白粉健身增肌营养补充术后恢复高蛋白",
+      "description": "高纯度蛋白粉快速吸收恢复",
+      "description_content": "精选优质乳清蛋白，含量高易吸收。适合健身人群增肌及术后恢复期营养补充。多种口味可选，冷水易溶解，无多余脂肪负担。",
+      "features": {
+        "brand": "欧普特蒙",
+        "specification": "2 磅/罐",
+        "origin": "美国"
+      },
+      "price": 450.0,
+      "stock": 50,
+      "sales": 200,
+      "average_rating": 4.8,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_4_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "天然维生素 C 咀嚼片增强免疫力成人儿童适用",
+      "description": "天然提取补充维 C 增强抵抗力",
+      "description_content": "选用天然针叶樱桃提取，富含天然维生素 C，有助于增强免疫力，抗氧化。适合成人及儿童日常补充，酸甜口味，每日咀嚼即可。",
+      "features": {
+        "brand": "汤臣倍健",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 300,
+      "sales": 1500,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "深海鱼油软胶囊 Omega-3 中老年心血管健康",
+      "description": "辅助调节血脂维护心血管健康",
+      "description_content": "精选深海鱼油，富含 EPA 和 DHA，有助于维护心血管健康，辅助调节血脂。适合中老年人群日常保健，建议随餐服用，每日两粒。",
+      "features": {
+        "brand": "澳佳宝",
+        "specification": "200 粒/瓶",
+        "origin": "澳大利亚"
+      },
+      "price": 198.0,
+      "stock": 150,
+      "sales": 800,
+      "average_rating": 4.7,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "液体钙软胶囊维生素 D3 促进吸收骨骼健康",
+      "description": "补充钙质维生素 D3 强健骨骼",
+      "description_content": "采用液体钙配方，添加维生素 D3 促进钙吸收。有助于维持骨骼密度，预防骨质疏松。适合成年人及老年人，易吞咽软胶囊设计。",
+      "features": {
+        "brand": "钙尔奇",
+        "specification": "100 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 128.0,
+      "stock": 200,
+      "sales": 1200,
+      "average_rating": 4.9,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "成人益生菌粉调理肠胃肠道健康菌群平衡",
+      "description": "调理肠胃改善消化菌群平衡",
+      "description_content": "含有多种活性益生菌株，有助于调理肠胃，改善消化功能，维持肠道菌群平衡。独立包装方便携带，温水冲服，每日一条。",
+      "features": {
+        "brand": "合生元",
+        "specification": "30 袋/盒",
+        "origin": "中国"
+      },
+      "price": 258.0,
+      "stock": 100,
+      "sales": 600,
+      "average_rating": 4.6,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "胶原蛋白肽粉美容养颜保湿紧致肌肤女性",
+      "description": "美容养颜保湿紧致肌肤",
+      "description_content": "小分子胶原蛋白肽，易吸收，有助于美容养颜，保湿紧致肌肤。添加维生素 E 抗氧化，适合女性日常保养，睡前冲饮效果佳。",
+      "features": {
+        "brand": "斯维诗",
+        "specification": "300g/罐",
+        "origin": "澳大利亚"
+      },
+      "price": 299.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.5,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "复合维生素矿物质片男女通用全面营养补充",
+      "description": "全面营养补充每日活力",
+      "description_content": "含多种维生素和矿物质，满足人体每日营养需求，缓解疲劳，增强活力。适合忙碌上班族，每日一片，方便高效补充营养。",
+      "features": {
+        "brand": "善存",
+        "specification": "100 片/瓶",
+        "origin": "美国"
+      },
+      "price": 159.0,
+      "stock": 250,
+      "sales": 1800,
+      "average_rating": 4.8,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "褪黑素维生素 B6 片改善睡眠质量安神助眠",
+      "description": "改善睡眠质量安神助眠",
+      "description_content": "科学配比褪黑素与维生素 B6，有助于缩短入睡时间，改善睡眠质量。适合睡眠不佳人群，睡前半小时服用，不建议长期依赖。",
+      "features": {
+        "brand": "康恩贝",
+        "specification": "60 片/瓶",
+        "origin": "中国"
+      },
+      "price": 69.0,
+      "stock": 400,
+      "sales": 900,
+      "average_rating": 4.4,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "氨糖软骨素钙片中老年关节健康养护修复",
+      "description": "养护关节修复软骨健康",
+      "description_content": "含有氨基葡萄糖和软骨素，有助于养护关节，修复软骨磨损，缓解关节不适。适合中老年及运动人群，每日两次，随餐服用。",
+      "features": {
+        "brand": "Move Free",
+        "specification": "80 粒/瓶",
+        "origin": "美国"
+      },
+      "price": 219.0,
+      "stock": 120,
+      "sales": 700,
+      "average_rating": 4.7,
+      "review_count": 100,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "富马酸亚铁胶囊补血益气女性孕期贫血适用",
+      "description": "补血益气改善缺铁性贫血",
+      "description_content": "优质富马酸亚铁源，吸收率高，有助于补血益气，改善缺铁性贫血。适合女性及孕期人群，建议配合维生素 C 服用促进吸收。",
+      "features": {
+        "brand": "红桃开",
+        "specification": "90 粒/瓶",
+        "origin": "中国"
+      },
+      "price": 78.0,
+      "stock": 350,
+      "sales": 500,
+      "average_rating": 4.6,
+      "review_count": 80,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "乳清蛋白粉健身增肌营养补充恢复体力能量",
+      "description": "健身增肌营养补充体力",
+      "description_content": "高纯度乳清蛋白，低脂低糖，有助于健身增肌，运动后恢复体力。多种口味可选，易溶解不结块，适合运动爱好者日常补充。",
+      "features": {
+        "brand": "欧普特蒙",
+        "specification": "2 磅/桶",
+        "origin": "美国"
+      },
+      "price": 359.0,
+      "stock": 60,
+      "sales": 300,
+      "average_rating": 4.9,
+      "review_count": 50,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_PRODUCTS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_products_5_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "欧姆龙上臂式电子血压计家用高精度测量仪",
+      "description": "高精度测量，语音播报功能",
+      "description_content": "专为家庭设计，采用生物传感技术，测量准确稳定。大屏幕显示，语音播报，适合老年人使用。内置记忆功能，方便记录健康数据。",
+      "features": {
+        "brand": "欧姆龙",
+        "specification": "标准版",
+        "origin": "日本"
+      },
+      "price": 299.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "三诺血糖仪家用全自动测血糖试纸套装",
+      "description": "免调码技术，采血疼痛感低",
+      "description_content": "采用免调码技术，操作简便。微量采血，减少疼痛。结果快速准确，适合糖尿病患者日常监测。包含试纸和采血针，性价比高。",
+      "features": {
+        "brand": "三诺",
+        "specification": "安稳 + 套装",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 300,
+      "sales": 1800,
+      "average_rating": 4.7,
+      "review_count": 195,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃红外线体温计额温枪家用婴儿精准",
+      "description": "非接触测量，一秒出结果",
+      "description_content": "采用红外传感技术，非接触式测量，避免交叉感染。一秒快速测温，精准度高。适合家庭、学校、公共场所使用，婴儿成人通用。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "YT-1",
+        "origin": "中国"
+      },
+      "price": 129.0,
+      "stock": 200,
+      "sales": 950,
+      "average_rating": 4.6,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "康泰指夹式血氧仪饱和度监测仪家用",
+      "description": "实时监测血氧，OLED 显示屏",
+      "description_content": "实时监测血氧饱和度和脉率，OLED 屏幕显示清晰。小巧便携，适合居家健康监测及户外运动使用。低功耗设计，电池耐用。",
+      "features": {
+        "brand": "康泰",
+        "specification": "CMS50D",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 400,
+      "sales": 1500,
+      "average_rating": 4.5,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "筋膜枪肌肉按摩器深层放松健身恢复神器",
+      "description": "深层肌肉放松，多档位调节",
+      "description_content": "高频冲击放松深层肌肉，缓解运动疲劳。配备多种按摩头，适应不同部位。静音电机，长续航能力。健身爱好者必备恢复工具。",
+      "features": {
+        "brand": "云麦",
+        "specification": "Pro 2",
+        "origin": "中国"
+      },
+      "price": 899.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.9,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "SKG 颈椎按摩器颈部多功能物理牵引仪",
+      "description": "物理牵引，热敷功能舒适",
+      "description_content": "结合物理牵引与热敷功能，缓解颈部僵硬。脉冲技术刺激穴位，促进血液循环。轻便挂脖设计，随时随地享受按摩，办公族首选。",
+      "features": {
+        "brand": "SKG",
+        "specification": "K5 Pro",
+        "origin": "中国"
+      },
+      "price": 399.0,
+      "stock": 120,
+      "sales": 800,
+      "average_rating": 4.4,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "蓓慈全自动足浴盆加热按摩泡脚桶家用",
+      "description": "恒温加热，滚轮按摩足底",
+      "description_content": "智能恒温加热系统，保持水温舒适。内置滚轮按摩足底穴位，促进睡眠。深桶设计覆盖小腿，水电分离安全保护。适合日常养生保健。",
+      "features": {
+        "brand": "蓓慈",
+        "specification": "5218",
+        "origin": "中国"
+      },
+      "price": 259.0,
+      "stock": 180,
+      "sales": 600,
+      "average_rating": 4.6,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃手动轮椅车轻便折叠老人残疾人代步",
+      "description": "轻便折叠，加厚钢管承重",
+      "description_content": "采用加厚钢管制作，承重能力强。一键折叠设计，方便收纳携带。配备舒适坐垫和手刹，出行安全便捷。适合老人及行动不便者。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "H058B",
+        "origin": "中国"
+      },
+      "price": 450.0,
+      "stock": 40,
+      "sales": 150,
+      "average_rating": 4.7,
+      "review_count": 60,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "欧姆龙低频治疗仪理疗机疼痛缓解家用",
+      "description": "低频脉冲，缓解关节疼痛",
+      "description_content": "通过低频脉冲刺激神经，缓解肌肉关节疼痛。多种模式可选，强度自由调节。便携设计，适合颈椎病、腰腿痛人群辅助治疗。",
+      "features": {
+        "brand": "欧姆龙",
+        "specification": "HV-F013",
+        "origin": "日本"
+      },
+      "price": 350.0,
+      "stock": 80,
+      "sales": 220,
+      "average_rating": 4.5,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "西门子助听器老年人无线隐形充电款",
+      "description": "隐形佩戴，智能降噪清晰",
+      "description_content": "小巧隐形设计，佩戴舒适无感。智能降噪技术，还原清晰声音。充电式电池，使用方便。适合中老年听力下降人群，提升生活质量。",
+      "features": {
+        "brand": "西门子",
+        "specification": "纯享版",
+        "origin": "德国"
+      },
+      "price": 1299.0,
+      "stock": 30,
+      "sales": 90,
+      "average_rating": 4.8,
+      "review_count": 45,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_1_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "欧姆龙上臂式电子血压计精准测量家用高血压监测仪",
+      "description": "精准测量血压，大屏显示易读",
+      "description_content": "采用生物传感技术，测量精准可靠。大屏背光显示，适合老年人使用。具备不规则脉搏检测功能，守护心血管健康。",
+      "features": {
+        "brand": "欧姆龙",
+        "specification": "上臂式",
+        "origin": "日本"
+      },
+      "price": 299.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "三诺血糖仪家用全自动测血糖试纸 kit 无痛采血",
+      "description": "全自动测血糖，无痛采血体验",
+      "description_content": "智能免调码设计，操作简单快捷。微量采血技术，减少疼痛感。适合糖尿病患者日常血糖监测管理，数据准确稳定。",
+      "features": {
+        "brand": "三诺",
+        "specification": "含 50 试纸",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 300,
+      "sales": 1800,
+      "average_rating": 4.7,
+      "review_count": 195,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃红外线体温计额温枪家用婴儿高精度测温仪",
+      "description": "红外测温，一秒快速出结果",
+      "description_content": "非接触式测量，避免交叉感染。高精度传感器，误差小于 0.2 度。适合家庭、学校及公共场所快速筛查体温，安全卫生。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "额温枪",
+        "origin": "中国"
+      },
+      "price": 129.0,
+      "stock": 200,
+      "sales": 950,
+      "average_rating": 4.6,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "康泰指夹式血氧仪家用医用级心率血氧饱和度监测",
+      "description": "监测血氧饱和度，实时心率显示",
+      "description_content": "医用级精度，实时监测血氧饱和度和脉率。OLED 屏幕显示清晰，低功耗设计。适合呼吸系统疾病患者及高原旅行者使用。",
+      "features": {
+        "brand": "康泰",
+        "specification": "指夹式",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 400,
+      "sales": 1500,
+      "average_rating": 4.5,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "互邦轻便折叠轮椅老人残疾人代步车铝合金手动",
+      "description": "轻便折叠设计，出行方便省力",
+      "description_content": "铝合金材质坚固耐用，重量轻便于携带。折叠后体积小，可放入汽车后备箱。人性化扶手设计，乘坐舒适，适合老人出行。",
+      "features": {
+        "brand": "互邦",
+        "specification": "铝合金",
+        "origin": "中国"
+      },
+      "price": 899.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.9,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "攀高颈椎按摩器脉冲理疗仪家用颈部缓解疲劳神器",
+      "description": "脉冲理疗技术，缓解颈部疲劳",
+      "description_content": "采用低频脉冲技术，模拟真人按摩手法。多种模式可选，热敷功能促进血液循环。适合长期伏案工作者缓解颈椎压力，便携设计。",
+      "features": {
+        "brand": "攀高",
+        "specification": "脉冲式",
+        "origin": "中国"
+      },
+      "price": 399.0,
+      "stock": 120,
+      "sales": 600,
+      "average_rating": 4.4,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "西门子助听器老人无线隐形充电式老年人耳聋耳背",
+      "description": "无线隐形设计，充电便捷耐用",
+      "description_content": "数字降噪技术，清晰还原声音。隐形佩戴舒适，不易察觉。充电式设计，续航能力强。适合老年性耳聋患者改善听力，提升生活质量。",
+      "features": {
+        "brand": "西门子",
+        "specification": "充电式",
+        "origin": "德国"
+      },
+      "price": 2599.0,
+      "stock": 30,
+      "sales": 150,
+      "average_rating": 4.7,
+      "review_count": 45,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃家用制氧机 3L 升氧浓度稳定静音吸氧机老人",
+      "description": "3L 大流量供氧，运行静音稳定",
+      "description_content": "分子筛制氧技术，氧浓度稳定在 90% 以上。低噪音运行，不影响休息。具备雾化功能，适合老人及呼吸系统疾病患者家庭氧疗使用。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "3L 机",
+        "origin": "中国"
+      },
+      "price": 1899.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.8,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "康德乐医用护腰带腰椎间盘突出腰肌劳损保暖支撑带",
+      "description": "医用级支撑，缓解腰部疼痛不适",
+      "description_content": "符合人体工学设计，提供腰部强力支撑。透气材质，佩戴舒适不闷热。适合腰椎间盘突出及腰肌劳损患者，日常保暖防护使用。",
+      "features": {
+        "brand": "康德乐",
+        "specification": "均码",
+        "origin": "中国"
+      },
+      "price": 159.0,
+      "stock": 250,
+      "sales": 800,
+      "average_rating": 4.3,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "欧姆龙低频治疗仪理疗机家用疼痛缓解肌肉按摩器",
+      "description": "低频电疗，缓解肌肉疼痛僵硬",
+      "description_content": "通过低频电流刺激肌肉，促进血液循环。多种强度调节，针对肩颈腰腿疼痛。家用便携设计，操作简单，适合运动后恢复及慢性疼痛管理。",
+      "features": {
+        "brand": "欧姆龙",
+        "specification": "手持式",
+        "origin": "日本"
+      },
+      "price": 450.0,
+      "stock": 100,
+      "sales": 550,
+      "average_rating": 4.6,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_2_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "欧姆龙电子血压计家用高精度臂式测量仪",
+      "description": "高精度测量，语音播报，适合老人",
+      "description_content": "采用生物传感技术，测量精准稳定。大屏显示，语音播报功能，方便老年人使用。内置存储记忆，可记录多次测量数据，便于健康管理。",
+      "features": {
+        "brand": "欧姆龙",
+        "specification": "臂式",
+        "origin": "日本"
+      },
+      "price": 299.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃血糖仪家用全自动免采血试纸套装",
+      "description": "免采血技术，快速出结果，疼痛低",
+      "description_content": "新一代免采血技术，减少疼痛感。5 秒快速出结果，操作简便。配套试纸精准度高，适合糖尿病患者日常监测血糖水平，守护健康。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "套装",
+        "origin": "中国"
+      },
+      "price": 158.0,
+      "stock": 300,
+      "sales": 850,
+      "average_rating": 4.6,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "飞利浦红外线额温枪家用婴儿电子体温计",
+      "description": "非接触测量，一秒出温，安全卫生",
+      "description_content": "红外传感技术，非接触式测量，避免交叉感染。一秒快速测温，精准可靠。适合婴儿及家庭日常使用，声光报警提示发烧，呵护家人健康。",
+      "features": {
+        "brand": "飞利浦",
+        "specification": "额温枪",
+        "origin": "德国"
+      },
+      "price": 89.0,
+      "stock": 450,
+      "sales": 1500,
+      "average_rating": 4.9,
+      "review_count": 200,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "迈瑞家用制氧机医用级吸氧机老人呼吸机",
+      "description": "医用级浓度，静音设计，适合老人",
+      "description_content": "提供医用级氧气浓度，稳定可靠。低噪音运行，不影响休息。适合老人、孕妇及缺氧人群使用。智能定时功能，操作面板简洁，方便易用。",
+      "features": {
+        "brand": "迈瑞",
+        "specification": "5L 机",
+        "origin": "中国"
+      },
+      "price": 2800.0,
+      "stock": 50,
+      "sales": 120,
+      "average_rating": 4.7,
+      "review_count": 45,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "攀高颈椎按摩器多功能脉冲理疗仪颈部",
+      "description": "脉冲理疗，缓解疲劳，便携设计",
+      "description_content": "采用低频脉冲技术，深层缓解颈椎疲劳。多种模式可选，模拟真人按摩手法。轻便便携，随时随地享受按摩。适合办公室人群及颈椎不适者使用。",
+      "features": {
+        "brand": "攀高",
+        "specification": "脉冲式",
+        "origin": "中国"
+      },
+      "price": 399.0,
+      "stock": 200,
+      "sales": 600,
+      "average_rating": 4.5,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "互邦轻便折叠轮椅老人代步车手动铝合金",
+      "description": "铝合金材质，轻便折叠，出行方便",
+      "description_content": "航空铝合金材质，车身轻便坚固。一键折叠设计，方便收纳携带。加厚坐垫舒适透气，适合老人及行动不便人士代步使用，安全刹车系统。",
+      "features": {
+        "brand": "互邦",
+        "specification": "铝合金",
+        "origin": "中国"
+      },
+      "price": 650.0,
+      "stock": 80,
+      "sales": 300,
+      "average_rating": 4.4,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "蓓慈足浴盆电动按摩加热泡脚桶家用恒温",
+      "description": "恒温加热，电动按摩，深层放松",
+      "description_content": "智能恒温加热系统，保持水温舒适。内置电动按摩滚轮，刺激穴位。深层清洁泡脚，促进血液循环。适合日常养生保健，缓解疲劳，提升睡眠质量。",
+      "features": {
+        "brand": "蓓慈",
+        "specification": "深桶",
+        "origin": "中国"
+      },
+      "price": 259.0,
+      "stock": 350,
+      "sales": 950,
+      "average_rating": 4.6,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "西门子助听器老人无线隐形充电式耳聋",
+      "description": "隐形佩戴，无线充电，清晰降噪",
+      "description_content": "迷你隐形设计，佩戴舒适美观。无线充电盒，续航持久。智能降噪技术，还原清晰声音。适合老年性耳聋患者，提升沟通质量，重拾自信生活。",
+      "features": {
+        "brand": "西门子",
+        "specification": "隐形式",
+        "origin": "德国"
+      },
+      "price": 1599.0,
+      "stock": 60,
+      "sales": 180,
+      "average_rating": 4.3,
+      "review_count": 50,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "Hyperice 筋膜枪肌肉放松器深层按摩仪",
+      "description": "深层放松，高频震动，运动恢复",
+      "description_content": "高频震动技术，深层放松肌肉筋膜。多种按摩头适配不同部位。轻便手持设计，运动后恢复必备。有效缓解酸痛，促进乳酸代谢，适合健身人群。",
+      "features": {
+        "brand": "Hyperice",
+        "specification": "便携",
+        "origin": "美国"
+      },
+      "price": 2200.0,
+      "stock": 100,
+      "sales": 450,
+      "average_rating": 4.8,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃腋下拐杖铝合金防滑高度可调残疾人",
+      "description": "铝合金制，防滑设计，高度可调",
+      "description_content": "优质铝合金材质，承重性强。腋下防滑软垫，舒适不磨皮肤。高度可调节，适应不同身高。适合骨折恢复期或行动不便人士使用，安全辅助行走。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "可调高度",
+        "origin": "中国"
+      },
+      "price": 85.0,
+      "stock": 400,
+      "sales": 700,
+      "average_rating": 4.5,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_3_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "欧姆龙上臂式电子血压计家用高精度测量仪",
+      "description": "高精度测量，语音播报功能",
+      "description_content": "适用于家庭日常血压监测，智能加压技术，测量准确。大屏显示，适合老年人使用，操作简便，存储记忆功能方便记录。",
+      "features": {
+        "brand": "欧姆龙",
+        "specification": "标准版",
+        "origin": "日本"
+      },
+      "price": 299.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "三诺血糖仪测试仪家用免采血痛感低试纸",
+      "description": "免采血痛感，快速出结果",
+      "description_content": "专为糖尿病患者设计，采血痛感低，5 秒出结果。蓝牙连接手机 APP，管理血糖数据。含试纸采血针，性价比高，居家必备监测工具。",
+      "features": {
+        "brand": "三诺",
+        "specification": "套装",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 300,
+      "sales": 1800,
+      "average_rating": 4.6,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃红外线体温计额温枪家用婴儿精准",
+      "description": "非接触测温，安全卫生",
+      "description_content": "采用红外传感技术，一秒测温，避免交叉感染。适合婴儿及家庭使用，高温报警功能。液晶显示屏，数据清晰，电池耐用性强。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "标准版",
+        "origin": "中国"
+      },
+      "price": 129.0,
+      "stock": 200,
+      "sales": 950,
+      "average_rating": 4.7,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "康泰脉搏血氧仪指夹式家用监测仪防缺氧",
+      "description": "监测血氧饱和度，防缺氧",
+      "description_content": "实时监测血氧饱和度和脉率，OLED 屏幕显示。适合心肺疾病患者及高原旅行者。小巧便携，自动关机，低功耗设计，准确可靠。",
+      "features": {
+        "brand": "康泰",
+        "specification": "便携式",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 400,
+      "sales": 1500,
+      "average_rating": 4.5,
+      "review_count": 100,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "互邦轻便折叠轮椅老人代步车手动铝合金",
+      "description": "轻便折叠，老人代步专用",
+      "description_content": "铝合金材质，车身轻便易折叠，方便携带收纳。加厚坐垫舒适透气，刹车灵敏安全。适合老年人及行动不便者外出使用，承重能力强。",
+      "features": {
+        "brand": "互邦",
+        "specification": "铝合金",
+        "origin": "中国"
+      },
+      "price": 899.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.9,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "攀高颈椎按摩器脉冲理疗仪家用颈部按摩",
+      "description": "脉冲理疗，缓解颈椎疲劳",
+      "description_content": "采用低频脉冲技术，模拟真人按摩手法。多种模式可调，热敷功能促进血液循环。适合低头族及颈椎不适人群，无线设计，佩戴舒适。",
+      "features": {
+        "brand": "攀高",
+        "specification": "无线版",
+        "origin": "中国"
+      },
+      "price": 399.0,
+      "stock": 120,
+      "sales": 600,
+      "average_rating": 4.4,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "西门子助听器老人无线隐形充电式降噪",
+      "description": "无线隐形设计，智能降噪",
+      "description_content": "专为老年人听力下降设计，隐形佩戴美观。智能降噪技术，清晰还原声音。充电式设计，续航持久。调节方便，适应不同听力损失程度。",
+      "features": {
+        "brand": "西门子",
+        "specification": "充电式",
+        "origin": "德国"
+      },
+      "price": 2599.0,
+      "stock": 30,
+      "sales": 150,
+      "average_rating": 4.8,
+      "review_count": 45,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "鱼跃家用制氧机 3L 升氧浓度高静音吸氧机",
+      "description": "3L 大流量，静音运行",
+      "description_content": "医用级制氧标准，氧浓度稳定在 90% 以上。静音设计，不影响睡眠。适合家庭氧疗，呼吸系统疾病患者。带雾化功能，一机多用，操作简单。",
+      "features": {
+        "brand": "鱼跃",
+        "specification": "3L/min",
+        "origin": "中国"
+      },
+      "price": 1899.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.7,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "欧姆龙医用护腰带腰椎间盘突出支撑固定带",
+      "description": "腰椎强力支撑，缓解疼痛",
+      "description_content": "符合人体工学设计，提供腰部强力支撑。透气材质，佩戴不闷热。适合腰椎间盘突出及腰肌劳损患者。可调节魔术贴，适应不同腰围，保护腰椎。",
+      "features": {
+        "brand": "欧姆龙",
+        "specification": "可调节",
+        "origin": "日本"
+      },
+      "price": 259.0,
+      "stock": 250,
+      "sales": 800,
+      "average_rating": 4.6,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "倍轻松经络按摩仪低频治疗仪止痛理疗机",
+      "description": "低频脉冲治疗，止痛理疗",
+      "description_content": "通过低频脉冲刺激穴位，缓解肌肉疼痛。多种强度模式，针对肩颈腰腿痛。小巧便携，附带电极片。适合运动损伤及慢性疼痛人群居家理疗。",
+      "features": {
+        "brand": "倍轻松",
+        "specification": "便携式",
+        "origin": "中国"
+      },
+      "price": 459.0,
+      "stock": 100,
+      "sales": 550,
+      "average_rating": 4.5,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MEDICAL_DEVICES",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/medical_devices_4_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "新西兰进口麦卢卡蜂蜜天然纯净养胃健康食品",
+      "description": "天然麦卢卡因子，养胃护肠健康首选",
+      "description_content": "源自新西兰纯净牧场，富含独特麦卢卡因子，有助于改善肠胃健康。日常食用或冲泡饮用均可，口感香甜细腻，适合肠胃不适人群及追求天然健康食品的家庭。",
+      "features": {
+        "brand": "Comvita",
+        "specification": "500g",
+        "origin": "新西兰"
+      },
+      "price": 299.0,
+      "stock": 120,
+      "sales": 850,
+      "average_rating": 4.8,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "云南深山老树核桃仁无添加原味健康坚果零食",
+      "description": "精选老树核桃，补脑益智营养美味",
+      "description_content": "选用云南深山老树核桃，人工剥壳取仁，无漂白无添加。富含不饱和脂肪酸，适合学生及脑力工作者日常补充营养，口感酥脆清香，回味甘甜。",
+      "features": {
+        "brand": "三只松鼠",
+        "specification": "500g",
+        "origin": "中国云南"
+      },
+      "price": 59.9,
+      "stock": 300,
+      "sales": 1200,
+      "average_rating": 4.7,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "西湖龙井明前特级绿茶有机认证健康茶饮礼盒",
+      "description": "明前嫩芽采摘，清香甘醇提神醒脑",
+      "description_content": "清明前嫩芽手工采摘，经过有机认证，无农药残留。茶汤清澈明亮，口感鲜爽甘醇，是送礼及自饮的健康茶饮佳品，富含茶多酚抗氧化。",
+      "features": {
+        "brand": "西湖牌",
+        "specification": "250g",
+        "origin": "中国杭州"
+      },
+      "price": 380.0,
+      "stock": 50,
+      "sales": 320,
+      "average_rating": 4.9,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "澳洲进口即食燕麦片低脂代餐健康早餐食品",
+      "description": "纯天然燕麦，低脂高纤饱腹感强",
+      "description_content": "源自澳洲优质燕麦产区，保留完整谷物营养。低 GI 值，富含膳食纤维，适合减肥健身人群作为代餐或早餐食用，冲泡方便，牛奶搭配更佳。",
+      "features": {
+        "brand": "桂格",
+        "specification": "1000g",
+        "origin": "澳大利亚"
+      },
+      "price": 45.5,
+      "stock": 450,
+      "sales": 1800,
+      "average_rating": 4.6,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "宁夏中宁枸杞王特级免洗泡茶煮粥健康食材",
+      "description": "正宗中宁产地，颗粒饱满营养丰富",
+      "description_content": "产自宁夏中宁核心产区，自然晾晒，特级大果。免洗设计干净卫生，富含枸杞多糖，适合泡茶、煮粥或直接食用，滋补肝肾，增强身体活力。",
+      "features": {
+        "brand": "百瑞源",
+        "specification": "300g",
+        "origin": "中国宁夏"
+      },
+      "price": 68.0,
+      "stock": 200,
+      "sales": 950,
+      "average_rating": 4.8,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "进口奇亚籽免洗即食代餐粉健康减肥健身食品",
+      "description": "高膳食纤维，遇水膨胀饱腹感极佳",
+      "description_content": "南美进口优质奇亚籽，富含 Omega-3 脂肪酸。遇水膨胀 12 倍，提供持久饱腹感，适合健身减脂人群加入酸奶或沙拉中食用，营养均衡。",
+      "features": {
+        "brand": "Bob's Red Mill",
+        "specification": "453g",
+        "origin": "美国"
+      },
+      "price": 55.0,
+      "stock": 150,
+      "sales": 600,
+      "average_rating": 4.5,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "九蒸九晒黑芝麻丸无糖低脂健康零食代餐丸子",
+      "description": "传统工艺制作，补肾乌发美味健康",
+      "description_content": "采用传统九蒸九晒工艺，搭配蜂蜜调制，无额外添加蔗糖。口感软糯香甜，富含微量元素，适合熬夜人群及头发护理需求者，独立包装方便。",
+      "features": {
+        "brand": "老金磨方",
+        "specification": "126g",
+        "origin": "中国安徽"
+      },
+      "price": 39.9,
+      "stock": 350,
+      "sales": 1500,
+      "average_rating": 4.7,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "无糖杏仁奶植物蛋白饮料低卡健康早餐饮品",
+      "description": "纯杏仁研磨，植物蛋白易吸收无负担",
+      "description_content": "100% 纯杏仁研磨制成，无添加蔗糖及乳糖。富含植物蛋白和维生素 E，口感顺滑，适合乳糖不耐受人群及追求低卡饮食者，冷藏风味更佳。",
+      "features": {
+        "brand": "奥乐齐",
+        "specification": "1L*2",
+        "origin": "中国上海"
+      },
+      "price": 42.0,
+      "stock": 280,
+      "sales": 750,
+      "average_rating": 4.6,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "玻利维亚进口藜麦米三色杂粮健康主食粗粮",
+      "description": "全营养谷物，低 GI 适合控糖人群食用",
+      "description_content": "源自玻利维亚高原，三色藜麦混合，富含完全蛋白。低升糖指数，适合糖尿病患者及健身人群作为主食替代，烹饪简单口感佳，营养全面。",
+      "features": {
+        "brand": "十月稻田",
+        "specification": "1kg",
+        "origin": "玻利维亚"
+      },
+      "price": 35.8,
+      "stock": 400,
+      "sales": 1100,
+      "average_rating": 4.7,
+      "review_count": 140,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "冻干草莓脆无添加糖健康零食儿童孕妇水果干",
+      "description": "真空冻干技术，保留鲜果营养美味",
+      "description_content": "采用真空冻干技术，锁住草莓新鲜营养与口感。无添加糖及防腐剂，酥脆可口，适合儿童及孕妇作为健康零食，方便携带食用，酸甜适中。",
+      "features": {
+        "brand": "良品铺子",
+        "specification": "100g",
+        "origin": "中国山东"
+      },
+      "price": 29.9,
+      "stock": 320,
+      "sales": 1350,
+      "average_rating": 4.8,
+      "review_count": 175,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_1_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "新疆特产薄皮核桃坚果休闲零食健康食品大果",
+      "description": "皮薄肉厚，营养丰富，健脑益智",
+      "description_content": "精选新疆优质核桃，自然成熟采摘。富含蛋白质与不饱和脂肪酸，适合学生及脑力工作者每日食用，补充能量，健康美味。",
+      "features": {
+        "brand": "疆果果",
+        "specification": "500g",
+        "origin": "新疆"
+      },
+      "price": 59.9,
+      "stock": 120,
+      "sales": 850,
+      "average_rating": 4.8,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "天然百花蜂蜜纯正无添加农家自产健康滋补品",
+      "description": "天然酿造，口感香甜，滋润养颜",
+      "description_content": "源自深山百花蜜，未经加工浓缩，保留天然活性酶。口感细腻甜润，适合冲泡饮用或涂抹面包，日常滋补佳品，增强免疫力。",
+      "features": {
+        "brand": "蜜源坊",
+        "specification": "1000g",
+        "origin": "四川"
+      },
+      "price": 88.0,
+      "stock": 200,
+      "sales": 1200,
+      "average_rating": 4.9,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "宁夏中宁枸杞子特级免洗正宗红果健康养生茶",
+      "description": "颗粒饱满，色泽红润，泡水煮粥",
+      "description_content": "正宗宁夏中宁产地，人工筛选特级大果。富含枸杞多糖，色泽自然红润。适合泡茶、煮粥或直接食用，滋补肝肾，明目安神，日常养生必备。",
+      "features": {
+        "brand": "杞里香",
+        "specification": "250g",
+        "origin": "宁夏"
+      },
+      "price": 45.5,
+      "stock": 300,
+      "sales": 1500,
+      "average_rating": 4.7,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "澳洲进口纯燕麦片无糖添加即食早餐健康谷物",
+      "description": "低脂高纤，饱腹感强，控糖首选",
+      "description_content": "精选澳洲优质燕麦，全程无糖无添加。富含膳食纤维，升糖指数低。适合减肥人群及糖尿病患者作为早餐，冲泡方便，口感软糯香浓。",
+      "features": {
+        "brand": "澳麦源",
+        "specification": "1kg",
+        "origin": "澳大利亚"
+      },
+      "price": 69.9,
+      "stock": 150,
+      "sales": 980,
+      "average_rating": 4.6,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "西湖龙井茶明前特级嫩芽绿茶健康饮品礼盒装",
+      "description": "香气浓郁，滋味甘醇，清热解暑",
+      "description_content": "杭州西湖核心产区，明前手工采摘嫩芽。茶汤清澈明亮，豆香浓郁。富含茶多酚，抗氧化效果好。适合办公待客或自饮，提神醒脑，健康养生。",
+      "features": {
+        "brand": "西湖牌",
+        "specification": "200g",
+        "origin": "浙江"
+      },
+      "price": 298.0,
+      "stock": 50,
+      "sales": 320,
+      "average_rating": 4.9,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "进口奇亚籽免洗即食饱腹代餐健康减肥食品",
+      "description": "富含 Omega-3，遇水膨胀，代餐",
+      "description_content": "南美进口优质奇亚籽，无需清洗可直接食用。富含 Omega-3 脂肪酸及膳食纤维，遇水膨胀十倍。适合制作沙拉或酸奶，控制体重，健康代餐。",
+      "features": {
+        "brand": "自然派",
+        "specification": "500g",
+        "origin": "墨西哥"
+      },
+      "price": 79.0,
+      "stock": 180,
+      "sales": 650,
+      "average_rating": 4.5,
+      "review_count": 70,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "新疆灰枣免洗红枣干果零食补血益气健康食品",
+      "description": "肉质紧实，香甜可口，天然晾晒",
+      "description_content": "选自新疆和田灰枣，树上自然风干。皮薄肉厚核小，口感香甜软糯。富含铁元素和维生素，适合女性日常滋补，泡茶煮汤皆可，补气养血。",
+      "features": {
+        "brand": "枣园春",
+        "specification": "1000g",
+        "origin": "新疆"
+      },
+      "price": 39.9,
+      "stock": 250,
+      "sales": 1800,
+      "average_rating": 4.8,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "纯杏仁粉无糖添加早餐冲饮坚果粉健康代餐粉",
+      "description": "细腻易溶，杏仁香味，润肺止咳",
+      "description_content": "精选优质杏仁研磨而成，无糖无添加防腐剂。粉质细腻易冲泡，保留天然杏仁香味。适合早餐冲饮，润肺止咳，美容养颜，老少皆宜的健康食品。",
+      "features": {
+        "brand": "杏仁坊",
+        "specification": "400g",
+        "origin": "河北"
+      },
+      "price": 55.0,
+      "stock": 90,
+      "sales": 420,
+      "average_rating": 4.4,
+      "review_count": 55,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "藜麦米三色杂粮粥米低脂粗粮健康主食食品",
+      "description": "营养全面，低脂低卡，健身主食",
+      "description_content": "进口三色藜麦，颗粒饱满，色泽自然。富含完全蛋白及多种矿物质，低脂低卡。适合健身人群及减肥人士作为主食，煮粥做饭皆宜，健康轻食。",
+      "features": {
+        "brand": "谷动力",
+        "specification": "500g",
+        "origin": "青海"
+      },
+      "price": 49.9,
+      "stock": 110,
+      "sales": 760,
+      "average_rating": 4.7,
+      "review_count": 88,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "纯黑芝麻糊无糖代餐粉早餐速溶健康养生食品",
+      "description": "黑发养肾，香浓顺滑，即冲即饮",
+      "description_content": "传统工艺研磨，精选优质黑芝麻。无糖配方，适合控糖人群。口感香浓顺滑，富含钙质与维生素 E。适合早餐或下午茶，乌发养肾，健康养生。",
+      "features": {
+        "brand": "芝麻王",
+        "specification": "600g",
+        "origin": "河南"
+      },
+      "price": 65.0,
+      "stock": 140,
+      "sales": 530,
+      "average_rating": 4.6,
+      "review_count": 62,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_2_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "有机三色藜麦五谷杂粮粗粮代餐饭 500g",
+      "description": "低脂饱腹富含膳食纤维健康主食",
+      "description_content": "源自高海拔产区，颗粒饱满，富含蛋白质与膳食纤维。适合健身减脂人群，煮粥做饭皆可，易消化易吸收，天然有机认证。",
+      "features": {
+        "brand": "北大荒",
+        "specification": "500g/袋",
+        "origin": "黑龙江"
+      },
+      "price": 39.9,
+      "stock": 300,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "纯正天然野生百花蜂蜜深山土蜂蜜 500g",
+      "description": "无添加纯天然滋养润燥美容养颜",
+      "description_content": "采集自深山野花，自然成熟蜜，口感香甜细腻。富含多种氨基酸和酶类，日常冲泡饮用或涂抹面包，滋润身心，老少皆宜。",
+      "features": {
+        "brand": "同仁堂",
+        "specification": "500g/瓶",
+        "origin": "四川"
+      },
+      "price": 88.0,
+      "stock": 150,
+      "sales": 800,
+      "average_rating": 4.9,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "每日坚果混合装仁原味无添加零食 30g*30",
+      "description": "科学配比营养均衡每日必备健康",
+      "description_content": "精选核桃、腰果、杏仁等七种坚果，低温烘焙保留营养。独立小包装方便携带，补充优质油脂与蛋白质，适合上班族及学生。",
+      "features": {
+        "brand": "三只松鼠",
+        "specification": "30g*30 袋",
+        "origin": "江苏"
+      },
+      "price": 129.0,
+      "stock": 400,
+      "sales": 1800,
+      "average_rating": 4.7,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "宁夏中宁枸杞子特级免洗大果泡茶煲汤",
+      "description": "滋补肝肾明目益气养血天然晾晒",
+      "description_content": "核心产区直供，颗粒大而饱满，色泽自然红润。免洗设计干净卫生，可直接嚼食或泡水煮粥，传统滋补佳品，适合长期用眼人群。",
+      "features": {
+        "brand": "百瑞源",
+        "specification": "250g/袋",
+        "origin": "宁夏"
+      },
+      "price": 59.9,
+      "stock": 200,
+      "sales": 950,
+      "average_rating": 4.8,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "日本进口抹茶粉烘焙食用级绿茶粉 100g",
+      "description": "色泽翠绿口感醇厚抗氧化提神",
+      "description_content": "精选优质茶叶研磨而成，粉质细腻无颗粒。富含茶多酚，具有抗氧化功效，可用于制作蛋糕饮料或直接冲泡，清新提神醒脑。",
+      "features": {
+        "brand": "丸久小山园",
+        "specification": "100g/罐",
+        "origin": "日本"
+      },
+      "price": 168.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.6,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "进口奇亚籽免洗即食代餐饱腹沙拉籽",
+      "description": "富含不饱和脂肪酸膳食纤维健康",
+      "description_content": "源自南美高原，遇水膨胀十倍，增强饱腹感。富含不饱和脂肪酸，促进肠道蠕动，适合减肥代餐或加入酸奶食用，天然健康食材。",
+      "features": {
+        "brand": "鲍勃红磨坊",
+        "specification": "400g/袋",
+        "origin": "美国"
+      },
+      "price": 45.0,
+      "stock": 250,
+      "sales": 600,
+      "average_rating": 4.5,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "黑芝麻糊无糖精早餐代餐粉五谷杂粮",
+      "description": "补肾乌发香浓细腻即冲即饮方便",
+      "description_content": "选用优质黑芝麻黑米黑豆，传统工艺研磨。无添加蔗糖，低热量高营养，口感香浓顺滑，适合早餐代餐或下午茶，滋养头发健康。",
+      "features": {
+        "brand": "南方食品",
+        "specification": "600g/罐",
+        "origin": "广西"
+      },
+      "price": 39.9,
+      "stock": 350,
+      "sales": 1100,
+      "average_rating": 4.4,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "菲律宾进口芒果干无添加低糖零食",
+      "description": "果肉厚实酸甜适中天然果香浓郁",
+      "description_content": "精选成熟芒果切片，低温脱水保留原味。无添加防腐剂色素，果肉厚实有嚼劲，富含维生素 C，办公室休闲健康小零食，解馋不长胖。",
+      "features": {
+        "brand": "菲诺",
+        "specification": "200g/袋",
+        "origin": "菲律宾"
+      },
+      "price": 29.9,
+      "stock": 450,
+      "sales": 1500,
+      "average_rating": 4.7,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "澳洲进口即食燕麦片纯麦无添加早餐",
+      "description": "高膳食纤维低升糖饱腹健康代餐",
+      "description_content": "100% 纯燕麦制作，无糖无添加，保留谷物原香。富含膳食纤维，升糖指数低，适合控糖人群及健身人士，牛奶冲泡即可食用，营养便捷。",
+      "features": {
+        "brand": "桂格",
+        "specification": "1000g/袋",
+        "origin": "澳大利亚"
+      },
+      "price": 49.9,
+      "stock": 300,
+      "sales": 1300,
+      "average_rating": 4.8,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "蛹虫草花干货煲汤材料天然种植非野生",
+      "description": "提高免疫力滋阴润肺家庭汤料佳品",
+      "description_content": "人工培育天然种植，色泽金黄无硫熏。富含虫草素，适合炖鸡煲汤，增强人体免疫力，滋阴润肺，家庭常备健康滋补食材，味道鲜美。",
+      "features": {
+        "brand": "康美",
+        "specification": "150g/盒",
+        "origin": "广东"
+      },
+      "price": 78.0,
+      "stock": 100,
+      "sales": 350,
+      "average_rating": 4.6,
+      "review_count": 70,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_3_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "进口有机藜麦五谷杂粮代餐饱腹健康食品",
+      "description": "富含膳食纤维，低脂饱腹感强",
+      "description_content": "源自玻利维亚高原有机种植，富含完全蛋白与膳食纤维。适合健身减脂人群代餐食用，冲泡煮粥皆可，营养均衡易吸收，助力健康生活方式。",
+      "features": {
+        "brand": "Nature's Path",
+        "specification": "500g/袋",
+        "origin": "玻利维亚"
+      },
+      "price": 89.0,
+      "stock": 120,
+      "sales": 850,
+      "average_rating": 4.8,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "新西兰进口麦卢卡蜂蜜 UMFO10+ 滋养肠胃",
+      "description": "天然抗菌活性，呵护肠胃健康",
+      "description_content": "新西兰原装进口麦卢卡蜂蜜，具备独特抗菌活性因子。日常冲泡饮用或涂抹面包，有助于调理肠胃不适，增强免疫力，纯天然无添加。",
+      "features": {
+        "brand": "Comvita",
+        "specification": "500g/瓶",
+        "origin": "新西兰"
+      },
+      "price": 358.0,
+      "stock": 50,
+      "sales": 320,
+      "average_rating": 4.9,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "每日坚果混合装原味无添加健康零食礼盒",
+      "description": "科学配比七种坚果，营养全面",
+      "description_content": "精选全球优质坚果，低温烘焙保留原味。内含核桃、腰果、杏仁等七种食材，每日补充必需脂肪酸与维生素，办公休闲健康首选。",
+      "features": {
+        "brand": "Three Squirrels",
+        "specification": "750g/礼盒",
+        "origin": "中国"
+      },
+      "price": 129.0,
+      "stock": 300,
+      "sales": 1500,
+      "average_rating": 4.7,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "宁夏中宁枸杞特级免洗泡水煮粥养生食材",
+      "description": "道地产区正宗枸杞，滋补肝肾",
+      "description_content": "精选宁夏中宁核心产区枸杞，人工筛选特级大果。免洗设计方便卫生，富含枸杞多糖，日常泡水煮粥或干嚼，滋补肝肾明目，适合亚健康人群。",
+      "features": {
+        "brand": "Baiji",
+        "specification": "250g/袋",
+        "origin": "中国宁夏"
+      },
+      "price": 68.0,
+      "stock": 200,
+      "sales": 980,
+      "average_rating": 4.6,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "日本宇治抹茶粉烘焙食用级绿色健康茶饮",
+      "description": "细腻口感，富含茶多酚抗氧化",
+      "description_content": "源自日本宇治茶园，石磨研磨成细微粉末。色泽翠绿香气浓郁，富含茶多酚与氨基酸，可用于烘焙制作甜点或直接冲泡饮用，抗氧化提神。",
+      "features": {
+        "brand": "Marukyu",
+        "specification": "100g/罐",
+        "origin": "日本"
+      },
+      "price": 158.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.8,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "进口奇亚籽免洗即食代餐饱腹减肥健康食品",
+      "description": "高纤维高蛋白，遇水膨胀饱腹",
+      "description_content": "墨西哥进口优质奇亚籽，富含 Omega-3 脂肪酸与膳食纤维。遇水膨胀十二倍，提供持久饱腹感，适合控制体重人群搭配酸奶或果汁食用。",
+      "features": {
+        "brand": "Bob's Red Mill",
+        "specification": "450g/袋",
+        "origin": "墨西哥"
+      },
+      "price": 79.0,
+      "stock": 150,
+      "sales": 620,
+      "average_rating": 4.5,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "纯黑芝麻糊无糖精添加早餐代餐粉养生食品",
+      "description": "传统工艺研磨，乌发养肾佳品",
+      "description_content": "选用优质黑芝麻与黑米，传统石磨工艺精细研磨。无蔗糖添加保留谷物原香，热水冲泡即食，适合早餐代餐或中老年人日常滋补养肾护发。",
+      "features": {
+        "brand": "Royal King",
+        "specification": "600g/罐",
+        "origin": "中国"
+      },
+      "price": 59.9,
+      "stock": 250,
+      "sales": 1100,
+      "average_rating": 4.4,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "土耳其进口无花果干天然晾晒健康休闲零食",
+      "description": "软糯香甜，富含膳食纤维果胶",
+      "description_content": "精选土耳其优质无花果，自然晾晒保留营养。口感软糯香甜，富含果胶与多种维生素，促进肠道蠕动，是办公室休闲健康的天然零食选择。",
+      "features": {
+        "brand": "Patara",
+        "specification": "500g/袋",
+        "origin": "土耳其"
+      },
+      "price": 99.0,
+      "stock": 100,
+      "sales": 380,
+      "average_rating": 4.7,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "深海鱼胶原蛋白肽饮品美白保湿健康口服液",
+      "description": "小分子易吸收，改善肌肤弹性",
+      "description_content": "提取自深海鱼皮胶原蛋白肽，小分子结构更易人体吸收。添加维生素 C 促进合成，每日一瓶改善肌肤水分与弹性，适合爱美女性日常保养。",
+      "features": {
+        "brand": "Fancl",
+        "specification": "50ml*10 支",
+        "origin": "日本"
+      },
+      "price": 299.0,
+      "stock": 60,
+      "sales": 550,
+      "average_rating": 4.6,
+      "review_count": 98,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "澳洲进口即食燕麦片低 GI 代餐早餐健康食品",
+      "description": "纯净无添加，低升糖指数健康",
+      "description_content": "澳洲农场直供优质燕麦，物理压片保留完整营养。低 GI 值适合血糖关注人群，牛奶或热水冲泡即可，富含β-葡聚糖，呵护心血管健康。",
+      "features": {
+        "brand": "Freedom Foods",
+        "specification": "1kg/袋",
+        "origin": "澳大利亚"
+      },
+      "price": 45.0,
+      "stock": 400,
+      "sales": 1800,
+      "average_rating": 4.5,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "HEALTH_FOOD",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/health_food_4_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业加厚防滑瑜伽垫初学者健身垫家用运动垫子",
+      "description": "加厚防滑设计，适合初学者家用健身练习",
+      "description_content": "采用环保 TPE 材质，加厚设计有效保护膝盖，双面防滑纹理确保稳定，适合瑜伽、普拉提等多种运动场景，易清洁收纳，居家健身必备。",
+      "features": {
+        "brand": "Keep",
+        "specification": "183*61*0.6cm",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "可调节哑铃男士家用健身器材快速调节重量哑铃",
+      "description": "快速调节重量，节省空间，适合家庭力量训练",
+      "description_content": "一体成型设计，重量可调节范围大，防滑手柄，耐用性强。适合男女家庭健身，增强肌肉力量，塑造完美体型，快速切换重量节省时间。",
+      "features": {
+        "brand": "博飞",
+        "specification": "2.5-24kg",
+        "origin": "美国"
+      },
+      "price": 1899.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.9,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "乳胶弹力带健身男女阻力带拉力带深蹲训练器材",
+      "description": "天然乳胶材质，多阻力级别，适合力量训练",
+      "description_content": "高弹性天然乳胶，不易断裂，五色代表不同阻力。适用于热身、拉伸、力量训练，便携易携带，随时随地健身，助力肌肉激活与恢复。",
+      "features": {
+        "brand": "迪卡侬",
+        "specification": "5 条套装",
+        "origin": "法国"
+      },
+      "price": 49.9,
+      "stock": 300,
+      "sales": 1800,
+      "average_rating": 4.7,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业竞速跳绳健身减肥运动绳子轴承防滑手柄",
+      "description": "轴承设计顺滑，防滑手柄，适合竞速减肥",
+      "description_content": "内置精密轴承，旋转顺滑不卡顿，PVC 绳身耐磨，手柄防滑吸汗。适合减肥燃脂、体能训练，长度可调节，满足身高不同需求。",
+      "features": {
+        "brand": "李宁",
+        "specification": "可调节长度",
+        "origin": "中国"
+      },
+      "price": 29.9,
+      "stock": 400,
+      "sales": 1500,
+      "average_rating": 4.6,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "瑜伽柱泡沫轴肌肉放松滚筒按摩轴健身筋膜棒",
+      "description": "深层肌肉放松，缓解疲劳，适合运动后恢复",
+      "description_content": "高密度 EPP 材质，坚固耐用，表面纹理设计模拟手指按压。有效缓解肌肉酸痛，促进血液循环，运动前后必备神器，提升恢复效率。",
+      "features": {
+        "brand": "TriggerPoint",
+        "specification": "33cm 长度",
+        "origin": "美国"
+      },
+      "price": 198.0,
+      "stock": 120,
+      "sales": 600,
+      "average_rating": 4.8,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "浸塑壶铃家用健身器材提壶哑铃女士深蹲力量",
+      "description": "浸塑工艺防滑，宽手柄设计，适合全身力量",
+      "description_content": "铸铁内核外包浸塑层，防滑防腐蚀，宽手柄适合双手抓握。适合摇摆、深蹲、推举等动作，全面提升核心力量与耐力，居家训练优选。",
+      "features": {
+        "brand": "舒华",
+        "specification": "8kg",
+        "origin": "中国"
+      },
+      "price": 128.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.7,
+      "review_count": 88,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "瑜伽砖高密度 EVA 泡沫砖辅助用品初学者伸展",
+      "description": "高密度 EVA 材质，轻便耐用，辅助瑜伽体式",
+      "description_content": "轻质高密度 EVA 材料，表面防滑，棱角圆润不伤手。帮助初学者完成高难度动作，加深拉伸，提升练习安全性与舒适度，辅助体式。",
+      "features": {
+        "brand": "奥义",
+        "specification": "23*15*7.5cm",
+        "origin": "中国"
+      },
+      "price": 35.0,
+      "stock": 250,
+      "sales": 900,
+      "average_rating": 4.5,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "防爆瑜伽球健身球加厚防爆初学者孕妇分娩球",
+      "description": "加厚防爆材质，安全承重，适合健身及孕妇",
+      "description_content": "采用环保 PVC 材质，加厚防爆设计，承重能力强。表面防滑纹理，适合核心训练、平衡练习，也可作为孕妇分娩球使用，安全耐用。",
+      "features": {
+        "brand": "杰朴森",
+        "specification": "65cm",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 200,
+      "sales": 750,
+      "average_rating": 4.6,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "室内单杠家用墙上单双杠引体向上器免打孔",
+      "description": "免打孔安装，承重性强，适合家庭引体向上",
+      "description_content": "采用加厚钢管，稳固承重，海绵手柄舒适防滑。免打孔设计保护墙面，适合多种门框，助力背部及手臂力量训练，安装简便快捷。",
+      "features": {
+        "brand": "凯速",
+        "specification": "可调节宽度",
+        "origin": "中国"
+      },
+      "price": 158.0,
+      "stock": 90,
+      "sales": 520,
+      "average_rating": 4.4,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "智能运动手环心率监测计步防水跑步健身手表",
+      "description": "心率监测精准，防水耐用，记录运动数据",
+      "description_content": "全天候心率监测，支持多种运动模式，IP68 级防水。久坐提醒、睡眠监测，蓝牙连接手机，助力科学健身与健康管理，续航持久。",
+      "features": {
+        "brand": "小米",
+        "specification": "黑色标准版",
+        "origin": "中国"
+      },
+      "price": 199.0,
+      "stock": 350,
+      "sales": 1900,
+      "average_rating": 4.7,
+      "review_count": 195,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_1_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业加厚防滑瑜伽垫初学者健身垫",
+      "description": "加厚防滑设计，适合初学者使用",
+      "description_content": "采用环保 TPE 材质，加厚设计有效保护关节，双面防滑纹理确保安全稳定。适合瑜伽普拉提等多种运动场景，易于清洁收纳，是居家健身的理想选择。",
+      "features": {
+        "brand": "Keep",
+        "specification": "183*61*0.6cm",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "可调节重量哑铃男士家用健身器材",
+      "description": "快速调节重量，节省空间家用",
+      "description_content": "一键调节重量设计，涵盖多种重量选择，适合家庭健身。防滑手柄设计，坚固耐用，助力肌肉训练，节省存放空间，专业级体验。",
+      "features": {
+        "brand": "Bowflex",
+        "specification": "2.5-24kg",
+        "origin": "美国"
+      },
+      "price": 2599.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.9,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "乳胶弹力带健身阻力带男女拉伸带",
+      "description": "天然乳胶材质，多阻力级别选择",
+      "description_content": "天然乳胶制成，弹性好不易断裂，五种阻力级别满足不同需求。适合力量训练热身拉伸，便携易用，居家旅行必备，助力全身塑形。",
+      "features": {
+        "brand": "Decathlon",
+        "specification": "5 件套装",
+        "origin": "法国"
+      },
+      "price": 49.9,
+      "stock": 300,
+      "sales": 1800,
+      "average_rating": 4.6,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业计数跳绳成人减肥健身运动绳",
+      "description": "智能计数功能，轴承顺滑不绕绳",
+      "description_content": "内置高精度计数器，实时记录运动数据，轴承设计旋转顺滑不绕绳。PVC 绳体耐磨，适合减肥有氧运动，手柄防滑舒适，持久耐用。",
+      "features": {
+        "brand": "Xiaomi",
+        "specification": "可调节长度",
+        "origin": "中国"
+      },
+      "price": 39.0,
+      "stock": 400,
+      "sales": 1500,
+      "average_rating": 4.7,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "高密度泡沫轴肌肉放松按摩滚轴",
+      "description": "高密度 EVA 材质，深层肌肉放松",
+      "description_content": "高密度 EVA 材料，表面纹理设计模拟手指按压，有效缓解肌肉酸痛。促进血液循环，运动后恢复必备工具，坚固耐用不易变形。",
+      "features": {
+        "brand": "TriggerPoint",
+        "specification": "33cm 长度",
+        "origin": "美国"
+      },
+      "price": 128.0,
+      "stock": 100,
+      "sales": 600,
+      "average_rating": 4.8,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "浸塑壶铃家用提壶哑铃健身力量训练",
+      "description": "宽手柄设计，浸塑防滑耐磨",
+      "description_content": "铸铁核心外部浸塑，手感舒适防滑，宽手柄适合双手抓握。适合摇摆推举等动作，增强核心力量与爆发力，家用健身优选器材。",
+      "features": {
+        "brand": "Titan",
+        "specification": "12KG",
+        "origin": "中国"
+      },
+      "price": 159.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.5,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "高密度瑜伽砖辅助用品初学者防滑",
+      "description": "高密度 EVA 材质，辅助体式完成",
+      "description_content": "轻质高密度 EVA 材料，边缘圆润不伤手，帮助初学者完成高难度体式。增强稳定性，防滑表面设计，耐用性强，瑜伽练习好帮手。",
+      "features": {
+        "brand": "Lululemon",
+        "specification": "23*15*7.5cm",
+        "origin": "加拿大"
+      },
+      "price": 198.0,
+      "stock": 120,
+      "sales": 350,
+      "average_rating": 4.9,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "防爆瑜伽球健身球孕妇分娩平衡球",
+      "description": "加厚防爆材质，多种用途平衡训练",
+      "description_content": "加厚 PVC 材质防爆设计，承重能力强，适合瑜伽健身及孕妇分娩辅助。增强核心平衡能力，附赠打气筒，安全可靠，家庭适用。",
+      "features": {
+        "brand": "Peilou",
+        "specification": "65cm 直径",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 200,
+      "sales": 900,
+      "average_rating": 4.4,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "自动回弹腹肌轮健腹轮家用健身器材",
+      "description": "自动回弹助力，静音轮设计",
+      "description_content": "内置回弹装置降低难度，双轮设计更稳定，静音轮垫保护地板。适合腹部核心训练，手柄舒适防滑，初学者友好，高效燃脂。",
+      "features": {
+        "brand": "Keep",
+        "specification": "双轮带垫",
+        "origin": "中国"
+      },
+      "price": 79.0,
+      "stock": 250,
+      "sales": 1100,
+      "average_rating": 4.6,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "俯卧撑支架工字型健身器材家用",
+      "description": "工字型设计，稳固支撑保护手腕",
+      "description_content": "工字型结构设计，稳固支撑有效保护手腕，防滑底座适应多种地面。适合胸肌臂力训练，泡沫手柄舒适，家用健身必备。",
+      "features": {
+        "brand": "Decathlon",
+        "specification": "泡沫手柄",
+        "origin": "法国"
+      },
+      "price": 45.0,
+      "stock": 300,
+      "sales": 800,
+      "average_rating": 4.5,
+      "review_count": 100,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_2_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业加厚防滑瑜伽垫初学者健身垫",
+      "description": "加厚防滑，环保无味，适合初学者",
+      "description_content": "采用环保材质制作，加厚设计有效保护关节，双面防滑纹理设计，适合瑜伽普拉提等多种运动，易于清洁收纳。",
+      "features": {
+        "brand": "Keep",
+        "specification": "183*61*0.6cm",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "可调节哑铃男士家用健身器材套装",
+      "description": "重量可调，节省空间，快速换片",
+      "description_content": "快速调节重量设计，节省家庭存放空间，防滑手柄设计，适合力量训练，多种重量组合满足进阶需求，坚固耐用。",
+      "features": {
+        "brand": "博飞",
+        "specification": "2.5-24kg",
+        "origin": "美国"
+      },
+      "price": 1299.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.9,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "乳胶弹力带阻力带健身拉伸训练器材",
+      "description": "高弹乳胶，五档阻力，便携耐用",
+      "description_content": "天然乳胶材质制作，高弹性不易断裂，五种不同阻力级别，适合热身拉伸力量训练，附带收纳袋方便携带使用。",
+      "features": {
+        "brand": "迪卡侬",
+        "specification": "5 件套",
+        "origin": "法国"
+      },
+      "price": 49.9,
+      "stock": 300,
+      "sales": 1800,
+      "average_rating": 4.7,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业竞速跳绳轴承防缠绕健身减肥",
+      "description": "轴承设计，防滑手柄，计数准确",
+      "description_content": "精密轴承设计防止缠绕，绳身耐磨耐用，手柄防滑舒适，适合中考体育及日常减肥运动，长度可自由调节。",
+      "features": {
+        "brand": "李宁",
+        "specification": "可调节",
+        "origin": "中国"
+      },
+      "price": 29.9,
+      "stock": 400,
+      "sales": 1500,
+      "average_rating": 4.6,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "肌肉放松泡沫轴瑜伽柱按摩滚轴器材",
+      "description": "深层按摩，缓解酸痛，高密度",
+      "description_content": "高密度材质，表面凸起设计模拟手指按摩，有效缓解运动后肌肉酸痛，促进血液循环，适合健身人群使用。",
+      "features": {
+        "brand": "TriggerPoint",
+        "specification": "33cm",
+        "origin": "美国"
+      },
+      "price": 199.0,
+      "stock": 120,
+      "sales": 600,
+      "average_rating": 4.8,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "智能运动手环心率监测防水计步器",
+      "description": "心率监测，防水耐用，长续航",
+      "description_content": "实时监测心率血压数据，支持多种运动模式，高级防水，超长续航七天，消息提醒功能，适合运动健康管理。",
+      "features": {
+        "brand": "小米",
+        "specification": "黑色",
+        "origin": "中国"
+      },
+      "price": 169.0,
+      "stock": 200,
+      "sales": 1900,
+      "average_rating": 4.5,
+      "review_count": 195,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "软木瑜伽砖辅助练习支撑块防滑",
+      "description": "天然软木，防滑吸汗，辅助支撑",
+      "description_content": "天然软木材质制作，环保无异味，表面防滑吸汗，硬度适中提供稳定支撑，帮助初学者完成高难度瑜伽体式。",
+      "features": {
+        "brand": "Lululemon",
+        "specification": "23*15*7.5cm",
+        "origin": "加拿大"
+      },
+      "price": 280.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.9,
+      "review_count": 60,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "健腹轮腹肌轮家用核心训练健身器材",
+      "description": "静音轮子，回弹辅助，锻炼核心",
+      "description_content": "双轮设计更稳定，内置回弹辅助新手使用，静音轮不伤地板，有效锻炼腹部核心肌群，附带跪垫保护膝盖。",
+      "features": {
+        "brand": "凯速",
+        "specification": "双轮带跪垫",
+        "origin": "中国"
+      },
+      "price": 59.0,
+      "stock": 250,
+      "sales": 900,
+      "average_rating": 4.4,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "防爆瑜伽球健身球孕妇分娩平衡球",
+      "description": "防爆材质，承重性强，辅助平衡",
+      "description_content": "加厚防爆材质，承重可达五百千克，适合瑜伽平衡训练及孕妇分娩辅助，表面磨砂防滑，附带打气筒。",
+      "features": {
+        "brand": "奥义",
+        "specification": "65cm",
+        "origin": "中国"
+      },
+      "price": 39.9,
+      "stock": 180,
+      "sales": 1100,
+      "average_rating": 4.6,
+      "review_count": 140,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "跑步手机臂包运动防水透气手臂套",
+      "description": "防水透气，稳固贴合，触屏灵敏",
+      "description_content": "高弹透气面料，防水防汗设计，魔术贴稳固不滑落，支持触屏操作，适合夜间跑步携带手机及钥匙，内部空间大。",
+      "features": {
+        "brand": "耐克",
+        "specification": "通用型",
+        "origin": "越南"
+      },
+      "price": 79.0,
+      "stock": 350,
+      "sales": 800,
+      "average_rating": 4.7,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_3_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业加厚防滑瑜伽垫初学者健身垫",
+      "description": "加厚防滑环保无味瑜伽垫",
+      "description_content": "采用 TPE 环保材质，加厚设计有效保护关节，双面防滑纹理确保稳定，适合初学者及专业练习，易清洁收纳，居家健身必备好物，耐用性强。",
+      "features": {
+        "brand": "Keep Fit",
+        "specification": "183*61*0.6cm",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 150,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "可调节重量哑铃男士家用健身器材",
+      "description": "快速调节重量省力健身哑铃",
+      "description_content": "一键调节重量，节省空间，防滑手柄设计，适合家庭力量训练，多种重量选择，助力肌肉塑造，坚固耐用不易生锈，专业级体验。",
+      "features": {
+        "brand": "PowerMax",
+        "specification": "2.5-24kg 可调",
+        "origin": "美国"
+      },
+      "price": 1299.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.7,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "乳胶阻力带健身弹力带男女拉伸带",
+      "description": "天然乳胶高弹力阻力训练带",
+      "description_content": "天然乳胶材质，高弹性不易断裂，五种阻力级别，适合热身、拉伸及力量训练，便携易用，随时随地开启健身模式，性价比高。",
+      "features": {
+        "brand": "FlexBand",
+        "specification": "5 件套不同阻力",
+        "origin": "越南"
+      },
+      "price": 45.9,
+      "stock": 300,
+      "sales": 1800,
+      "average_rating": 4.6,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "专业计数跳绳减肥健身无绳球绳",
+      "description": "智能计数轴承防缠绕跳绳",
+      "description_content": "内置计数器，精准记录次数，轴承设计防缠绕，可拆卸配重球，适合室内减肥燃脂运动，静音设计不扰邻居，操作简便。",
+      "features": {
+        "brand": "SkipPro",
+        "specification": "绳长可调/无绳",
+        "origin": "中国"
+      },
+      "price": 39.0,
+      "stock": 200,
+      "sales": 950,
+      "average_rating": 4.5,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "高密度泡沫轴肌肉放松按摩滚轴",
+      "description": "深层肌肉放松筋膜放松滚轴",
+      "description_content": "高密度 EPP 材质，表面纹理模拟手指按压，有效缓解肌肉酸痛，适合运动后恢复及日常放松，提升身体柔韧性，结实耐用。",
+      "features": {
+        "brand": "RecoverRight",
+        "specification": "33*14cm 高密度",
+        "origin": "德国"
+      },
+      "price": 78.5,
+      "stock": 120,
+      "sales": 600,
+      "average_rating": 4.7,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "浸塑壶铃家用提壶哑铃健身力量",
+      "description": "宽手柄浸塑防滑壶铃训练",
+      "description_content": "一体成型铸铁，表面浸塑防滑防臭，宽手柄设计保护手掌，适合爆发力及核心力量训练，提升全身协调性，重量精准。",
+      "features": {
+        "brand": "IronCore",
+        "specification": "8kg/12kg/16kg",
+        "origin": "中国"
+      },
+      "price": 128.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.6,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "防爆瑜伽球加厚健身球孕妇分娩",
+      "description": "防爆加厚环保瑜伽健身球",
+      "description_content": "防爆材质安全可靠，加厚耐磨，适合瑜伽练习、核心训练及孕妇分娩辅助，附赠打气筒，承重能力强，弹性适中。",
+      "features": {
+        "brand": "BallFit",
+        "specification": "直径 65cm 防爆",
+        "origin": "泰国"
+      },
+      "price": 59.0,
+      "stock": 180,
+      "sales": 800,
+      "average_rating": 4.8,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "高密度 EVA 瑜伽砖辅助支撑砖",
+      "description": "轻质高密度 EVA 瑜伽辅助砖",
+      "description_content": "高密度 EVA 泡沫，轻质耐用，表面防滑，辅助完成高难度动作，适合初学者提升柔韧性，多种颜色可选，无味环保。",
+      "features": {
+        "brand": "ZenYoga",
+        "specification": "23*15*7.5cm",
+        "origin": "中国"
+      },
+      "price": 25.0,
+      "stock": 250,
+      "sales": 1500,
+      "average_rating": 4.5,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "自动回弹健腹轮静音腹肌轮健身",
+      "description": "静音自动回弹健腹腹肌轮",
+      "description_content": "内置回弹助力系统，降低难度，静音轮设计不扰民，加宽轮面更稳定，高效锻炼腹部核心肌群，新手友好，安全舒适。",
+      "features": {
+        "brand": "CoreBlaster",
+        "specification": "双轮带膝垫",
+        "origin": "中国"
+      },
+      "price": 69.0,
+      "stock": 100,
+      "sales": 700,
+      "average_rating": 4.4,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "运动手环心率监测防水计步器手表",
+      "description": "多功能心率监测防水运动手环",
+      "description_content": "实时心率监测，多种运动模式，IP68 防水，长续航待机，数据同步手机，助力科学运动管理，佩戴舒适，屏幕清晰。",
+      "features": {
+        "brand": "TechFit",
+        "specification": "彩色屏幕 IP68",
+        "origin": "中国"
+      },
+      "price": 199.0,
+      "stock": 300,
+      "sales": 1100,
+      "average_rating": 4.3,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "SPORTS_FITNESS",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/sports_fitness_4_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "babycare 皇室弱酸纸尿裤 NB 码 60 片新生婴儿超薄透气",
+      "description": "专为新生儿设计，超薄透气防漏",
+      "description_content": "采用弱酸表层保护宝宝娇嫩肌肤，超薄芯体吸收快，整夜干爽。适合 0-3 个月宝宝，防侧漏设计，妈妈更安心。",
+      "features": {
+        "brand": "babycare",
+        "specification": "NB 60 片",
+        "origin": "中国"
+      },
+      "price": 158.0,
+      "stock": 300,
+      "sales": 1500,
+      "average_rating": 4.9,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "好孩子婴儿推车可坐可躺轻便折叠双向避震新生儿宝宝伞车",
+      "description": "轻便折叠双向推行，舒适避震",
+      "description_content": "一键收车方便携带，可坐可躺适合不同年龄段。双向推行便于观察宝宝，四轮避震平稳舒适，安全带保护宝宝出行安全。",
+      "features": {
+        "brand": "好孩子",
+        "specification": "灰色",
+        "origin": "中国"
+      },
+      "price": 899.0,
+      "stock": 50,
+      "sales": 320,
+      "average_rating": 4.7,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "爱他美卓萃婴儿配方奶粉 1 段 0-6 个月 900g 罐装进口",
+      "description": "进口奶源富含核苷酸，增强免疫力",
+      "description_content": "源自欧洲天然乳脂，接近母乳结构，易吸收不上火。含天然核苷酸增强宝宝自护力，适合 0-6 个月婴儿，科学配比营养全面。",
+      "features": {
+        "brand": "爱他美",
+        "specification": "900g",
+        "origin": "荷兰"
+      },
+      "price": 320.0,
+      "stock": 200,
+      "sales": 800,
+      "average_rating": 4.8,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "哺乳枕头喂奶神器坐月子护腰垫新生婴儿防吐奶斜坡垫子",
+      "description": "科学斜坡设计，缓解妈妈腰部压力",
+      "description_content": "人体工学设计支撑宝宝头部，防止吐奶。记忆棉材质柔软回弹，可拆洗外套卫生方便。帮助妈妈正确哺乳姿势，减少腰背酸痛。",
+      "features": {
+        "brand": "贝亲",
+        "specification": "蓝色",
+        "origin": "中国"
+      },
+      "price": 129.0,
+      "stock": 150,
+      "sales": 450,
+      "average_rating": 4.6,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "全棉时代婴儿连体衣纯棉新生儿哈衣爬服春秋款长袖蝴蝶衣",
+      "description": "100% 纯棉材质，柔软亲肤无刺激",
+      "description_content": "精选优质长绒棉，透气吸汗适合宝宝娇嫩肌肤。无骨缝制工艺摩擦小，蝴蝶衣设计方便换尿布。通过婴幼儿 A 类标准，安全放心。",
+      "features": {
+        "brand": "全棉时代",
+        "specification": "59 码",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 400,
+      "sales": 1200,
+      "average_rating": 4.9,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "宝得适婴儿安全座椅 0-4 岁双向安装 ISOFIX 接口汽车用",
+      "description": "欧洲安全认证，全方位保护宝宝出行",
+      "description_content": "通过 ECE 安全认证，侧撞保护系统有效缓冲冲击力。360 度旋转方便抱取，ISOFIX 硬接口安装稳固。适合 0-4 岁宝宝，出行必备。",
+      "features": {
+        "brand": "宝得适",
+        "specification": "黑色",
+        "origin": "英国"
+      },
+      "price": 2599.0,
+      "stock": 30,
+      "sales": 120,
+      "average_rating": 4.8,
+      "review_count": 45,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "艾维诺婴儿润肤乳全身保湿霜新生儿宝宝面霜燕麦精华",
+      "description": "天然燕麦精华，深层保湿舒缓干燥",
+      "description_content": "不含激素香精，温和配方适合敏感肌。每天使用锁住水分，预防湿疹干燥。质地轻盈易吸收，全家可用，呵护宝宝娇嫩肌肤健康。",
+      "features": {
+        "brand": "艾维诺",
+        "specification": "354ml",
+        "origin": "美国"
+      },
+      "price": 79.0,
+      "stock": 250,
+      "sales": 900,
+      "average_rating": 4.7,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "贝亲玻璃奶瓶新生婴儿宽口径防胀气宝宝奶瓶 160ml 配 SS 奶嘴",
+      "description": "高硼硅玻璃材质，耐高温易清洗",
+      "description_content": "宽口径设计方便加奶粉清洗，防胀气孔减少空气吸入。SS 号奶嘴适合新生儿流速，握感舒适。不含 BPA 安全无毒，妈妈信赖之选。",
+      "features": {
+        "brand": "贝亲",
+        "specification": "160ml",
+        "origin": "日本"
+      },
+      "price": 65.0,
+      "stock": 350,
+      "sales": 1800,
+      "average_rating": 4.9,
+      "review_count": 200,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "费雪婴儿健身架器新生儿宝宝音乐钢琴玩具 0-1 岁脚踏琴",
+      "description": "多功能健身架，促进感官发育",
+      "description_content": "悬挂玩具吸引宝宝注意力，脚踏钢琴锻炼腿部力量。多种音乐模式刺激听觉发育，可拆卸设计方便携带。安全材质可啃咬，陪伴宝宝成长。",
+      "features": {
+        "brand": "费雪",
+        "specification": "彩色",
+        "origin": "美国"
+      },
+      "price": 299.0,
+      "stock": 100,
+      "sales": 600,
+      "average_rating": 4.8,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "全棉时代婴儿湿巾手口专用新生儿无酒精加厚湿纸巾 80 抽 6 包",
+      "description": "纯水配方无添加，安全可入口",
+      "description_content": "采用 EDI 纯水，不含酒精香精防腐剂。加厚珍珠纹清洁力强，柔软不掉絮。通过皮肤测试，手口屁通用，居家外出必备护理用品。",
+      "features": {
+        "brand": "全棉时代",
+        "specification": "80 抽*6 包",
+        "origin": "中国"
+      },
+      "price": 59.9,
+      "stock": 500,
+      "sales": 2000,
+      "average_rating": 4.9,
+      "review_count": 195,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_1_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "帮宝适一级帮拉拉裤 XL 码超薄透气婴儿尿不湿",
+      "description": "超薄透气，整夜干爽，呵护宝宝娇嫩肌肤",
+      "description_content": "专为宝宝设计，采用微米级透气孔，快速吸收尿液，保持表面干爽。适合体重 12-17kg 宝宝，柔软亲肤，减少红屁股风险。",
+      "features": {
+        "brand": "帮宝适",
+        "specification": "XL 码 50 片",
+        "origin": "日本"
+      },
+      "price": 159.0,
+      "stock": 300,
+      "sales": 1500,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "爱他美卓萃婴儿配方奶粉 1 段 0-6 个月 900g",
+      "description": "富含天然乳脂，支持宝宝免疫力健康成长",
+      "description_content": "模拟母乳成分，添加 DHA 和益生元，促进大脑发育和肠道健康。清淡口味，不易上火，适合新生宝宝日常营养补充。",
+      "features": {
+        "brand": "爱他美",
+        "specification": "900g 罐装",
+        "origin": "德国"
+      },
+      "price": 320.0,
+      "stock": 150,
+      "sales": 800,
+      "average_rating": 4.9,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "纯棉孕妇连衣裙夏季宽松透气外出哺乳裙",
+      "description": "宽松舒适，隐藏哺乳口，时尚美观两不误",
+      "description_content": "选用优质纯棉面料，吸汗透气，适合夏季穿着。侧边隐形哺乳设计，方便喂奶。版型宽松，遮盖孕肚，产后也可继续穿着。",
+      "features": {
+        "brand": "孕味食足",
+        "specification": "L 码 蓝色",
+        "origin": "中国"
+      },
+      "price": 128.0,
+      "stock": 200,
+      "sales": 450,
+      "average_rating": 4.6,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "好孩子婴儿推车可坐可躺轻便折叠避震宝宝车",
+      "description": "一键折叠，双向推行，高景观避震设计",
+      "description_content": "高景观视野好，远离汽车尾气。四轮独立避震，适应各种路面。可坐可躺调节，适合 0-3 岁宝宝。轻便折叠，方便收纳携带。",
+      "features": {
+        "brand": "好孩子",
+        "specification": "金色",
+        "origin": "中国"
+      },
+      "price": 1299.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.7,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "哺乳枕头护腰椅子神器坐月子喂奶垫抱娃托",
+      "description": "科学坡度设计，缓解妈妈腰部压力，宝宝舒适",
+      "description_content": "符合人体工学设计，有效支撑宝宝重量，防止妈妈腰背酸痛。面料柔软可拆洗，内部填充饱满，喂奶、哄睡多场景适用。",
+      "features": {
+        "brand": "babycare",
+        "specification": "灰色",
+        "origin": "中国"
+      },
+      "price": 259.0,
+      "stock": 180,
+      "sales": 600,
+      "average_rating": 4.8,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "全棉时代婴儿湿巾手口专用无酒精加厚 80 抽",
+      "description": "纯棉材质，无添加刺激，安全清洁宝宝手口",
+      "description_content": "100% 天然棉制成，不含酒精、荧光剂。水分充足，质地厚实不易破。独立包装或大包装可选，方便居家外出随时清洁。",
+      "features": {
+        "brand": "全棉时代",
+        "specification": "80 抽*5 包",
+        "origin": "中国"
+      },
+      "price": 69.9,
+      "stock": 400,
+      "sales": 1800,
+      "average_rating": 4.9,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "爱乐维复合维生素片孕妇备孕叶酸营养 100 片",
+      "description": "补充多种维生素矿物质，助力宝宝健康发育",
+      "description_content": "含叶酸、铁、钙等 18 种营养素，预防胎儿神经管畸形。适合备孕、孕期及哺乳期女性。每日一片，方便补充日常所需营养。",
+      "features": {
+        "brand": "爱乐维",
+        "specification": "100 片/盒",
+        "origin": "澳大利亚"
+      },
+      "price": 288.0,
+      "stock": 250,
+      "sales": 950,
+      "average_rating": 4.7,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "新生儿衣服纯棉内衣套装初生婴儿和尚服春秋",
+      "description": "A 类纯棉，无骨缝制，呵护新生儿敏感肌肤",
+      "description_content": "严格符合 A 类婴幼儿标准，无荧光剂。无骨缝制工艺，摩擦不伤皮肤。系带设计方便穿脱，调节松紧，适合刚出生宝宝穿着。",
+      "features": {
+        "brand": "童泰",
+        "specification": "59 码 3 件套",
+        "origin": "中国"
+      },
+      "price": 89.0,
+      "stock": 350,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "贝亲玻璃奶瓶新生婴儿宽口径防胀气 160ml",
+      "description": "高硼硅玻璃，耐高温消毒，防胀气奶嘴设计",
+      "description_content": "采用高硼硅玻璃，安全耐用，耐高温消毒。宽口径方便清洗加粉。特有防胀气系统，减少宝宝吸入空气，预防吐奶胀气不适。",
+      "features": {
+        "brand": "贝亲",
+        "specification": "160ml",
+        "origin": "日本"
+      },
+      "price": 79.0,
+      "stock": 220,
+      "sales": 750,
+      "average_rating": 4.6,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "孕妇枕头侧睡枕托腹 U 型枕怀孕期睡觉神器",
+      "description": "多功能 U 型设计，支撑腰腹，改善孕期睡眠",
+      "description_content": "专为孕妇设计，缓解腰背压力，托腹保护宝宝。可拆卸设计，灵活调整形状。面料亲肤透气，帮助孕妈妈获得高质量睡眠体验。",
+      "features": {
+        "brand": "佳韵宝",
+        "specification": "紫色",
+        "origin": "中国"
+      },
+      "price": 199.0,
+      "stock": 120,
+      "sales": 400,
+      "average_rating": 4.5,
+      "review_count": 75,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_2_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "超薄透气婴儿纸尿裤新生儿专用 nb 码",
+      "description": "超薄透气干爽不红屁屁",
+      "description_content": "专为新生儿设计，超薄芯体吸收快，表面干爽透气，有效预防红屁屁，适合 0-3 个月宝宝使用，妈妈更安心。",
+      "features": {
+        "brand": "帮宝适",
+        "specification": "NB 码 60 片",
+        "origin": "中国"
+      },
+      "price": 129.0,
+      "stock": 350,
+      "sales": 1500,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "有机婴幼儿配方奶粉一段 0-6 个月",
+      "description": "有机奶源贴近母乳好吸收",
+      "description_content": "精选有机奶源，富含 DHA 和益生元，配方贴近母乳，易于宝宝消化吸收，增强免疫力，适合 0-6 个月婴儿食用。",
+      "features": {
+        "brand": "爱他美",
+        "specification": "800g 罐装",
+        "origin": "德国"
+      },
+      "price": 328.0,
+      "stock": 200,
+      "sales": 800,
+      "average_rating": 4.9,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "轻便折叠婴儿推车可坐可躺双向",
+      "description": "一键收车便携出行神器",
+      "description_content": "铝合金车架轻便耐用，可坐可躺调节，双向推行方便互动，一键折叠方便收纳，适合外出散步旅行使用更轻松。",
+      "features": {
+        "brand": "好孩子",
+        "specification": "红色",
+        "origin": "中国"
+      },
+      "price": 899.0,
+      "stock": 50,
+      "sales": 300,
+      "average_rating": 4.7,
+      "review_count": 85,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "纯棉孕妇连衣裙夏季宽松透气",
+      "description": "舒适面料适合孕期穿着",
+      "description_content": "采用优质纯棉面料，柔软亲肤透气，宽松版型不束缚腹部，适合孕期各个阶段穿着，时尚美观又舒适放心。",
+      "features": {
+        "brand": "十月结晶",
+        "specification": "L 码",
+        "origin": "中国"
+      },
+      "price": 159.0,
+      "stock": 120,
+      "sales": 600,
+      "average_rating": 4.6,
+      "review_count": 90,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "防胀气玻璃奶瓶新生儿宽口径",
+      "description": "高硼硅玻璃安全耐高温",
+      "description_content": "高硼硅玻璃材质安全耐高温，宽口径设计方便清洗，特有防胀气系统减少宝宝吸入空气，适合新生儿喂养使用。",
+      "features": {
+        "brand": "贝亲",
+        "specification": "160ml",
+        "origin": "日本"
+      },
+      "price": 89.0,
+      "stock": 300,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "婴儿手口专用湿巾无酒精无香精",
+      "description": "纯水配方温和不刺激",
+      "description_content": "采用 RO 纯水制作，无酒精无香精无荧光剂，温和不刺激宝宝娇嫩肌肤，加厚设计清洁力强，居家外出必备。",
+      "features": {
+        "brand": "全棉时代",
+        "specification": "80 抽 5 包",
+        "origin": "中国"
+      },
+      "price": 49.9,
+      "stock": 450,
+      "sales": 1800,
+      "average_rating": 4.9,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "多功能哺乳枕头护腰解放双手",
+      "description": "科学设计缓解喂奶疲劳",
+      "description_content": "人体工学设计有效支撑宝宝重量，缓解妈妈腰背压力，可调节高度，面料可拆洗，让喂奶更轻松舒适愉快。",
+      "features": {
+        "brand": "babycare",
+        "specification": "灰色",
+        "origin": "中国"
+      },
+      "price": 199.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.7,
+      "review_count": 70,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "儿童安全座椅汽车用 0-4 岁可躺",
+      "description": "360 度旋转方便抱放宝宝",
+      "description_content": "通过 3C 认证，ISOFIX 接口安装稳固，360 度旋转方便抱放，多角度调节可坐可躺，保护宝宝出行安全。",
+      "features": {
+        "brand": "宝得适",
+        "specification": "黑色",
+        "origin": "英国"
+      },
+      "price": 2599.0,
+      "stock": 30,
+      "sales": 150,
+      "average_rating": 4.8,
+      "review_count": 45,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "孕妇复合维生素叶酸铁钙片",
+      "description": "补充孕期所需多种营养",
+      "description_content": "专为孕妇配方，含叶酸、铁、钙等多种微量元素，预防胎儿畸形，补充母体营养，每天一片方便服用好。",
+      "features": {
+        "brand": "爱乐维",
+        "specification": "100 片",
+        "origin": "澳大利亚"
+      },
+      "price": 298.0,
+      "stock": 150,
+      "sales": 900,
+      "average_rating": 4.9,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "新生儿衣服纯棉内衣套装春秋",
+      "description": "柔软亲肤适合宝宝娇嫩肌",
+      "description_content": "100% 纯棉材质，A 类标准无荧光剂，和尚服设计方便穿脱，缝线平整不摩擦皮肤，适合刚出生宝宝贴身穿着。",
+      "features": {
+        "brand": "童泰",
+        "specification": "59 码",
+        "origin": "中国"
+      },
+      "price": 79.0,
+      "stock": 250,
+      "sales": 1100,
+      "average_rating": 4.7,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_3_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "超薄透气婴儿纸尿裤新生儿专用 NB 码 100 片",
+      "description": "柔软亲肤防漏设计呵护宝宝",
+      "description_content": "采用天然棉柔表层，超薄透气芯体，有效防止红屁股。适合 0-3 个月新生儿，瞬吸干爽，让宝宝整夜安睡。",
+      "features": {
+        "brand": "帮宝适",
+        "specification": "NB 码 100 片",
+        "origin": "日本"
+      },
+      "price": 129.0,
+      "stock": 350,
+      "sales": 1500,
+      "average_rating": 4.8,
+      "review_count": 180,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_1.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "轻便折叠婴儿推车可坐可躺双向避震伞车",
+      "description": "一键收车便携出行轻松带娃",
+      "description_content": "铝合金车架轻便坚固，双向推行方便互动。高景观避震轮，适合 0-3 岁宝宝。折叠后体积小，可登机携带。",
+      "features": {
+        "brand": "好孩子",
+        "specification": "灰色",
+        "origin": "中国"
+      },
+      "price": 899.0,
+      "stock": 50,
+      "sales": 320,
+      "average_rating": 4.7,
+      "review_count": 95,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_2.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "婴幼儿配方奶粉 1 段 0-6 个月 900g 罐装",
+      "description": "接近母乳营养配方易吸收",
+      "description_content": "富含 DHA 和益生元，促进大脑发育和肠道健康。奶源来自新西兰牧场，清淡口味不易上火，适合新生宝宝食用。",
+      "features": {
+        "brand": "爱他美",
+        "specification": "900g",
+        "origin": "新西兰"
+      },
+      "price": 258.0,
+      "stock": 200,
+      "sales": 890,
+      "average_rating": 4.9,
+      "review_count": 150,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_3.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "电动吸奶器静音无痛大吸力产后挤奶神器",
+      "description": "智能按摩催乳模式舒适",
+      "description_content": "医疗级硅胶喇叭罩，贴合乳房不疼痛。九档调节吸力，静音马达设计，夜间使用不吵醒宝宝。锂电池续航持久。",
+      "features": {
+        "brand": "新安怡",
+        "specification": "标准版",
+        "origin": "荷兰"
+      },
+      "price": 699.0,
+      "stock": 80,
+      "sales": 450,
+      "average_rating": 4.6,
+      "review_count": 120,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_4.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "纯棉婴儿连体衣春秋款新生儿哈衣爬服",
+      "description": "A 类标准柔软舒适亲肤",
+      "description_content": "100% 纯棉面料，无荧光剂添加，保护宝宝娇嫩肌肤。和尚服设计方便穿脱，按扣开裆方便换尿布，多色可选。",
+      "features": {
+        "brand": "童泰",
+        "specification": "59 码",
+        "origin": "中国"
+      },
+      "price": 49.9,
+      "stock": 400,
+      "sales": 1200,
+      "average_rating": 4.8,
+      "review_count": 190,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_5.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "宽口径玻璃奶瓶防胀气新生儿奶瓶 150ml",
+      "description": "耐高温易清洗安全耐用",
+      "description_content": "高硼硅玻璃材质，安全无毒。仿母乳实感奶嘴，减少空气吸入防止胀气。刻度清晰，方便冲泡奶粉，可高温消毒。",
+      "features": {
+        "brand": "贝亲",
+        "specification": "150ml",
+        "origin": "日本"
+      },
+      "price": 89.0,
+      "stock": 300,
+      "sales": 980,
+      "average_rating": 4.7,
+      "review_count": 160,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_6.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "孕妇枕头侧睡枕托腹 U 型多功能睡觉神器",
+      "description": "缓解孕期睡眠压力辅助",
+      "description_content": "科学 U 型设计，支撑腹部腰部，缓解腰酸背痛。可拆卸调节高度，纯棉枕套透气吸汗，帮助孕妈妈获得优质睡眠。",
+      "features": {
+        "brand": "佳韵宝",
+        "specification": "灰色",
+        "origin": "中国"
+      },
+      "price": 159.0,
+      "stock": 120,
+      "sales": 670,
+      "average_rating": 4.5,
+      "review_count": 140,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_7.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "婴儿监护器高清夜视双向语音远程看护仪",
+      "description": "实时监控宝宝动态安心",
+      "description_content": "1080P 高清画质，红外夜视功能看清夜间状况。双向语音对讲，随时安抚宝宝。移动侦测报警，手机 APP 远程查看。",
+      "features": {
+        "brand": "小米",
+        "specification": "白色",
+        "origin": "中国"
+      },
+      "price": 199.0,
+      "stock": 150,
+      "sales": 540,
+      "average_rating": 4.6,
+      "review_count": 110,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_8.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "有机婴儿米粉高铁锌营养辅食 1 段 225g",
+      "description": "易消化补充微量元素",
+      "description_content": "精选有机大米，细腻粉末易吞咽。强化铁锌钙，满足宝宝成长需求。不含香精色素，独立小包装，方便携带卫生。",
+      "features": {
+        "brand": "嘉宝",
+        "specification": "225g",
+        "origin": "美国"
+      },
+      "price": 58.0,
+      "stock": 250,
+      "sales": 760,
+      "average_rating": 4.8,
+      "review_count": 130,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_9.jpg",
+      "auto_confirm_mode": "MANUAL"
+    },
+    {
+      "title": "婴儿洗发水沐浴露二合一无泪配方 500ml",
+      "description": "温和清洁保护头皮滋润",
+      "description_content": "植物萃取成分，温和不刺激眼睛。泡沫丰富易冲洗，滋润保湿不干燥。适合新生儿及儿童日常洗护，瓶身防滑设计。",
+      "features": {
+        "brand": "强生",
+        "specification": "500ml",
+        "origin": "中国"
+      },
+      "price": 39.9,
+      "stock": 450,
+      "sales": 1800,
+      "average_rating": 4.7,
+      "review_count": 195,
+      "status": "ON_SALE",
+      "merchant_id": 4,
+      "category": "MATERNAL_BABY",
+      "cover_url": "http://localhost:8080/v1/static/product/cover/maternal_baby_4_10.jpg",
+      "auto_confirm_mode": "MANUAL"
+    }
+  ]
+}

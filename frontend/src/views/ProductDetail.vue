@@ -131,8 +131,13 @@
           <p class="desc-text">{{ product.description }}</p>
         </div>
 
-        <div v-if="productDescription" class="product-description-section">
+        <div v-if="product.descriptionContent" class="product-description-section">
           <h3 class="section-title">详细介绍</h3>
+          <div class="description-content">{{ product.descriptionContent }}</div>
+        </div>
+
+        <div v-if="productDescription" class="product-description-section">
+          <h3 class="section-title">详细介绍（补充）</h3>
           <div class="description-content">{{ productDescription.content }}</div>
         </div>
 
@@ -169,7 +174,7 @@
             </tr>
             <tr>
               <td class="spec-name">商品分类</td>
-              <td class="spec-value">{{ product.category }}</td>
+              <td class="spec-value">{{ getCategoryLabel(product.category) }}</td>
             </tr>
             <tr>
               <td class="spec-name">价格</td>
@@ -186,10 +191,6 @@
             <tr>
               <td class="spec-name">商品状态</td>
               <td class="spec-value">{{ formatStatus(product.status) }}</td>
-            </tr>
-            <tr v-if="product.features">
-              <td class="spec-name">商品特性</td>
-              <td class="spec-value">{{ product.features }}</td>
             </tr>
           </tbody>
         </table>
@@ -312,6 +313,7 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import api from '../api'
 import { useUserStore } from '../stores/user'
+import { getCategoryLabel } from '../constants/productCategories'
 
 const route = useRoute()
 const router = useRouter()

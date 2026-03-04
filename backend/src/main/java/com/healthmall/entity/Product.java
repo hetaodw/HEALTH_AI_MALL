@@ -14,6 +14,12 @@ public class Product {
         OUT_OF_STOCK
     }
 
+    public enum AutoConfirmMode {
+        AUTO,      // 自动确认：库存充足时自动确认订单
+        MANUAL,    // 手动确认：所有订单都需要商家手动确认
+        SMART      // 智能确认：根据订单条件智能判断是否自动确认
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -36,6 +42,9 @@ public class Product {
     @Column(columnDefinition = "JSON")
     private String features;
 
+    @Column(name = "description_content", columnDefinition = "TEXT")
+    private String descriptionContent;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 
@@ -54,6 +63,13 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ProductStatus status = ProductStatus.ON_SALE;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auto_confirm_mode", length = 20)
+    private AutoConfirmMode autoConfirmMode = AutoConfirmMode.MANUAL;
+
+    @Column(name = "auto_confirm_condition", columnDefinition = "TEXT")
+    private String autoConfirmCondition;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -128,6 +144,14 @@ public class Product {
         this.features = features;
     }
 
+    public String getDescriptionContent() {
+        return descriptionContent;
+    }
+
+    public void setDescriptionContent(String descriptionContent) {
+        this.descriptionContent = descriptionContent;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -190,5 +214,21 @@ public class Product {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public AutoConfirmMode getAutoConfirmMode() {
+        return autoConfirmMode;
+    }
+
+    public void setAutoConfirmMode(AutoConfirmMode autoConfirmMode) {
+        this.autoConfirmMode = autoConfirmMode;
+    }
+
+    public String getAutoConfirmCondition() {
+        return autoConfirmCondition;
+    }
+
+    public void setAutoConfirmCondition(String autoConfirmCondition) {
+        this.autoConfirmCondition = autoConfirmCondition;
     }
 }

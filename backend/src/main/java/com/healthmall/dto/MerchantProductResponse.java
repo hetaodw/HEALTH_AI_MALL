@@ -13,6 +13,7 @@ public class MerchantProductResponse {
     private String description;
     private String coverUrl;
     private String features;
+    private String descriptionContent;
     private BigDecimal price;
     private Integer stock;
     private Integer sales;
@@ -20,6 +21,8 @@ public class MerchantProductResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<String> detailImages;
+    private Product.AutoConfirmMode autoConfirmMode;
+    private String autoConfirmCondition;
 
     public Integer getId() {
         return id;
@@ -77,6 +80,14 @@ public class MerchantProductResponse {
         this.features = features;
     }
 
+    public String getDescriptionContent() {
+        return descriptionContent;
+    }
+
+    public void setDescriptionContent(String descriptionContent) {
+        this.descriptionContent = descriptionContent;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -131,5 +142,21 @@ public class MerchantProductResponse {
 
     public void setDetailImages(List<String> detailImages) {
         this.detailImages = detailImages;
+    }
+
+    public Product.AutoConfirmMode getAutoConfirmMode() {
+        return autoConfirmMode;
+    }
+
+    public void setAutoConfirmMode(Product.AutoConfirmMode autoConfirmMode) {
+        this.autoConfirmMode = autoConfirmMode;
+    }
+
+    public String getAutoConfirmCondition() {
+        return autoConfirmCondition;
+    }
+
+    public void setAutoConfirmCondition(String autoConfirmCondition) {
+        this.autoConfirmCondition = autoConfirmCondition;
     }
 }

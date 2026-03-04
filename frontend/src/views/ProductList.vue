@@ -10,11 +10,7 @@
         <label class="filter-label">分类</label>
         <select v-model="filters.category" @change="applyFilters" class="skeuomorphic-select">
           <option value="">全部</option>
-          <option value="保健品">保健品</option>
-          <option value="医疗器械">医疗器械</option>
-          <option value="健康食品">健康食品</option>
-          <option value="运动健身">运动健身</option>
-          <option value="母婴用品">母婴用品</option>
+          <option v-for="cat in PRODUCT_CATEGORIES" :key="cat.value" :value="cat.value">{{ cat.label }}</option>
         </select>
       </div>
 
@@ -93,6 +89,7 @@ import { ref, onMounted } from 'vue'
 import ProductCard from '../components/ProductCard.vue'
 import Pagination from '../components/Pagination.vue'
 import api from '../api'
+import { PRODUCT_CATEGORIES } from '../constants/productCategories'
 
 const products = ref([])
 const loading = ref(false)
@@ -158,8 +155,8 @@ const fetchProducts = async () => {
 
     if (response.code === 200) {
       products.value = response.data.list || []
-      totalPages.value = response.data.totalPages || 1
       totalItems.value = response.data.total || 0
+      totalPages.value = Math.ceil(totalItems.value / filters.value.pageSize) || 1
     } else {
       error.value = response.msg || '获取商品列表失败'
     }
