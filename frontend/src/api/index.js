@@ -96,5 +96,11 @@ export default {
     getDetail: (reviewId) => api.get(`/product/reviews/detail/${reviewId}`),
     create: (productId, data) => api.post(`/product/reviews/${productId}`, data),
     delete: (reviewId) => api.delete(`/product/reviews/${reviewId}`)
+  },
+  browsingHistory: {
+    getList: (params) => api.get('/browsing-history', { params }),
+    add: (productId) => api.post(`/browsing-history/${productId}`),
+    delete: (productId) => api.delete(`/browsing-history/${productId}`),
+    clear: () => api.delete('/browsing-history')
   }
 }

@@ -40,6 +40,9 @@
               {{ userStore.user?.username?.charAt(0).toUpperCase() || 'U' }}
             </div>
           </router-link>
+          <router-link to="/browsing-history" class="skeuomorphic-button" title="浏览记录">
+            📝 浏览记录
+          </router-link>
           <button @click="handleLogout" class="skeuomorphic-button logout-button">
             退出
           </button>

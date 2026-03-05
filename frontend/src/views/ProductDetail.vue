@@ -388,6 +388,12 @@ const fetchProductDetail = async () => {
       }
       
       fetchProductDescription(productId)
+      
+      if (userStore.isLoggedIn()) {
+        api.browsingHistory.add(productId).catch(err => {
+          console.log('浏览记录记录失败:', err)
+        })
+      }
     } else {
       console.error('获取商品详情失败:', response.msg)
       alert('获取商品详情失败: ' + response.msg)

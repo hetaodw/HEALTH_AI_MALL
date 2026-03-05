@@ -174,6 +174,9 @@
         <div class="profile-section skeuomorphic-card">
           <h3 class="section-title">账户设置</h3>
           <div class="settings-list">
+            <router-link to="/browsing-history" class="setting-item skeuomorphic-button">
+              浏览记录
+            </router-link>
             <button @click="showChangePassword = true" class="setting-item skeuomorphic-button">
               修改密码
             </button>

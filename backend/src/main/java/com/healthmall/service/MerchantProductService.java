@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,10 +35,13 @@ public class MerchantProductService {
     private final UserRepository userRepository;
     private final ProductDetailsImageRepository productDetailsImageRepository;
 
-    public MerchantProductService(ProductRepository productRepository, UserRepository userRepository, ProductDetailsImageRepository productDetailsImageRepository) {
+    private final AiTagGenerator aiTagGenerator;
+
+    public MerchantProductService(ProductRepository productRepository, UserRepository userRepository, ProductDetailsImageRepository productDetailsImageRepository, AiTagGenerator aiTagGenerator) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.productDetailsImageRepository = productDetailsImageRepository;
+        this.aiTagGenerator = aiTagGenerator;
     }
 
     @Transactional
@@ -96,6 +100,19 @@ public class MerchantProductService {
             }
         }
         
+        // 自动生成标签
+        try {
+            List<String> tags = aiTagGenerator.generateTags(savedProduct.getTitle(), savedProduct.getDescription());
+            if (!tags.isEmpty()) {
+                savedProduct.setTags(tags);
+                savedProduct.setNeedRegenerateTags(false);
+                productRepository.save(savedProduct);
+                logger.info("商品标签自动生成成功: productId={}, tags={}", savedProduct.getId(), tags);
+            }
+        } catch (Exception e) {
+            logger.warn("商品标签自动生成失败，但不影响商品创建: productId={}, error={}", savedProduct.getId(), e.getMessage());
+        }
+        
         return convertToResponse(savedProduct);
     }
 
@@ -111,6 +128,13 @@ public class MerchantProductService {
         if (!ProductCategory.isValidCategory(request.getCategory())) {
             throw new RuntimeException("无效的商品分类");
         }
+
+        // 检查标题或描述是否变化
+        boolean titleChanged = !product.getTitle().equals(request.getTitle());
+        String oldDescription = product.getDescription() != null ? product.getDescription() : "";
+        String newDescription = request.getDescription() != null ? request.getDescription() : "";
+        boolean descriptionChanged = !oldDescription.equals(newDescription);
+        boolean needRegenerateTags = titleChanged || descriptionChanged;
 
         product.setTitle(request.getTitle());
         product.setCategory(request.getCategory());
@@ -142,6 +166,12 @@ public class MerchantProductService {
             product.setAutoConfirmMode(request.getAutoConfirmMode());
         }
         product.setAutoConfirmCondition(request.getAutoConfirmCondition());
+
+        // 如果标题或描述变化，标记需要重新生成标签
+        if (needRegenerateTags) {
+            product.setNeedRegenerateTags(true);
+            logger.info("商品标题或描述已修改，标记需要重新生成标签: productId={}", productId);
+        }
 
         Product updatedProduct = productRepository.save(product);
         

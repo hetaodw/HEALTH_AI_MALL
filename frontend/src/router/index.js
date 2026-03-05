@@ -10,6 +10,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import MerchantDashboard from '../views/MerchantDashboard.vue'
 import MerchantOrders from '../views/MerchantOrders.vue'
+import BrowsingHistory from '../views/BrowsingHistory.vue'
 
 const routes = [
   {
@@ -36,6 +37,12 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/browsing-history',
+    name: 'BrowsingHistory',
+    component: BrowsingHistory,
     meta: { requiresAuth: true }
   },
   {

@@ -28,6 +28,7 @@ public class ProductDetailResponse {
     private Product.ProductStatus status;
     private LocalDateTime createdAt;
     private List<String> detailImages;
+    private List<String> tags;
 
     public ProductDetailResponse() {
     }
@@ -46,6 +47,7 @@ public class ProductDetailResponse {
         this.status = product.getStatus();
         this.createdAt = product.getCreatedAt();
         this.detailImages = detailImages;
+        this.tags = product.getTags();
     }
 
     // Getters and Setters
@@ -191,5 +193,13 @@ public class ProductDetailResponse {
 
     public void setDetailImages(List<String> detailImages) {
         this.detailImages = detailImages;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 }

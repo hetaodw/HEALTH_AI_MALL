@@ -44,4 +44,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> findByMerchantIdAndStatus(Integer merchantId, com.healthmall.entity.Product.ProductStatus status, Pageable pageable);
 
     Page<Product> findByMerchantIdAndCategory(Integer merchantId, String category, Pageable pageable);
+
+    List<Product> findByNeedRegenerateTagsTrueOrderByUpdatedAtAsc();
 }

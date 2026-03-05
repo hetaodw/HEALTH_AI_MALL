@@ -60,13 +60,25 @@
   - [43. 获取评价详情](#43-获取评价详情)
   - [44. 创建商品评价](#44-创建商品评价)
   - [45. 删除商品评价](#45-删除商品评价)
+- [浏览记录 API](#浏览记录-api)
+  - [46. 获取浏览记录列表](#46-获取浏览记录列表)
+  - [47. 添加浏览记录](#47-添加浏览记录)
+  - [48. 删除浏览记录](#48-删除浏览记录)
+  - [49. 清空浏览记录](#49-清空浏览记录)
+- [商品标签 API](#商品标签-api)
+  - [50. 为商品生成标签](#50-为商品生成标签)
+  - [51. 批量生成商品标签](#51-批量生成商品标签)
+  - [52. 获取商品标签](#52-获取商品标签)
+  - [53. 手动更新商品标签](#53-手动更新商品标签)
+  - [54. 获取热门标签](#54-获取热门标签)
+  - [55. 按标签搜索商品](#55-按标签搜索商品)
 - [测试用例 (cURL)](#测试用例-curl)
 - [状态码说明](#状态码说明)
 - [角色说明](#角色说明)
 
 ---
 
-## 商品详情介绍 API
+## 商品标签 API
 
 ### 39. 获取商品详情介绍
 
@@ -300,6 +312,353 @@
 
 ---
 
+## 浏览记录 API
+
+### 46. 获取浏览记录列表
+
+**接口**: `GET /v1/browsing-history`
+
+**请求头**: `Authorization: Bearer {token}`
+
+**请求参数**:
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| page | int | 否 | 1 | 页码 |
+| size | int | 否 | 20 | 每页数量 |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "list": [
+      {
+        "id": 1,
+        "productId": 1,
+        "productTitle": "维生素C片",
+        "productCoverUrl": "http://example.com/product1.jpg",
+        "productPrice": 59.90,
+        "viewedAt": "2026-03-04T10:00:00"
+      }
+    ],
+    "total": 50
+  }
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| list | array | 浏览记录列表 |
+| list[].id | int | 浏览记录ID |
+| list[].productId | int | 商品ID |
+| list[].productTitle | string | 商品标题 |
+| list[].productCoverUrl | string | 商品封面图URL |
+| list[].productPrice | decimal | 商品价格 |
+| list[].viewedAt | datetime | 浏览时间 |
+| total | long | 总记录数 |
+
+---
+
+### 47. 添加浏览记录
+
+**接口**: `POST /v1/browsing-history/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**说明**: 
+- 用户访问商品详情页时自动调用此接口
+- 每个用户最多保留100条浏览记录，超出自动删除最早的
+- 如果商品已删除，浏览记录会自动级联删除
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+---
+
+### 48. 删除浏览记录
+
+**接口**: `DELETE /v1/browsing-history/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**说明**: 删除指定商品的浏览记录
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+---
+
+### 49. 清空浏览记录
+
+**接口**: `DELETE /v1/browsing-history`
+
+**请求头**: `Authorization: Bearer {token}`
+
+**说明**: 清空当前用户的所有浏览记录
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+---
+
+## 商品标签 API
+
+### 50. 为商品生成标签
+
+**接口**: `POST /v1/products/tags/{productId}/generate`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**说明**: 调用AI模型根据商品标题和介绍自动生成标签
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": ["维生素", "增强免疫力", "抗氧化", "天然原料"]
+}
+```
+
+---
+
+### 51. 批量生成商品标签
+
+**接口**: `POST /v1/products/tags/batch/generate`
+
+**请求头**: `Authorization: Bearer {token}`
+
+**请求体**:
+```json
+{
+  "productIds": [1, 2, 3, 4, 5]
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| productIds | array | 是 | 商品ID列表 |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "successCount": 4,
+    "failedCount": 1,
+    "failedProductIds": [5],
+    "message": "批量生成完成：成功4个，失败1个"
+  }
+}
+```
+
+---
+
+### 52. 获取商品标签
+
+**接口**: `GET /v1/products/tags/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": ["维生素", "增强免疫力", "抗氧化", "天然原料"]
+}
+```
+
+---
+
+### 53. 手动更新商品标签
+
+**接口**: `PUT /v1/products/tags/{productId}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| productId | int | 商品 ID |
+
+**请求头**: `Authorization: Bearer {token}`
+
+**请求体**:
+```json
+{
+  "tags": ["维生素", "增强免疫力", "抗氧化"]
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| tags | array | 是 | 标签列表 |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": null
+}
+```
+
+---
+
+### 54. 获取热门标签
+
+**接口**: `GET /v1/products/tags/popular`
+
+**查询参数**:
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| limit | int | 否 | 20 | 返回数量 |
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": [
+    {"tag": "维生素", "count": 150},
+    {"tag": "增强免疫力", "count": 120},
+    {"tag": "抗氧化", "count": 98}
+  ]
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| tag | string | 标签名称 |
+| count | int | 使用该标签的商品数量 |
+
+---
+
+### 55. 按标签搜索商品
+
+**接口**: `GET /v1/products/tags/search`
+
+**查询参数**:
+| 参数 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| tags | array | 是 | - | 标签列表 |
+| page | int | 否 | 1 | 页码 |
+| size | int | 否 | 10 | 每页数量 |
+
+**请求示例**:
+```
+GET /v1/products/tags/search?tags=维生素&tags=增强免疫力&page=1&size=10
+```
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "list": [
+      {
+        "id": 1,
+        "title": "天然维C片500mg",
+        "coverUrl": "http://example.com/product1.jpg",
+        "price": 59.90,
+        "stock": 100,
+        "tags": ["维生素", "增强免疫力", "抗氧化"]
+      }
+    ],
+    "total": 50
+  }
+}
+```
+
+---
+
+## 测试用例 - 商品标签 (cURL)
+
+### 32. 为商品生成标签
+```bash
+curl -X POST http://localhost:8080/v1/products/tags/1/generate \
+  -H "Authorization: Bearer {merchant_token}"
+```
+
+### 33. 批量生成商品标签
+```bash
+curl -X POST http://localhost:8080/v1/products/tags/batch/generate \
+  -H "Authorization: Bearer {merchant_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "productIds": [1, 2, 3, 4, 5]
+  }'
+```
+
+### 34. 获取商品标签
+```bash
+curl -X GET http://localhost:8080/v1/products/tags/1
+```
+
+### 35. 手动更新商品标签
+```bash
+curl -X PUT http://localhost:8080/v1/products/tags/1 \
+  -H "Authorization: Bearer {merchant_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tags": ["维生素", "增强免疫力", "抗氧化"]
+  }'
+```
+
+### 36. 获取热门标签
+```bash
+curl -X GET "http://localhost:8080/v1/products/tags/popular?limit=10"
+```
+
+### 37. 按标签搜索商品
+```bash
+curl -X GET "http://localhost:8080/v1/products/tags/search?tags=维生素&tags=增强免疫力&page=1&size=10"
+```
+
+---
+
 ## 测试用例 - 商品详情介绍和评价 (cURL)
 
 ### 22. 获取商品详情介绍
@@ -344,6 +703,34 @@ curl -X POST http://localhost:8080/v1/product/reviews/1 \
 ### 27. 删除商品评价
 ```bash
 curl -X DELETE http://localhost:8080/v1/product/reviews/1 \
+  -H "Authorization: Bearer {user_token}"
+```
+
+---
+
+## 测试用例 - 浏览记录 (cURL)
+
+### 28. 获取浏览记录列表
+```bash
+curl -X GET "http://localhost:8080/v1/browsing-history?page=1&size=20" \
+  -H "Authorization: Bearer {user_token}"
+```
+
+### 29. 添加浏览记录
+```bash
+curl -X POST http://localhost:8080/v1/browsing-history/1 \
+  -H "Authorization: Bearer {user_token}"
+```
+
+### 30. 删除单条浏览记录
+```bash
+curl -X DELETE http://localhost:8080/v1/browsing-history/1 \
+  -H "Authorization: Bearer {user_token}"
+```
+
+### 31. 清空所有浏览记录
+```bash
+curl -X DELETE http://localhost:8080/v1/browsing-history \
   -H "Authorization: Bearer {user_token}"
 ```
 

@@ -14,6 +14,7 @@ public class ProductListItem {
     private Integer sales;
     private Double averageRating;
     private Integer reviewCount;
+    private java.util.List<String> tags;
 
     public ProductListItem(Product product) {
         this.id = product.getId();
@@ -27,6 +28,7 @@ public class ProductListItem {
         this.sales = product.getSales();
         this.averageRating = product.getAverageRating();
         this.reviewCount = product.getReviewCount();
+        this.tags = product.getTags();
     }
 
     public Integer getId() {
@@ -115,5 +117,13 @@ public class ProductListItem {
 
     public void setReviewCount(Integer reviewCount) {
         this.reviewCount = reviewCount;
+    }
+
+    public java.util.List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(java.util.List<String> tags) {
+        this.tags = tags;
     }
 }

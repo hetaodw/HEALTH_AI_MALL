@@ -4,6 +4,7 @@ import com.healthmall.common.ApiResponse;
 import com.healthmall.dto.PageResponse;
 import com.healthmall.dto.ProductDetailResponse;
 import com.healthmall.dto.ProductListItem;
+import com.healthmall.service.BrowsingHistoryService;
 import com.healthmall.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private BrowsingHistoryService browsingHistoryService;
 
     @GetMapping
     public ApiResponse<PageResponse<ProductListItem>> getProductList(
@@ -55,8 +59,18 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<ProductDetailResponse> getProductDetail(@PathVariable Integer id) {
+    public ApiResponse<ProductDetailResponse> getProductDetail(@PathVariable Integer id, HttpServletRequest request) {
         ProductDetailResponse response = productService.getProductDetail(id);
+        
+        Integer userId = (Integer) request.getAttribute("userId");
+        if (userId != null) {
+            try {
+                browsingHistoryService.addBrowsingHistory(userId, id);
+            } catch (Exception e) {
+                // 浏览记录记录失败不影响商品详情返回
+            }
+        }
+        
         return ApiResponse.success(response);
     }
 

@@ -1,0 +1,129 @@
+model:
+  name: "Qwen3.5-2B"
+  base_model_path: "D:\\26bs\\ai-service\\models\\Qwen3___5-2B"
+  lora_adapter_path: "D:\\26bs\\ai-service\\models\\qwen3.5-2b-lora-finetuned"
+  
+  # 模型配置
+  max_length: 2048
+  max_new_tokens: 512
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+  
+  # 量化配置
+  quantization:
+    enabled: true
+    bits: 4
+    compute_dtype: "float16"
+    use_double_quant: true
+    quant_type: "nf4"
+  
+  # 设备配置
+  device: "auto"  # auto, cuda, cpu
+  torch_dtype: "float16"
+
+server:
+  # 服务器配置
+  host: "0.0.0.0"
+  port: 5001
+  workers: 1
+  log_level: "info"
+
+training:
+  # LoRA配置
+  lora:
+    r: 16
+    lora_alpha: 32
+    lora_dropout: 0.05
+    target_modules:
+      - "q_proj"
+      - "k_proj"
+      - "v_proj"
+      - "o_proj"
+      - "gate_proj"
+      - "up_proj"
+      - "down_proj"
+    bias: "none"
+    task_type: "CAUSAL_LM"
+  
+  # 训练参数
+  num_train_epochs: 3
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+  
+  # 优化器配置
+  optimizer: "adamw_torch"
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  
+  # 其他配置
+  fp16: true
+  gradient_checkpointing: true
+  ddp_find_unused_parameters: false
+  
+  # 输出配置
+  output_dir: "models/qwen2.5-3b-lora"
+  logging_dir: "logs"
+  save_total_limit: 3
+
+data:
+  # 数据路径
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  training_data_dir: "data/training"
+  
+  # 数据集配置
+  train_file: "training_data.jsonl"
+  eval_file: "eval_data.jsonl"
+  test_file: "test_data.jsonl"
+  
+  # 数据处理
+  max_samples: null  # null表示使用全部数据
+  train_test_split: 0.1
+  train_eval_split: 0.1
+  
+  # 预处理
+  truncation: true
+  padding: "max_length"
+
+inference:
+  # 推理配置
+  batch_size: 8
+  max_concurrent: 4
+  
+  # 标签提取配置
+  tag_types:
+    - "function"      # 功能标签
+    - "audience"      # 适用人群
+    - "ingredient"    # 成分标签
+    - "scene"         # 场景标签
+    - "brand"         # 品牌标签
+    - "price"         # 价格区间
+  
+  # 置信度阈值
+  confidence_threshold: 0.7
+  
+  # 输出格式
+  output_format: "json"  # json, csv
+
+logging:
+  # 日志配置
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/ai_service.log"
+  
+  # TensorBoard
+  tensorboard:
+    enabled: true
+    log_dir: "logs/tensorboard"
+  
+  # WandB
+  wandb:
+    enabled: false
+    project: "health-mall-tagging"
+    entity: null

@@ -71,6 +71,9 @@ public class Product {
     @Column(name = "auto_confirm_condition", columnDefinition = "TEXT")
     private String autoConfirmCondition;
 
+    @Column(name = "need_regenerate_tags")
+    private Boolean needRegenerateTags = false;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -230,5 +233,46 @@ public class Product {
 
     public void setAutoConfirmCondition(String autoConfirmCondition) {
         this.autoConfirmCondition = autoConfirmCondition;
+    }
+
+    public Boolean getNeedRegenerateTags() {
+        return needRegenerateTags;
+    }
+
+    public void setNeedRegenerateTags(Boolean needRegenerateTags) {
+        this.needRegenerateTags = needRegenerateTags;
+    }
+
+    public java.util.List<String> getTags() {
+        if (features == null || features.isEmpty()) {
+            return new java.util.ArrayList<>();
+        }
+        try {
+            return com.alibaba.fastjson2.JSON.parseArray(features, String.class);
+        } catch (Exception e) {
+            return new java.util.ArrayList<>();
+        }
+    }
+
+    public void setTags(java.util.List<String> tags) {
+        if (tags == null || tags.isEmpty()) {
+            this.features = null;
+        } else {
+            this.features = com.alibaba.fastjson2.JSON.toJSONString(tags);
+        }
+    }
+
+    public void addTag(String tag) {
+        java.util.List<String> tags = getTags();
+        if (!tags.contains(tag)) {
+            tags.add(tag);
+            setTags(tags);
+        }
+    }
+
+    public void removeTag(String tag) {
+        java.util.List<String> tags = getTags();
+        tags.remove(tag);
+        setTags(tags);
     }
 }

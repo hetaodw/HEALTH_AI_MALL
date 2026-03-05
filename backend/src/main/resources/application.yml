@@ -51,3 +51,16 @@ file:
     path: ${FILE_UPLOAD_PATH:/app/static}
   access:
     url: ${FILE_ACCESS_URL:http://localhost:8080/v1/static}
+
+ai:
+  service:
+    url: ${AI_SERVICE_URL:http://localhost:5001}
+    timeout: ${AI_SERVICE_TIMEOUT:30000}
+
+product:
+  tag:
+    batch:
+      size: ${PRODUCT_TAG_BATCH_SIZE:50}
+    task:
+      enabled: ${PRODUCT_TAG_TASK_ENABLED:true}
+      cron: ${PRODUCT_TAG_TASK_CRON:0 0 */2 * * ?}
