@@ -10,6 +10,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import MerchantDashboard from '../views/MerchantDashboard.vue'
 import MerchantOrders from '../views/MerchantOrders.vue'
+import MerchantTags from '../views/MerchantTags.vue'
 import BrowsingHistory from '../views/BrowsingHistory.vue'
 
 const routes = [
@@ -77,6 +78,12 @@ const routes = [
     path: '/merchant/orders',
     name: 'MerchantOrders',
     component: MerchantOrders,
+    meta: { requiresAuth: true, requiresMerchant: true }
+  },
+  {
+    path: '/merchant/tags',
+    name: 'MerchantTags',
+    component: MerchantTags,
     meta: { requiresAuth: true, requiresMerchant: true }
   }
 ]

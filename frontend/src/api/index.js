@@ -102,5 +102,13 @@ export default {
     add: (productId) => api.post(`/browsing-history/${productId}`),
     delete: (productId) => api.delete(`/browsing-history/${productId}`),
     clear: () => api.delete('/browsing-history')
+  },
+  productTags: {
+    generate: (productId) => api.post(`/products/tags/${productId}/generate`),
+    batchGenerate: (data) => api.post('/products/tags/batch/generate', data),
+    get: (productId) => api.get(`/products/tags/${productId}`),
+    update: (productId, data) => api.put(`/products/tags/${productId}`, data),
+    getPopular: (params) => api.get('/products/tags/popular', { params }),
+    search: (params) => api.get('/products/tags/search', { params })
   }
 }

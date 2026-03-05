@@ -14,6 +14,9 @@
         <router-link v-if="userStore.isMerchant()" to="/merchant" class="nav-link merchant-link">
           🏪 商家后台
         </router-link>
+        <router-link v-if="userStore.isMerchant()" to="/merchant/tags" class="nav-link tags-link">
+          🏷️ 标签管理
+        </router-link>
       </nav>
 
       <div class="header-actions">
@@ -198,6 +201,16 @@ const handleLogout = () => {
 .nav-link.merchant-link:hover,
 .nav-link.merchant-link.router-link-active {
   background: linear-gradient(145deg, #d97706, #b45309);
+}
+
+.nav-link.tags-link {
+  background: linear-gradient(145deg, #10b981, #059669);
+  color: white;
+}
+
+.nav-link.tags-link:hover,
+.nav-link.tags-link.router-link-active {
+  background: linear-gradient(145deg, #059669, #047857);
 }
 
 .header-actions {

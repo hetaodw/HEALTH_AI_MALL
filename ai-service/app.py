@@ -4,6 +4,7 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'TRUE'
 import sys
 import json
 import logging
+import re
 from typing import Dict, List, Optional
 from contextlib import asynccontextmanager
 
@@ -140,7 +141,14 @@ async def generate_tags(request: GenerateTagsRequest):
         raise HTTPException(status_code=503, detail="模型未加载")
     
     try:
-        inputs = tokenizer(request.prompt, return_tensors="pt").to(device)
+        prompt_text = request.prompt
+        logger.info(f"收到请求 - prompt长度: {len(prompt_text)}")
+        
+        messages = [{"role": "user", "content": prompt_text}]
+        prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, enable_thinking=False)
+        logger.info(f"格式化后的prompt: {prompt[:200]}...")
+        
+        inputs = tokenizer(prompt, return_tensors="pt").to(device)
         
         with torch.no_grad():
             outputs = model.generate(
@@ -153,7 +161,13 @@ async def generate_tags(request: GenerateTagsRequest):
                 repetition_penalty=1.1
             )
         
-        response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        # ✅ 核心修复：截取模型新生成的 token，避开输入 prompt 的干扰
+        input_length = inputs.input_ids.shape[1]
+        generated_ids = outputs[0][input_length:]
+        
+        response = tokenizer.decode(generated_ids, skip_special_tokens=True)
+        logger.info(f"模型纯净输出: {response}")
+        
         tags = parse_tags(response)
         
         return GenerateTagsResponse(tags=tags)
@@ -165,32 +179,51 @@ async def generate_tags(request: GenerateTagsRequest):
 
 def parse_tags(response: str) -> List[str]:
     try:
-        json_start = response.find('[')
-        json_end = response.rfind(']') + 1
+        cleaned = re.sub(r'<think>.*?</think>', '', response, flags=re.DOTALL).strip()
         
-        if json_start == -1 or json_end == 0:
+        json_match = re.search(r'\[.*?\]', cleaned, re.DOTALL)
+        
+        if not json_match:
             logger.warning(f"未找到JSON数组格式响应: {response}")
             return []
         
-        json_str = response[json_start:json_end]
-        tags = json.loads(json_str)
+        json_str = json_match.group(0)
+        logger.info(f"提取的JSON: {json_str}")
+        
+        try:
+            tags = json.loads(json_str)
+        except json.JSONDecodeError:
+            logger.info("尝试解析非标准JSON格式...")
+            tags = parse_non_standard_json(json_str)
         
         if isinstance(tags, list):
-            return [tag.strip() for tag in tags if tag and isinstance(tag, str)]
+            return list(set(str(tag).strip() for tag in tags if tag))
         
         return []
         
-    except json.JSONDecodeError as e:
-        logger.error(f"JSON解析失败: {e}")
-        logger.debug(f"原始响应: {response}")
-        return []
     except Exception as e:
         logger.error(f"响应解析失败: {e}")
         return []
 
 
+def parse_non_standard_json(json_str: str) -> List[str]:
+    try:
+        content = json_str.strip()
+        if content.startswith('[') and content.endswith(']'):
+            content = content[1:-1].strip()
+        
+        if not content:
+            return []
+        
+        items = [item.strip() for item in content.split(',')]
+        return [item for item in items if item]
+    except Exception as e:
+        logger.error(f"非标准JSON解析失败: {e}")
+        return []
+
+
 if __name__ == "__main__":
-    # ✅ 修复：恢复正常的配置读取
+    # 恢复正常的配置读取
     host = config.get('server', {}).get('host', '0.0.0.0')
     port = config.get('server', {}).get('port', 5001)
     

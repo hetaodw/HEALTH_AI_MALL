@@ -1,7 +1,12 @@
 <template>
   <div class="merchant-orders-page">
     <div class="page-header skeuomorphic-card">
-      <h1>订单管理</h1>
+      <div class="header-top">
+        <h1>订单管理</h1>
+        <button @click="router.push('/merchant/tags')" class="skeuomorphic-button tags-button">
+          🏷️ 标签管理
+        </button>
+      </div>
       <div class="tabs">
         <button 
           class="tab-item" 
@@ -154,8 +159,10 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import api from '../api'
 
+const router = useRouter()
 const activeTab = ref('pending')
 const selectedStatus = ref('')
 const orders = ref([])
@@ -347,6 +354,39 @@ onMounted(() => {
   margin: 0 0 20px 0;
   font-size: 28px;
   color: #333;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.skeuomorphic-button {
+  padding: 12px 24px;
+  border: none;
+  background: linear-gradient(145deg, #f0f0f0, #cacaca);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+  transition: all 0.3s;
+  box-shadow: 
+    3px 3px 6px rgba(0,0,0,0.1),
+    -3px -3px 6px rgba(255,255,255,0.8);
+}
+
+.skeuomorphic-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    5px 5px 10px rgba(0,0,0,0.15),
+    -5px -5px 10px rgba(255,255,255,0.9);
+}
+
+.tags-button {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
 }
 
 .tabs {

@@ -67,7 +67,7 @@
 | `category` | VARCHAR(50) | NULL | NULL | 商品分类 |
 | `description` | TEXT | NULL | NULL | 商品详细描述 |
 | `cover_url` | VARCHAR(255) | NOT NULL | - | 商品封面图片URL |
-| `features` | JSON | NULL | NULL | 商品特征（JSON格式，便于扩展） |
+C
 | `price` | DECIMAL(10,2) | NOT NULL | 0.00 | 商品价格 |
 | `stock` | INT | NULL | 0 | 库存数量 |
 | `sales` | INT | NULL | 0 | 销量统计 |

@@ -1,0 +1,199 @@
+﻿        p1_0.sales,
+        p1_0.status,
+        p1_0.stock,
+        p1_0.title,
+        p1_0.updated_at 
+    from
+        products p1_0 
+    where
+        p1_0.id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.auto_confirm_condition,
+        p1_0.auto_confirm_mode,
+        p1_0.average_rating,
+        p1_0.category,
+        p1_0.cover_url,
+        p1_0.created_at,
+        p1_0.description,
+        p1_0.description_content,
+        p1_0.features,
+        p1_0.merchant_id,
+        p1_0.need_regenerate_tags,
+        p1_0.price,
+        p1_0.review_count,
+        p1_0.sales,
+        p1_0.status,
+        p1_0.stock,
+        p1_0.title,
+        p1_0.updated_at 
+    from
+        products p1_0 
+    where
+        p1_0.id=?
+2026-03-05T01:18:57.066Z  INFO 1 --- [health-mall-backend] [nio-8080-exec-5] c.healthmall.service.ProductTagService   : 鍟嗗搧鏍囩鎵嬪姩鏇存柊鎴愬姛: productId=1, tags=[vitamin, immunity, antioxidant, natural, health]
+Hibernate: 
+    update
+        products 
+    set
+        auto_confirm_condition=?,
+        auto_confirm_mode=?,
+        average_rating=?,
+        category=?,
+        cover_url=?,
+        description=?,
+        description_content=?,
+        features=?,
+        merchant_id=?,
+        need_regenerate_tags=?,
+        price=?,
+        review_count=?,
+        sales=?,
+        status=?,
+        stock=?,
+        title=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.auto_confirm_condition,
+        p1_0.auto_confirm_mode,
+        p1_0.average_rating,
+        p1_0.category,
+        p1_0.cover_url,
+        p1_0.created_at,
+        p1_0.description,
+        p1_0.description_content,
+        p1_0.features,
+        p1_0.merchant_id,
+        p1_0.need_regenerate_tags,
+        p1_0.price,
+        p1_0.review_count,
+        p1_0.sales,
+        p1_0.status,
+        p1_0.stock,
+        p1_0.title,
+        p1_0.updated_at 
+    from
+        products p1_0
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.auto_confirm_condition,
+        p1_0.auto_confirm_mode,
+        p1_0.average_rating,
+        p1_0.category,
+        p1_0.cover_url,
+        p1_0.created_at,
+        p1_0.description,
+        p1_0.description_content,
+        p1_0.features,
+        p1_0.merchant_id,
+        p1_0.need_regenerate_tags,
+        p1_0.price,
+        p1_0.review_count,
+        p1_0.sales,
+        p1_0.status,
+        p1_0.stock,
+        p1_0.title,
+        p1_0.updated_at 
+    from
+        products p1_0
+2026-03-05T01:19:02.525Z  INFO 1 --- [health-mall-backend] [   scheduling-1] com.healthmall.task.OrderScheduledTask   : 寮€濮嬭嚜鍔ㄦ嫆缁濊秴鏃惰鍗?..
+Hibernate: 
+    select
+        o1_0.id,
+        o1_0.address_id,
+        o1_0.auto_confirmed,
+        o1_0.cancel_reason,
+        o1_0.cancelled_at,
+        o1_0.completed_at,
+        o1_0.confirmed_at,
+        o1_0.created_at,
+        o1_0.item_count,
+        o1_0.order_no,
+        o1_0.paid_at,
+        o1_0.pay_expire_at,
+        o1_0.receiver_address,
+        o1_0.receiver_name,
+        o1_0.receiver_phone,
+        o1_0.reject_reason,
+        o1_0.rejected_at,
+        o1_0.remark,
+        o1_0.shipped_at,
+        o1_0.status,
+        o1_0.total_amount,
+        o1_0.updated_at,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    where
+        o1_0.status=? 
+        and o1_0.created_at<?
+2026-03-05T01:19:02.529Z  INFO 1 --- [health-mall-backend] [   scheduling-1] com.healthmall.task.OrderScheduledTask   : 鑷姩鎷掔粷瓒呮椂璁㈠崟浠诲姟瀹屾垚
+2026-03-05T01:19:02.530Z  INFO 1 --- [health-mall-backend] [   scheduling-1] com.healthmall.task.OrderScheduledTask   : 寮€濮嬫鏌ヨ秴鏃惰鍗?..
+Hibernate: 
+    select
+        o1_0.id,
+        o1_0.address_id,
+        o1_0.auto_confirmed,
+        o1_0.cancel_reason,
+        o1_0.cancelled_at,
+        o1_0.completed_at,
+        o1_0.confirmed_at,
+        o1_0.created_at,
+        o1_0.item_count,
+        o1_0.order_no,
+        o1_0.paid_at,
+        o1_0.pay_expire_at,
+        o1_0.receiver_address,
+        o1_0.receiver_name,
+        o1_0.receiver_phone,
+        o1_0.reject_reason,
+        o1_0.rejected_at,
+        o1_0.remark,
+        o1_0.shipped_at,
+        o1_0.status,
+        o1_0.total_amount,
+        o1_0.updated_at,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    where
+        o1_0.status=? 
+        and o1_0.pay_expire_at<?
+2026-03-05T01:19:02.533Z  INFO 1 --- [health-mall-backend] [   scheduling-1] com.healthmall.task.OrderScheduledTask   : 瓒呮椂璁㈠崟妫€鏌ュ畬鎴愶紝鍏卞鐞?0 涓鍗?2026-03-05T01:19:02.533Z  INFO 1 --- [health-mall-backend] [   scheduling-1] com.healthmall.task.OrderScheduledTask   : 寮€濮嬭嚜鍔ㄧ‘璁よ鍗?..
+Hibernate: 
+    select
+        o1_0.id,
+        o1_0.address_id,
+        o1_0.auto_confirmed,
+        o1_0.cancel_reason,
+        o1_0.cancelled_at,
+        o1_0.completed_at,
+        o1_0.confirmed_at,
+        o1_0.created_at,
+        o1_0.item_count,
+        o1_0.order_no,
+        o1_0.paid_at,
+        o1_0.pay_expire_at,
+        o1_0.receiver_address,
+        o1_0.receiver_name,
+        o1_0.receiver_phone,
+        o1_0.reject_reason,
+        o1_0.rejected_at,
+        o1_0.remark,
+        o1_0.shipped_at,
+        o1_0.status,
+        o1_0.total_amount,
+        o1_0.updated_at,
+        o1_0.user_id 
+    from
+        orders o1_0 
+    where
+        o1_0.status=? 
+        and o1_0.created_at<?
+2026-03-05T01:19:02.536Z  INFO 1 --- [health-mall-backend] [   scheduling-1] com.healthmall.task.OrderScheduledTask   : 鑷姩纭璁㈠崟浠诲姟瀹屾垚

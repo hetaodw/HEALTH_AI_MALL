@@ -11,6 +11,7 @@ import com.healthmall.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +33,28 @@ public class ProductTagService {
 
     @Autowired
     private AiTagGenerator aiTagGenerator;
+
+    @Value("${app.tag-generation.thread-pool-size:5}")
+    private int threadPoolSize;
+
+    @Value("${app.tag-generation.timeout-seconds:30}")
+    private int timeoutSeconds;
+
+    private ExecutorService tagGenerationExecutor;
+
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        tagGenerationExecutor = Executors.newFixedThreadPool(threadPoolSize);
+        logger.info("标签生成线程池初始化完成，线程池大小: {}", threadPoolSize);
+    }
+
+    @jakarta.annotation.PreDestroy
+    public void destroy() {
+        if (tagGenerationExecutor != null) {
+            tagGenerationExecutor.shutdown();
+            logger.info("标签生成线程池已关闭");
+        }
+    }
 
     public List<String> generateTagsForProduct(Integer productId) {
         Product product = productRepository.findById(productId)
@@ -57,19 +81,53 @@ public class ProductTagService {
         response.setFailedCount(0);
         response.setFailedProductIds(new ArrayList<>());
 
+        long startTime = System.currentTimeMillis();
+        logger.info("开始批量生成标签，商品数量: {}, 线程池大小: {}", productIds.size(), threadPoolSize);
+
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
+
         for (Integer productId : productIds) {
-            try {
-                generateTagsForProduct(productId);
-                response.setSuccessCount(response.getSuccessCount() + 1);
-            } catch (Exception e) {
-                logger.error("批量生成标签失败: productId={}, error={}", productId, e.getMessage());
-                response.setFailedCount(response.getFailedCount() + 1);
-                response.getFailedProductIds().add(productId);
-            }
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+                try {
+                    generateTagsForProduct(productId);
+                    synchronized (response) {
+                        response.setSuccessCount(response.getSuccessCount() + 1);
+                    }
+                    logger.info("商品标签生成成功: productId={}", productId);
+                } catch (Exception e) {
+                    logger.error("批量生成标签失败: productId={}, error={}", productId, e.getMessage());
+                    synchronized (response) {
+                        response.setFailedCount(response.getFailedCount() + 1);
+                        response.getFailedProductIds().add(productId);
+                    }
+                }
+            }, tagGenerationExecutor);
+            futures.add(future);
         }
 
-        response.setMessage(String.format("批量生成完成：成功%d个，失败%d个", 
-            response.getSuccessCount(), response.getFailedCount()));
+        try {
+            CompletableFuture<Void> allFutures = CompletableFuture.allOf(
+                futures.toArray(new CompletableFuture[0])
+            );
+            
+            allFutures.get(timeoutSeconds, TimeUnit.SECONDS);
+            
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime;
+            logger.info("批量生成标签完成，耗时: {}ms, 成功: {}, 失败: {}", 
+                duration, response.getSuccessCount(), response.getFailedCount());
+            
+            response.setMessage(String.format("批量生成完成（并行处理）：成功%d个，失败%d个，耗时%dms", 
+                response.getSuccessCount(), response.getFailedCount(), duration));
+        } catch (TimeoutException e) {
+            logger.error("批量生成标签超时，已超时时间: {}秒", timeoutSeconds);
+            response.setMessage(String.format("批量生成超时：已完成%d个，失败%d个", 
+                response.getSuccessCount(), response.getFailedCount()));
+        } catch (Exception e) {
+            logger.error("批量生成标签异常: {}", e.getMessage());
+            response.setMessage(String.format("批量生成异常：已完成%d个，失败%d个", 
+                response.getSuccessCount(), response.getFailedCount()));
+        }
 
         return response;
     }

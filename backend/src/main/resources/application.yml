@@ -64,3 +64,8 @@ product:
     task:
       enabled: ${PRODUCT_TAG_TASK_ENABLED:true}
       cron: ${PRODUCT_TAG_TASK_CRON:0 0 */2 * * ?}
+
+app:
+  tag-generation:
+    thread-pool-size: ${APP_TAG_GENERATION_THREAD_POOL_SIZE:5}
+    timeout-seconds: ${APP_TAG_GENERATION_TIMEOUT_SECONDS:30}

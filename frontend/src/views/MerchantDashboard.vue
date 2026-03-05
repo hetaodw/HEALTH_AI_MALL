@@ -12,6 +12,9 @@
           />
           <span class="merchant-name">{{ userProfile?.username || '商家' }}</span>
         </div>
+        <button @click="router.push('/merchant/tags')" class="skeuomorphic-button tags-button">
+          🏷️ 标签管理
+        </button>
         <button @click="showBatchUpdateModal = true" class="skeuomorphic-button batch-button">
           🔄 批量更新
         </button>
@@ -466,6 +469,13 @@ onMounted(() => {
   padding: 12px 24px;
   font-size: 16px;
   background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  color: white;
+}
+
+.tags-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
 }
 
