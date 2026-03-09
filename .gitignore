@@ -58,3 +58,7 @@ Thumbs.db
 
 # Docker
 .dockerignore
+
+# Models - 不提交模型文件和临时文件
+models/qwen3.5-2b/._____temp/
+models/qwen3.5-2b/*.safetensors
