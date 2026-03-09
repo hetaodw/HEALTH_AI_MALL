@@ -62,3 +62,13 @@ Thumbs.db
 # Models - 不提交模型文件和临时文件
 models/qwen3.5-2b/._____temp/
 models/qwen3.5-2b/*.safetensors
+ai-service/models/
+.modelscope_cache/
+*.safetensors
+*.bin
+*.pth
+*.pt
+*.onnx
+*.h5
+*.pkl
+*.joblib
