@@ -1,5 +1,7 @@
 package com.healthmall.controller;
 
+import com.healthmall.annotation.Idempotent;
+import com.healthmall.annotation.OperationLog;
 import com.healthmall.common.ApiResponse;
 import com.healthmall.dto.CreateOrderRequest;
 import com.healthmall.dto.OrderResponse;
@@ -21,6 +23,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
+    @Idempotent(key = "createOrder", expireSeconds = 60, message = "请勿重复提交订单")
+    @OperationLog(module = "订单", operation = "创建订单", description = "用户创建新订单")
     public ApiResponse<OrderResponse> createOrder(
             HttpServletRequest request,
             @RequestBody CreateOrderRequest createOrderRequest) {
@@ -80,6 +84,8 @@ public class OrderController {
     }
 
     @PostMapping("/{orderNo}/pay")
+    @Idempotent(key = "payOrder", expireSeconds = 300, message = "请勿重复支付")
+    @OperationLog(module = "支付", operation = "订单支付", description = "用户支付订单")
     public ApiResponse<OrderResponse> payOrder(
             HttpServletRequest request,
             @PathVariable String orderNo,
@@ -106,6 +112,7 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/cancel")
+    @OperationLog(module = "订单", operation = "取消订单", description = "用户取消订单")
     public ApiResponse<Void> cancelOrder(
             HttpServletRequest request,
             @PathVariable Integer id,

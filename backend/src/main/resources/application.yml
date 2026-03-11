@@ -69,3 +69,58 @@ app:
   tag-generation:
     thread-pool-size: ${APP_TAG_GENERATION_THREAD_POOL_SIZE:5}
     timeout-seconds: ${APP_TAG_GENERATION_TIMEOUT_SECONDS:30}
+
+logistics:
+  sf:
+    api-url: ${LOGISTICS_SF_API_URL:https://api.sf-express.com}
+    app-key: ${LOGISTICS_SF_APP_KEY:test-key}
+  sto:
+    api-url: ${LOGISTICS_STO_API_URL:https://api.sto.cn}
+    app-key: ${LOGISTICS_STO_APP_KEY:test-key}
+  yto:
+    api-url: ${LOGISTICS_YTO_API_URL:https://api.yto.net.cn}
+    app-key: ${LOGISTICS_YTO_APP_KEY:test-key}
+  zto:
+    api-url: ${LOGISTICS_ZTO_API_URL:https://api.zto.com}
+    app-key: ${LOGISTICS_ZTO_APP_KEY:test-key}
+  ems:
+    api-url: ${LOGISTICS_EMS_API_URL:https://api.ems.com.cn}
+    app-key: ${LOGISTICS_EMS_APP_KEY:test-key}
+
+cainiao:
+  app-key: ${CAINIAO_APP_KEY:your-app-key}
+  app-secret: ${CAINIAO_APP_SECRET:your-app-secret}
+  partner-code: ${CAINIAO_PARTNER_CODE:your-partner-code}
+  from-code: ${CAINIAO_FROM_CODE:your-from-code}
+  gateway-url: ${CAINIAO_GATEWAY_URL:https://link.cainiao.com/gateway/link.do}
+  sandbox-url: ${CAINIAO_SANDBOX_URL:http://linkdaily.tbsandbox.com/gateway/link.do}
+  sandbox-mode: ${CAINIAO_SANDBOX_MODE:true}
+
+notification:
+  sms:
+    enabled: ${NOTIFICATION_SMS_ENABLED:false}
+    provider: ${NOTIFICATION_SMS_PROVIDER:aliyun}
+    access-key: ${NOTIFICATION_SMS_ACCESS_KEY:}
+    secret-key: ${NOTIFICATION_SMS_SECRET_KEY:}
+  email:
+    enabled: ${NOTIFICATION_EMAIL_ENABLED:false}
+    host: ${NOTIFICATION_EMAIL_HOST:smtp.example.com}
+    port: ${NOTIFICATION_EMAIL_PORT:587}
+    username: ${NOTIFICATION_EMAIL_USERNAME:}
+    password: ${NOTIFICATION_EMAIL_PASSWORD:}
+
+risk:
+  control:
+    high-amount-threshold: ${RISK_HIGH_AMOUNT_THRESHOLD:10000}
+    frequent-order-threshold: ${RISK_FREQUENT_ORDER_THRESHOLD:5}
+    auto-approve-threshold: ${RISK_AUTO_APPROVE_THRESHOLD:20}
+    manual-review-threshold: ${RISK_MANUAL_REVIEW_THRESHOLD:50}
+
+idempotent:
+  enabled: ${IDEMPOTENT_ENABLED:true}
+  expire-seconds: ${IDEMPOTENT_EXPIRE_SECONDS:300}
+  key-prefix: ${IDEMPOTENT_KEY_PREFIX:idempotent:}
+
+operation-log:
+  enabled: ${OPERATION_LOG_ENABLED:true}
+  async: ${OPERATION_LOG_ASYNC:true}

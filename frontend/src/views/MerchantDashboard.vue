@@ -1,5 +1,25 @@
 <template>
   <div class="merchant-dashboard">
+    <div class="merchant-nav">
+      <div class="nav-container">
+        <router-link to="/merchant" class="nav-item active">
+          📦 商品管理
+        </router-link>
+        <router-link to="/merchant/orders" class="nav-item">
+          📋 订单管理
+        </router-link>
+        <router-link to="/merchant/logistics" class="nav-item">
+          🚚 物流管理
+        </router-link>
+        <router-link to="/merchant/tags" class="nav-item">
+          🏷️ 标签管理
+        </router-link>
+        <router-link to="/" class="nav-item back-home">
+          🏠 返回首页
+        </router-link>
+      </div>
+    </div>
+
     <div class="dashboard-header">
       <div class="header-left">
         <h1 class="dashboard-title">🏪 商家管理后台</h1>
@@ -12,14 +32,8 @@
           />
           <span class="merchant-name">{{ userProfile?.username || '商家' }}</span>
         </div>
-        <button @click="router.push('/merchant/tags')" class="skeuomorphic-button tags-button">
-          🏷️ 标签管理
-        </button>
         <button @click="showBatchUpdateModal = true" class="skeuomorphic-button batch-button">
           🔄 批量更新
-        </button>
-        <button @click="router.push('/merchant/orders')" class="skeuomorphic-button orders-button">
-          📋 订单管理
         </button>
         <button @click="showAddModal = true" class="skeuomorphic-button primary add-button">
           + 添加商品
@@ -414,6 +428,63 @@ onMounted(() => {
   padding: 32px 24px;
 }
 
+.merchant-nav {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 16px;
+  box-shadow: 
+    5px 5px 10px #d1d9e6,
+    -5px -5px 10px #ffffff;
+}
+
+.nav-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #666;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 
+    3px 3px 6px #d1d9e6,
+    -3px -3px 6px #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    5px 5px 10px #d1d9e6,
+    -5px -5px 10px #ffffff;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 
+    3px 3px 6px #a8b5d1,
+    -3px -3px 6px #ffffff;
+}
+
+.nav-item.back-home {
+  background: linear-gradient(145deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.nav-item.back-home:hover {
+  background: linear-gradient(145deg, #d97706, #b45309);
+}
+
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -469,20 +540,6 @@ onMounted(() => {
   padding: 12px 24px;
   font-size: 16px;
   background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-  color: white;
-}
-
-.tags-button {
-  padding: 12px 24px;
-  font-size: 16px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
-}
-
-.orders-button {
-  padding: 12px 24px;
-  font-size: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 

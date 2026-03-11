@@ -72,3 +72,7 @@ ai-service/models/
 *.h5
 *.pkl
 *.joblib
+
+# Tools and Scripts - 不提交工具和脚本文件夹
+tools/
+scripts/

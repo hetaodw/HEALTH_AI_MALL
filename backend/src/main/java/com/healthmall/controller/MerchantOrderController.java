@@ -1,9 +1,13 @@
 package com.healthmall.controller;
 
+import com.healthmall.annotation.OperationLog;
 import com.healthmall.common.ApiResponse;
 import com.healthmall.dto.ConfirmOrderRequest;
 import com.healthmall.dto.OrderResponse;
+import com.healthmall.dto.ShipOrderRequest;
+import com.healthmall.entity.LogisticsInfo;
 import com.healthmall.entity.Order;
+import com.healthmall.service.LogisticsService;
 import com.healthmall.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,9 @@ public class MerchantOrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private LogisticsService logisticsService;
 
     @GetMapping("/pending")
     public ApiResponse<List<OrderResponse>> getPendingOrders(HttpServletRequest request) {
@@ -52,6 +59,7 @@ public class MerchantOrderController {
     }
 
     @PostMapping("/{orderId}/confirm")
+    @OperationLog(module = "订单", operation = "确认订单", description = "商家确认订单")
     public ApiResponse<OrderResponse> confirmOrder(
             @PathVariable Integer orderId,
             HttpServletRequest request) {
@@ -65,6 +73,7 @@ public class MerchantOrderController {
     }
 
     @PostMapping("/{orderId}/reject")
+    @OperationLog(module = "订单", operation = "拒绝订单", description = "商家拒绝订单")
     public ApiResponse<OrderResponse> rejectOrder(
             @PathVariable Integer orderId,
             @RequestBody ConfirmOrderRequest request,
@@ -75,6 +84,27 @@ public class MerchantOrderController {
         }
 
         OrderResponse response = orderService.rejectOrder(merchantId, orderId, request.getRejectReason());
+        return ApiResponse.success(response);
+    }
+
+    @PostMapping("/{orderNo}/ship")
+    @OperationLog(module = "订单", operation = "订单发货", description = "商家确认订单发货")
+    public ApiResponse<OrderResponse> shipOrder(
+        @PathVariable String orderNo,
+        @RequestBody ShipOrderRequest request,
+        HttpServletRequest httpRequest
+    ) {
+        Integer merchantId = (Integer) httpRequest.getAttribute("userId");
+        if (merchantId == null) {
+            return ApiResponse.error(401, "请先登录");
+        }
+        
+        OrderResponse response = orderService.shipOrder(
+            merchantId, 
+            orderNo, 
+            request.getTrackingNo(), 
+            request.getLogisticsCompany()
+        );
         return ApiResponse.success(response);
     }
 }

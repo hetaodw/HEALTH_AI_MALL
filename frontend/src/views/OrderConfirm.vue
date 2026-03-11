@@ -233,30 +233,36 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">收货人姓名 <span class="required">*</span></label>
-              <input v-model="addressForm.receiverName" type="text" placeholder="请输入收货人姓名" class="skeuomorphic-input" required />
+              <input v-model="addressForm.receiverName" type="text" placeholder="请输入收货人姓名" class="skeuomorphic-input" :class="{ 'error': formErrors.receiverName }" @blur="validateField('receiverName')" />
+              <div v-if="formErrors.receiverName" class="field-error">{{ formErrors.receiverName }}</div>
             </div>
             <div class="form-group">
               <label class="form-label">手机号码 <span class="required">*</span></label>
-              <input v-model="addressForm.receiverPhone" type="tel" placeholder="请输入手机号码" class="skeuomorphic-input" required />
+              <input v-model="addressForm.receiverPhone" type="tel" placeholder="请输入手机号码" class="skeuomorphic-input" :class="{ 'error': formErrors.receiverPhone }" @blur="validateField('receiverPhone')" maxlength="11" />
+              <div v-if="formErrors.receiverPhone" class="field-error">{{ formErrors.receiverPhone }}</div>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">省份 <span class="required">*</span></label>
-              <input v-model="addressForm.province" type="text" placeholder="请输入省份" class="skeuomorphic-input" required />
+              <input v-model="addressForm.province" type="text" placeholder="请输入省份" class="skeuomorphic-input" :class="{ 'error': formErrors.province }" @blur="validateField('province')" />
+              <div v-if="formErrors.province" class="field-error">{{ formErrors.province }}</div>
             </div>
             <div class="form-group">
               <label class="form-label">城市 <span class="required">*</span></label>
-              <input v-model="addressForm.city" type="text" placeholder="请输入城市" class="skeuomorphic-input" required />
+              <input v-model="addressForm.city" type="text" placeholder="请输入城市" class="skeuomorphic-input" :class="{ 'error': formErrors.city }" @blur="validateField('city')" />
+              <div v-if="formErrors.city" class="field-error">{{ formErrors.city }}</div>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">区/县 <span class="required">*</span></label>
-            <input v-model="addressForm.district" type="text" placeholder="请输入区/县" class="skeuomorphic-input" required />
+            <input v-model="addressForm.district" type="text" placeholder="请输入区/县" class="skeuomorphic-input" :class="{ 'error': formErrors.district }" @blur="validateField('district')" />
+            <div v-if="formErrors.district" class="field-error">{{ formErrors.district }}</div>
           </div>
           <div class="form-group">
             <label class="form-label">详细地址 <span class="required">*</span></label>
-            <textarea v-model="addressForm.detailAddress" placeholder="请输入详细地址，如街道、门牌号等" class="skeuomorphic-input" rows="3" required></textarea>
+            <textarea v-model="addressForm.detailAddress" placeholder="请输入详细地址，如街道、门牌号等" class="skeuomorphic-input" :class="{ 'error': formErrors.detailAddress }" rows="3" @blur="validateField('detailAddress')"></textarea>
+            <div v-if="formErrors.detailAddress" class="field-error">{{ formErrors.detailAddress }}</div>
           </div>
           <div class="form-group checkbox-group">
             <label class="checkbox-label">
@@ -310,6 +316,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 import api from '../api'
 import { getCategoryLabel } from '../constants/productCategories'
+import { validateAddressForm, validatePhone, validateReceiverName, validateProvince, validateCity, validateDistrict, validateDetailAddress } from '../utils/validators'
 
 const route = useRoute()
 const router = useRouter()
@@ -357,6 +364,7 @@ const addressForm = ref({
   detailAddress: '',
   isDefault: false
 })
+const formErrors = ref({})
 
 // 计算属性
 const subtotal = computed(() => {
@@ -459,7 +467,45 @@ const openAddressModal = (address = null) => {
     }
   }
   addressError.value = ''
+  formErrors.value = {}
   showAddressModal.value = true
+}
+
+// 验证单个字段
+const validateField = (field) => {
+  const value = addressForm.value[field]
+  let result
+  
+  switch (field) {
+    case 'receiverName':
+      result = validateReceiverName(value)
+      break
+    case 'receiverPhone':
+      result = validatePhone(value)
+      break
+    case 'province':
+      result = validateProvince(value)
+      break
+    case 'city':
+      result = validateCity(value)
+      break
+    case 'district':
+      result = validateDistrict(value)
+      break
+    case 'detailAddress':
+      result = validateDetailAddress(value)
+      break
+    default:
+      result = { valid: true, message: '' }
+  }
+  
+  if (!result.valid) {
+    formErrors.value[field] = result.message
+  } else {
+    delete formErrors.value[field]
+  }
+  
+  return result.valid
 }
 
 // 关闭地址弹窗
@@ -470,6 +516,13 @@ const closeAddressModal = () => {
 
 // 保存地址
 const saveAddress = async () => {
+  const validation = validateAddressForm(addressForm.value)
+  
+  if (!validation.valid) {
+    formErrors.value = validation.errors
+    return
+  }
+  
   addressLoading.value = true
   addressError.value = ''
   try {
@@ -856,6 +909,17 @@ onMounted(() => {
   text-align: center;
   padding: 40px;
   color: #ef4444;
+}
+
+.field-error {
+  font-size: 12px;
+  color: #c33;
+  margin-top: 4px;
+}
+
+.skeuomorphic-input.error {
+  border: 2px solid #c33;
+  background: linear-gradient(145deg, #fff5f5, #ffe0e0);
 }
 
 /* 商品信息 */

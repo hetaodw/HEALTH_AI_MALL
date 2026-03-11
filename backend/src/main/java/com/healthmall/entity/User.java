@@ -9,7 +9,8 @@ public class User {
     
     public enum Role {
         USER,
-        MERCHANT
+        MERCHANT,
+        BLACKLIST
     }
 
     @Id

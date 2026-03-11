@@ -72,6 +72,12 @@
   - [53. 手动更新商品标签](#53-手动更新商品标签)
   - [54. 获取热门标签](#54-获取热门标签)
   - [55. 按标签搜索商品](#55-按标签搜索商品)
+- [物流管理 API](#物流管理-api)
+  - [56. 获取可用物流提供商](#56-获取可用物流提供商)
+  - [57. 创建运单](#57-创建运单)
+  - [58. 查询物流信息](#58-查询物流信息)
+  - [59. 订阅物流状态](#59-订阅物流状态)
+  - [60. 物流回调接口](#60-物流回调接口)
 - [测试用例 (cURL)](#测试用例-curl)
 - [状态码说明](#状态码说明)
 - [角色说明](#角色说明)
@@ -2245,9 +2251,256 @@ curl -X POST http://localhost:8080/v1/merchant/orders/1/reject \
 
 ---
 
+## 物流管理 API
+
+### 56. 获取可用物流提供商
+
+**接口**: `GET /v1/cainiao/providers`
+
+**说明**: 获取系统中所有可用的物流提供商列表
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": [
+    "测试物流公司",
+    "菜鸟物流"
+  ]
+}
+```
+
+---
+
+### 57. 创建运单
+
+**接口**: `POST /v1/merchant/logistics/waybill`
+
+**请求头**: `Authorization: Bearer {merchant_token}`
+
+**请求体**:
+```json
+{
+  "orderNo": "280686617910448128",
+  "logisticsCompany": "TEST"
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| orderNo | string | 是 | 订单号 |
+| logisticsCompany | string | 是 | 物流公司代码: TEST(测试物流), CAINIAO(菜鸟物流) |
+
+**说明**:
+- 创建运单后会自动订阅物流状态更新
+- TEST为测试物流提供商，用于开发和测试
+- CAINIAO为菜鸟物流，用于生产环境
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "orderNo": "280686617910448128",
+    "logisticsCompany": "TEST",
+    "trackingNo": "TEST1710123456789",
+    "waybillUrl": "http://example.com/waybill/TEST1710123456789.pdf",
+    "status": "CREATED",
+    "estimatedDelivery": "2026-03-15T10:00:00",
+    "deliveredAt": null,
+    "traceInfo": null,
+    "cainiaoSubscribed": true,
+    "cainiaoLastUpdate": null,
+    "createdAt": "2026-03-11T10:00:00",
+    "updatedAt": "2026-03-11T10:00:00"
+  }
+}
+```
+
+**物流状态说明**:
+| 状态 | 说明 |
+|------|------|
+| CREATED | 已创建 |
+| PICKED | 已揽收 |
+| IN_TRANSIT | 运输中 |
+| DELIVERED | 已送达 |
+| EXCEPTION | 异常 |
+
+---
+
+### 58. 查询物流信息
+
+**接口**: `GET /v1/merchant/logistics/{orderNo}`
+
+**路径参数**:
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| orderNo | string | 订单号 |
+
+**请求头**: `Authorization: Bearer {merchant_token}`
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "id": 1,
+    "orderNo": "280686617910448128",
+    "logisticsCompany": "TEST",
+    "trackingNo": "TEST1710123456789",
+    "waybillUrl": "http://example.com/waybill/TEST1710123456789.pdf",
+    "status": "IN_TRANSIT",
+    "estimatedDelivery": "2026-03-15T10:00:00",
+    "deliveredAt": null,
+    "traceInfo": "2026-03-11 10:00:00 - Package picked up by courier\n2026-03-12 08:30:00 - Package is in transit, expected to arrive tomorrow",
+    "cainiaoSubscribed": true,
+    "cainiaoLastUpdate": "2026-03-12T08:30:00",
+    "createdAt": "2026-03-11T10:00:00",
+    "updatedAt": "2026-03-12T08:30:00"
+  }
+}
+```
+
+---
+
+### 59. 订阅物流状态
+
+**接口**: `POST /v1/cainiao/subscribe`
+
+**请求参数**:
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| mailNo | string | 是 | 运单号 |
+| subPhone | string | 是 | 收件人手机号 |
+
+**说明**: 订阅指定运单的物流状态更新，当物流状态发生变化时会通过回调接口通知
+
+**响应示例**:
+```json
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": "订阅成功"
+}
+```
+
+---
+
+### 60. 物流回调接口
+
+**接口**: `POST /v1/cainiao/callback`
+
+**说明**: 物流提供商回调接口，用于接收物流状态更新通知
+
+**请求体**:
+```json
+{
+  "msgType": "LPC_PACK_PUB",
+  "msgId": "test-msg-20260311100000",
+  "fromCode": "TEST",
+  "partnerCode": "TEST",
+  "dataDigest": "test-digest",
+  "logisticsInterface": "{\"cpCode\":\"TEST\",\"logisticsStatus\":\"PICKED\",\"subPhone\":\"13800138000\",\"mailNo\":\"TEST1710123456789\",\"logisticsStatusDesc\":\"PICKED\",\"lastLogisticDetail\":\"Package picked up by courier\",\"logisticsGmtModified\":\"2026-03-11 10:00:00\",\"city\":\"Hangzhou\",\"type\":\"receive\",\"bizKey\":\"TEST1710123456789\"}"
+}
+```
+
+**字段说明**:
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| msgType | string | 是 | 消息类型: LPC_PACK_PUB(物流状态更新) |
+| msgId | string | 是 | 消息ID |
+| fromCode | string | 是 | 物流提供商代码 |
+| partnerCode | string | 是 | 合作伙伴代码 |
+| dataDigest | string | 是 | 数据签名 |
+| logisticsInterface | string | 是 | 物流信息JSON字符串 |
+
+**logisticsInterface JSON字段说明**:
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| cpCode | string | 物流公司代码 |
+| logisticsStatus | string | 物流状态: PICKED(已揽收), IN_TRANSIT(运输中), SIGN(已签收) |
+| subPhone | string | 收件人手机号 |
+| mailNo | string | 运单号 |
+| logisticsStatusDesc | string | 物流状态描述 |
+| lastLogisticDetail | string | 最新物流详情 |
+| logisticsGmtModified | string | 物流更新时间 |
+| city | string | 城市 |
+| type | string | 类型: receive(收件) |
+| bizKey | string | 业务键(运单号) |
+
+**响应示例**:
+```json
+{
+  "success": true,
+  "errorCode": null,
+  "errorMsg": null
+}
+```
+
+**错误响应示例**:
+```json
+{
+  "success": false,
+  "errorCode": "SIGN_ERROR",
+  "errorMsg": "签名验证失败"
+}
+```
+
+---
+
+## 测试用例 - 物流管理 (cURL)
+
+### 38. 获取可用物流提供商
+```bash
+curl -X GET http://localhost:8080/v1/cainiao/providers
+```
+
+### 39. 创建运单
+```bash
+curl -X POST http://localhost:8080/v1/merchant/logistics/waybill \
+  -H "Authorization: Bearer {merchant_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "orderNo": "280686617910448128",
+    "logisticsCompany": "TEST"
+  }'
+```
+
+### 40. 查询物流信息
+```bash
+curl -X GET http://localhost:8080/v1/merchant/logistics/280686617910448128 \
+  -H "Authorization: Bearer {merchant_token}"
+```
+
+### 41. 订阅物流状态
+```bash
+curl -X POST "http://localhost:8080/v1/cainiao/subscribe?mailNo=TEST1710123456789&subPhone=13800138000"
+```
+
+### 42. 物流回调接口（测试用）
+```bash
+curl -X POST http://localhost:8080/v1/cainiao/callback \
+  -H "Content-Type: application/json" \
+  -d '{
+    "msgType": "LPC_PACK_PUB",
+    "msgId": "test-msg-20260311100000",
+    "fromCode": "TEST",
+    "partnerCode": "TEST",
+    "dataDigest": "test-digest",
+    "logisticsInterface": "{\"cpCode\":\"TEST\",\"logisticsStatus\":\"PICKED\",\"subPhone\":\"13800138000\",\"mailNo\":\"TEST1710123456789\",\"logisticsStatusDesc\":\"PICKED\",\"lastLogisticDetail\":\"Package picked up by courier\",\"logisticsGmtModified\":\"2026-03-11 10:00:00\",\"city\":\"Hangzhou\",\"type\":\"receive\",\"bizKey\":\"TEST1710123456789\"}"
+  }'
+```
+
+---
+
 ## 测试用例 - 地址管理 (cURL)
 
-### 28. 创建地址
+### 43. 创建地址
 ```bash
 curl -X POST http://localhost:8080/v1/addresses \
   -H "Authorization: Bearer {user_token}" \
@@ -2263,13 +2516,13 @@ curl -X POST http://localhost:8080/v1/addresses \
   }'
 ```
 
-### 29. 获取地址列表
+### 44. 获取地址列表
 ```bash
 curl -X GET http://localhost:8080/v1/addresses \
   -H "Authorization: Bearer {user_token}"
 ```
 
-### 30. 设置默认地址
+### 45. 设置默认地址
 ```bash
 curl -X POST http://localhost:8080/v1/addresses/1/default \
   -H "Authorization: Bearer {user_token}"
@@ -2291,8 +2544,8 @@ curl -X POST http://localhost:8080/v1/addresses/1/default \
 
 | 角色 | 权限 |
 |------|------|
-| USER | 普通用户，可浏览商品、管理个人信息 |
-| MERCHANT | 商家，可管理自己的商品 |
+| USER | 普通用户，可浏览商品、管理个人信息、创建订单、查询物流 |
+| MERCHANT | 商家，可管理自己的商品、管理订单、创建运单、查询物流 |
 | ADMIN | 管理员，可管理所有商品和用户 |
 
 ---

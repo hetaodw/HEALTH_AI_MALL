@@ -1,11 +1,28 @@
 <template>
   <div class="merchant-orders-page">
+    <div class="merchant-nav">
+      <div class="nav-container">
+        <router-link to="/merchant" class="nav-item">
+          📦 商品管理
+        </router-link>
+        <router-link to="/merchant/orders" class="nav-item">
+          📋 订单管理
+        </router-link>
+        <router-link to="/merchant/logistics" class="nav-item">
+          🚚 物流管理
+        </router-link>
+        <router-link to="/merchant/tags" class="nav-item">
+          🏷️ 标签管理
+        </router-link>
+        <router-link to="/" class="nav-item back-home">
+          🏠 返回首页
+        </router-link>
+      </div>
+    </div>
+
     <div class="page-header skeuomorphic-card">
       <div class="header-top">
         <h1>订单管理</h1>
-        <button @click="router.push('/merchant/tags')" class="skeuomorphic-button tags-button">
-          🏷️ 标签管理
-        </button>
       </div>
       <div class="tabs">
         <button 
@@ -117,6 +134,13 @@
                 :disabled="processing"
               >
                 拒绝订单
+              </button>
+              <button 
+                v-if="['CONFIRMED', 'SHIPPED', 'DELIVERED', 'COMPLETED'].includes(order.status)" 
+                class="btn-logistics"
+                @click="goToLogistics(order.orderNo)"
+              >
+                🚚 查询物流
               </button>
               <span v-if="order.autoConfirmed" class="auto-confirmed-tag">自动确认</span>
             </div>
@@ -327,6 +351,13 @@ const formatDate = (dateStr) => {
   })
 }
 
+const goToLogistics = (orderNo) => {
+  router.push({
+    path: '/merchant/logistics',
+    query: { orderNo }
+  })
+}
+
 watch(activeTab, () => {
   fetchOrders()
 })
@@ -343,6 +374,63 @@ onMounted(() => {
   padding: 20px;
   background: linear-gradient(135deg, #e0e5ec 0%, #c8d0e0 100%);
   min-height: 100vh;
+}
+
+.merchant-nav {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border-radius: 16px;
+  box-shadow: 
+    5px 5px 10px #d1d9e6,
+    -5px -5px 10px #ffffff;
+}
+
+.nav-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #666;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 
+    3px 3px 6px #d1d9e6,
+    -3px -3px 6px #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    5px 5px 10px #d1d9e6,
+    -5px -5px 10px #ffffff;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 
+    3px 3px 6px #a8b5d1,
+    -3px -3px 6px #ffffff;
+}
+
+.nav-item.back-home {
+  background: linear-gradient(145deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.nav-item.back-home:hover {
+  background: linear-gradient(145deg, #d97706, #b45309);
 }
 
 .page-header {
@@ -382,11 +470,6 @@ onMounted(() => {
   box-shadow: 
     5px 5px 10px rgba(0,0,0,0.15),
     -5px -5px 10px rgba(255,255,255,0.9);
-}
-
-.tags-button {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
 }
 
 .tabs {
@@ -758,6 +841,28 @@ onMounted(() => {
 .btn-reject:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.btn-logistics {
+  padding: 12px 24px;
+  border: none;
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 
+    3px 3px 6px rgba(79, 172, 254, 0.3),
+    -3px -3px 6px rgba(255,255,255,0.8);
+}
+
+.btn-logistics:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    5px 5px 10px rgba(79, 172, 254, 0.4),
+    -5px -5px 10px rgba(255,255,255,0.9);
 }
 
 .auto-confirmed-tag {

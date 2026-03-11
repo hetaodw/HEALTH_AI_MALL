@@ -6,10 +6,8 @@ import com.healthmall.entity.*;
 import com.healthmall.exception.BusinessException;
 import com.healthmall.repository.*;
 import com.healthmall.util.SnowflakeIdGenerator;
+import com.healthmall.config.OrderStateMachineConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +15,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -58,6 +55,15 @@ public class OrderService {
 
     @Autowired
     private StockReservationService stockReservationService;
+
+    @Autowired
+    private RiskControlService riskControlService;
+
+    @Autowired
+    private LogisticsRepository logisticsRepository;
+
+    @Autowired
+    private OrderStateMachineConfig stateMachineConfig;
 
     @Transactional
     public OrderResponse createOrder(Integer userId, CreateOrderRequest request) {
@@ -338,6 +344,7 @@ public class OrderService {
         payment.setPaidAt(LocalDateTime.now());
         paymentRepository.save(payment);
 
+        stateMachineConfig.validateTransition(order.getStatus(), Order.OrderStatus.PAID);
         order.setStatus(Order.OrderStatus.PAID);
         order.setPaidAt(LocalDateTime.now());
         orderRepository.save(order);
@@ -384,6 +391,7 @@ public class OrderService {
             throw new BusinessException(400, "订单状态不允许取消");
         }
 
+        stateMachineConfig.validateTransition(order.getStatus(), Order.OrderStatus.CANCELLED);
         releaseStockReservation(order.getOrderNo());
 
         order.setStatus(Order.OrderStatus.CANCELLED);
@@ -526,6 +534,8 @@ public class OrderService {
             throw new BusinessException(400, "订单状态不允许确认");
         }
 
+        stateMachineConfig.validateTransition(order.getStatus(), Order.OrderStatus.CONFIRMED);
+        
         if (!checkStockAvailable(order)) {
             throw new BusinessException(400, "库存不足，无法确认订单");
         }
@@ -560,6 +570,8 @@ public class OrderService {
             throw new BusinessException(400, "订单状态不允许拒绝");
         }
 
+        stateMachineConfig.validateTransition(order.getStatus(), Order.OrderStatus.REJECTED);
+        
         releaseStockReservation(order.getOrderNo());
 
         order.setStatus(Order.OrderStatus.REJECTED);
@@ -586,6 +598,7 @@ public class OrderService {
         for (Order order : pendingOrders) {
             try {
                 if (checkStockAvailable(order)) {
+                    stateMachineConfig.validateTransition(order.getStatus(), Order.OrderStatus.CONFIRMED);
                     order.setStatus(Order.OrderStatus.CONFIRMED);
                     order.setConfirmedAt(LocalDateTime.now());
                     order.setAutoConfirmed(true);
@@ -608,6 +621,7 @@ public class OrderService {
         for (Order order : pendingOrders) {
             try {
                 if (order.getStatus() == Order.OrderStatus.PENDING_CONFIRMATION) {
+                    stateMachineConfig.validateTransition(order.getStatus(), Order.OrderStatus.REJECTED);
                     releaseStockReservation(order.getOrderNo());
                     order.setStatus(Order.OrderStatus.REJECTED);
                     order.setRejectedAt(LocalDateTime.now());
@@ -684,4 +698,53 @@ public class OrderService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public OrderResponse shipOrder(Integer merchantId, String orderNo, String trackingNo, 
+                                LogisticsInfo.LogisticsCompany company) {
+        Order order = orderRepository.findByOrderNo(orderNo)
+            .orElseThrow(() -> new BusinessException(404, "订单不存在"));
+        
+        if (!isOrderBelongToMerchant(order, merchantId)) {
+            throw new BusinessException(403, "无权操作此订单");
+        }
+        
+        if (order.getStatus() != Order.OrderStatus.PAID) {
+            throw new BusinessException(400, "订单状态不允许发货");
+        }
+        
+        stateMachineConfig.validateTransition(order.getStatus(), Order.OrderStatus.SHIPPED);
+        
+        if (!riskControlService.isOrderApproved(orderNo)) {
+            throw new BusinessException(400, "订单风控未通过");
+        }
+        
+        LogisticsInfo logistics = logisticsRepository.findByOrderNo(orderNo)
+            .orElseThrow(() -> new BusinessException(400, "请先申请电子面单"));
+        
+        if (!logistics.getTrackingNo().equals(trackingNo)) {
+            throw new BusinessException(400, "运单号不匹配");
+        }
+        
+        order.setStatus(Order.OrderStatus.SHIPPED);
+        order.setShippedAt(LocalDateTime.now());
+        orderRepository.save(order);
+        
+        logistics.setStatus(LogisticsInfo.LogisticsStatus.PICKED);
+        logisticsRepository.save(logistics);
+        
+        notificationService.sendShipmentNotification(order.getUserId(), orderNo, trackingNo);
+        
+        List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
+        List<ProductSnapshot> snapshots = snapshotRepository.findAllById(
+            items.stream()
+                .map(OrderItem::getSnapshotId)
+                .collect(Collectors.toList())
+        );
+        
+        return convertToResponse(order, items, snapshots);
+    }
+
+    @Autowired
+    private NotificationService notificationService;
 }

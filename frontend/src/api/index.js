@@ -110,5 +110,11 @@ export default {
     update: (productId, data) => api.put(`/products/tags/${productId}`, data),
     getPopular: (params) => api.get('/products/tags/popular', { params }),
     search: (params) => api.get('/products/tags/search', { params })
+  },
+  logistics: {
+    getProviders: () => api.get('/cainiao/providers'),
+    createWaybill: (data) => api.post('/merchant/logistics/waybill', data),
+    getLogisticsInfo: (orderNo) => api.get(`/merchant/logistics/${orderNo}`),
+    subscribe: (data) => api.post('/cainiao/subscribe', data)
   }
 }
