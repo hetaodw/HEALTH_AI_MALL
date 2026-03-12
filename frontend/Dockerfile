@@ -11,12 +11,14 @@ ENV https_proxy=${HTTPS_PROXY}
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY frontend/package*.json ./
 
 RUN npm config set registry https://registry.npmjs.org/ && \
     npm install --no-audit --progress=false
 
-COPY . .
+COPY frontend/ ./
+
+COPY tools ./tools
 
 RUN npm run build
 
@@ -24,7 +26,7 @@ FROM nginx:alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

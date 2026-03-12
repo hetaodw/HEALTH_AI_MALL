@@ -69,8 +69,8 @@ services:
 
   mall-frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./frontend/Dockerfile
       args:
         - HTTP_PROXY
         - HTTPS_PROXY

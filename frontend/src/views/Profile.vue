@@ -277,39 +277,27 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">省份 <span class="required">*</span></label>
-              <input
-                v-model="addressForm.province"
-                type="text"
-                placeholder="请输入省份"
-                class="skeuomorphic-input"
-                :class="{ 'error': formErrors.province }"
-                @blur="validateField('province')"
-              />
+              <select v-model="addressForm.province" class="skeuomorphic-input" :class="{ 'error': formErrors.province }" @change="handleProvinceChange">
+                <option value="">请选择省份</option>
+                <option v-for="province in provinces" :key="province" :value="province">{{ province }}</option>
+              </select>
               <div v-if="formErrors.province" class="field-error">{{ formErrors.province }}</div>
             </div>
             <div class="form-group">
               <label class="form-label">城市 <span class="required">*</span></label>
-              <input
-                v-model="addressForm.city"
-                type="text"
-                placeholder="请输入城市"
-                class="skeuomorphic-input"
-                :class="{ 'error': formErrors.city }"
-                @blur="validateField('city')"
-              />
+              <select v-model="addressForm.city" class="skeuomorphic-input" :class="{ 'error': formErrors.city }" @change="handleCityChange" :disabled="!addressForm.province">
+                <option value="">请选择城市</option>
+                <option v-for="city in cities" :key="city" :value="city">{{ city }}</option>
+              </select>
               <div v-if="formErrors.city" class="field-error">{{ formErrors.city }}</div>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label">区/县 <span class="required">*</span></label>
-            <input
-              v-model="addressForm.district"
-              type="text"
-              placeholder="请输入区/县"
-              class="skeuomorphic-input"
-              :class="{ 'error': formErrors.district }"
-              @blur="validateField('district')"
-            />
+            <select v-model="addressForm.district" class="skeuomorphic-input" :class="{ 'error': formErrors.district }" :disabled="!addressForm.city">
+              <option value="">请选择区/县</option>
+              <option v-for="district in districts" :key="district" :value="district">{{ district }}</option>
+            </select>
             <div v-if="formErrors.district" class="field-error">{{ formErrors.district }}</div>
           </div>
           <div class="form-group">
@@ -456,6 +444,7 @@ import AvatarUpload from '../components/AvatarUpload.vue'
 import api from '../api'
 import { formatDateTime, formatDate } from '../utils/dateFormatter'
 import { validateAddressForm, validatePhone, validateReceiverName, validateProvince, validateCity, validateDistrict, validateDetailAddress } from '../utils/validators'
+import { getProvinces, getCitiesByProvince, getDistrictsByProvinceAndCity } from '../utils/chinaRegions'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -492,6 +481,30 @@ const addressError = ref(null)
 const addressLoading = ref(false)
 const editingAddress = ref(null)
 const formErrors = ref({})
+
+// 地区数据
+const provinces = computed(() => getProvinces())
+const cities = computed(() => {
+  if (!addressForm.value.province) return []
+  return getCitiesByProvince(addressForm.value.province)
+})
+const districts = computed(() => {
+  if (!addressForm.value.province || !addressForm.value.city) return []
+  return getDistrictsByProvinceAndCity(addressForm.value.province, addressForm.value.city)
+})
+
+// 省份变化处理
+const handleProvinceChange = () => {
+  addressForm.value.city = ''
+  addressForm.value.district = ''
+  delete formErrors.value.province
+}
+
+// 城市变化处理
+const handleCityChange = () => {
+  addressForm.value.district = ''
+  delete formErrors.value.city
+}
 
 const payLoading = ref(false)
 
