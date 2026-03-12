@@ -27,7 +27,8 @@ public class LogisticsController {
         
         LogisticsInfo logistics = logisticsService.createWaybill(
             request.getOrderNo(), 
-            request.getLogisticsCompany()
+            request.getLogisticsCompany(),
+            merchantId
         );
         return ApiResponse.success(logistics);
     }

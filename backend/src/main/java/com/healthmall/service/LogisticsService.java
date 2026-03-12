@@ -14,17 +14,38 @@ import java.time.LocalDateTime;
 public class LogisticsService {
     
     @Autowired
-    private LogisticsRepository logisticsRepository;
+    private OrderRepository orderRepository;
     
     @Autowired
-    private OrderRepository orderRepository;
+    private LogisticsRepository logisticsRepository;
     
     @Autowired
     private LogisticsProviderManager logisticsProviderManager;
     
-    public LogisticsInfo createWaybill(String orderNo, LogisticsInfo.LogisticsCompany company) {
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+    
+    @Autowired
+    private ProductRepository productRepository;
+    
+    public LogisticsInfo createWaybill(String orderNo, LogisticsInfo.LogisticsCompany company, Integer merchantId) {
         Order order = orderRepository.findByOrderNo(orderNo)
             .orElseThrow(() -> new BusinessException(404, "订单不存在"));
+        
+        if (merchantId != null) {
+            List<OrderItem> items = orderItemRepository.findByOrderId(order.getId());
+            if (items.isEmpty()) {
+                throw new BusinessException(403, "无权操作此订单");
+            }
+            
+            for (OrderItem item : items) {
+                Product product = productRepository.findById(item.getProductId()).orElse(null);
+                if (product != null && product.getMerchantId() != null 
+                        && !product.getMerchantId().equals(merchantId)) {
+                    throw new BusinessException(403, "无权操作此订单");
+                }
+            }
+        }
         
         if (order.getStatus() != Order.OrderStatus.PAID) {
             throw new BusinessException(400, "订单状态不允许发货");

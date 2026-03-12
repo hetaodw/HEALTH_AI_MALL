@@ -24,6 +24,7 @@ public class OrderStateMachineConfig {
         
         allowedTransitions.put(Order.OrderStatus.CONFIRMED, Set.of(
             Order.OrderStatus.PENDING_PAYMENT,
+            Order.OrderStatus.PAID,
             Order.OrderStatus.CANCELLED
         ));
         
