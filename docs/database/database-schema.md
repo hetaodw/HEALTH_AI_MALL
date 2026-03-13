@@ -28,6 +28,10 @@
 | `order_items` | 订单项表 | 十万级 |
 | `stock_reservations` | 库存预占记录表 | 十万级 |
 | `payments` | 支付记录表 | 十万级 |
+| `browsing_history` | 浏览记录表 | 十万级 |
+| `logistics_info` | 物流信息表 | 十万级 |
+| `operation_logs` | 操作日志表 | 百万级 |
+| `risk_control_records` | 风控记录表 | 十万级 |
 
 ---
 
@@ -67,7 +71,8 @@
 | `category` | VARCHAR(50) | NULL | NULL | 商品分类 |
 | `description` | TEXT | NULL | NULL | 商品详细描述 |
 | `cover_url` | VARCHAR(255) | NOT NULL | - | 商品封面图片URL |
-C
+| `features` | JSON | NULL | NULL | 商品特征（标签数组，JSON格式） |
+| `description_content` | TEXT | NULL | NULL | 商品详细文字介绍内容 |
 | `price` | DECIMAL(10,2) | NOT NULL | 0.00 | 商品价格 |
 | `stock` | INT | NULL | 0 | 库存数量 |
 | `sales` | INT | NULL | 0 | 销量统计 |
@@ -76,6 +81,7 @@ C
 | `status` | ENUM | NULL | 'ON_SALE' | 商品状态：ON_SALE-在售，OFF_SALE-下架，OUT_OF_STOCK-缺货 |
 | `auto_confirm_mode` | ENUM | NULL | 'MANUAL' | 订单确认模式：AUTO-自动确认，MANUAL-手动确认，SMART-智能确认 |
 | `auto_confirm_condition` | TEXT | NULL | NULL | 自动确认条件（JSON格式） |
+| `need_regenerate_tags` | BOOLEAN | NULL | FALSE | 是否需要重新生成标签 |
 | `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 商品创建时间 |
 | `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 商品更新时间 |
 
@@ -86,6 +92,7 @@ C
 - 建议索引: `merchant_id` + `status`（商家商品管理）
 - 建议索引: `category`（分类查询）
 - 建议索引: `average_rating`（评分排序）
+- 建议索引: `need_regenerate_tags`（标签生成任务查询）
 
 **外键约束**:
 ```sql
@@ -418,6 +425,118 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
 
 ---
 
+### 14. browsing_history - 浏览记录表
+
+记录用户的商品浏览历史，用于个性化推荐和浏览记录查询。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | INT | PRIMARY KEY, AUTO_INCREMENT | - | 浏览记录ID |
+| `user_id` | INT | FOREIGN KEY, NOT NULL | - | 用户ID |
+| `product_id` | INT | FOREIGN KEY, NOT NULL | - | 商品ID |
+| `viewed_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 浏览时间 |
+
+**索引**:
+- 主键索引: `id`
+- 外键索引: `user_id` → `users(id)`
+- 外键索引: `product_id` → `products(id)`
+- 建议索引: `user_id` + `viewed_at`（用户浏览记录查询）
+
+**外键约束**:
+```sql
+FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+```
+
+---
+
+### 15. logistics_info - 物流信息表
+
+存储订单的物流配送信息，支持多家物流公司和菜鸟网络集成。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | - | 物流信息ID |
+| `order_no` | VARCHAR(32) | NOT NULL, UNIQUE | - | 订单号 |
+| `logistics_company` | ENUM | NOT NULL | - | 物流公司：TEST-测试，SF-顺丰，STO-申通，YTO-圆通，ZTO-中通，EMS-EMS |
+| `tracking_no` | VARCHAR(50) | NOT NULL | - | 物流单号 |
+| `waybill_url` | VARCHAR(255) | NULL | NULL | 面单URL |
+| `status` | ENUM | NOT NULL | 'CREATED' | 物流状态：CREATED-已创建，PICKED-已揽收，IN_TRANSIT-运输中，DELIVERED-已送达，EXCEPTION-异常 |
+| `estimated_delivery` | TIMESTAMP | NULL | NULL | 预计送达时间 |
+| `delivered_at` | TIMESTAMP | NULL | NULL | 实际送达时间 |
+| `trace_info` | TEXT | NULL | NULL | 物流轨迹信息（JSON格式） |
+| `cainiao_subscribed` | BOOLEAN | NULL | FALSE | 是否订阅菜鸟网络 |
+| `cainiao_last_update` | TIMESTAMP | NULL | NULL | 菜鸟网络最后更新时间 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+| `updated_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP ON UPDATE | 更新时间 |
+
+**索引**:
+- 主键索引: `id`
+- 唯一索引: `order_no`
+- 建议索引: `tracking_no`（物流单号查询）
+- 建议索引: `status`（物流状态查询）
+
+---
+
+### 16. operation_logs - 操作日志表
+
+记录系统中的操作日志，用于审计和问题追踪。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | - | 日志ID |
+| `user_id` | INT | NULL | NULL | 用户ID |
+| `username` | VARCHAR(50) | NULL | NULL | 用户名 |
+| `module` | VARCHAR(50) | NULL | NULL | 模块名称 |
+| `operation` | VARCHAR(50) | NULL | NULL | 操作类型 |
+| `description` | VARCHAR(500) | NULL | NULL | 操作描述 |
+| `request_method` | VARCHAR(10) | NULL | NULL | 请求方法（GET/POST/PUT/DELETE） |
+| `request_url` | VARCHAR(255) | NULL | NULL | 请求URL |
+| `request_params` | TEXT | NULL | NULL | 请求参数（JSON格式） |
+| `response_data` | TEXT | NULL | NULL | 响应数据（JSON格式） |
+| `ip_address` | VARCHAR(50) | NULL | NULL | 客户端IP地址 |
+| `execute_time` | BIGINT | NULL | NULL | 执行时间（毫秒） |
+| `status` | VARCHAR(20) | NULL | NULL | 操作状态 |
+| `error_message` | TEXT | NULL | NULL | 错误信息 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+
+**索引**:
+- 主键索引: `id`
+- 建议索引: `user_id`（用户操作日志查询）
+- 建议索引: `module` + `operation`（模块操作查询）
+- 建议索引: `created_at`（时间范围查询）
+- 建议索引: `status`（状态查询）
+
+---
+
+### 17. risk_control_records - 风控记录表
+
+存储订单的风控审核记录，用于风险控制和订单审核。
+
+| 字段名 | 类型 | 约束 | 默认值 | 说明 |
+|--------|------|------|--------|------|
+| `id` | BIGINT | PRIMARY KEY, AUTO_INCREMENT | - | 风控记录ID |
+| `order_no` | VARCHAR(32) | NOT NULL, UNIQUE | - | 订单号 |
+| `user_id` | INT | NOT NULL | - | 用户ID |
+| `rule_id` | VARCHAR(50) | NULL | NULL | 触发的风控规则ID |
+| `risk_level` | ENUM | NOT NULL | - | 风险等级：LOW-低风险，MEDIUM-中风险，HIGH-高风险，CRITICAL-严重风险 |
+| `status` | ENUM | NOT NULL | 'PENDING' | 审核状态：PENDING-待审核，APPROVED-已通过，REJECTED-已拒绝，MANUAL_REVIEW-人工复核 |
+| `risk_score` | INT | NULL | NULL | 风险评分 |
+| `risk_reason` | VARCHAR(500) | NULL | NULL | 风险原因 |
+| `reviewer_id` | INT | NULL | NULL | 审核人ID |
+| `review_comment` | VARCHAR(500) | NULL | NULL | 审核意见 |
+| `reviewed_at` | TIMESTAMP | NULL | NULL | 审核时间 |
+| `created_at` | TIMESTAMP | NULL | CURRENT_TIMESTAMP | 创建时间 |
+
+**索引**:
+- 主键索引: `id`
+- 唯一索引: `order_no`
+- 建议索引: `user_id`（用户风控记录查询）
+- 建议索引: `risk_level`（风险等级查询）
+- 建议索引: `status`（审核状态查询）
+
+---
+
 ## ER 关系图
 
 ```
@@ -517,6 +636,43 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
          │                              │    amount       │
          │                              │    status       │
          │                              └─────────────────┘
+         │                                       │
+         │                                       │ 1:1
+         │                                       │
+         │                              ┌─────────────────┐
+         │                              │  logistics_info │
+         │                              ├─────────────────┤
+         │                              │ PK id           │
+         │                              │    order_no     │
+         │                              │    tracking_no  │
+         │                              │    status       │
+         │                              └─────────────────┘
+         │                                       │
+         │                                       │ 1:1
+         │                                       │
+         │                              ┌─────────────────┐
+         │                              │risk_control_rec │
+         │                              ├─────────────────┤
+         │                              │ PK id           │
+         │                              │    order_no     │
+         │                              │    risk_level   │
+         │                              │    status       │
+         │                              └─────────────────┘
+         │
+         │ 1:N
+         │
+         │  ┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐
+         │  │ browsing_history│         │  operation_logs │         │                 │
+         │  ├─────────────────┤         ├─────────────────┤         │                 │
+         │  │ PK id           │         │ PK id           │         │                 │
+         │  │ FK user_id      │         │    user_id      │         │                 │
+         │  │ FK product_id   │         │    module       │         │                 │
+         │  │    viewed_at    │         │    operation    │         │                 │
+         │  └─────────────────┘         └─────────────────┘         │                 │
+         │                                                            │                 │
+         └────────────────────────────────────────────────────────────┘                 │
+                                                                               │         │
+                                                                               └─────────┘
 ```
 
 ---
@@ -541,11 +697,17 @@ FOREIGN KEY (`product_id`) REFERENCES `products`(`id`)
 | orders | order_items | 1:N | orders.id = order_items.order_id | ON DELETE CASCADE |
 | product_snapshots | order_items | 1:N | product_snapshots.id = order_items.snapshot_id | - |
 | orders | payments | 1:1 | orders.order_no = payments.order_no | - |
+| orders | logistics_info | 1:1 | orders.order_no = logistics_info.order_no | - |
+| orders | risk_control_records | 1:1 | orders.order_no = risk_control_records.order_no | - |
+| users | browsing_history | 1:N | users.id = browsing_history.user_id | ON DELETE CASCADE |
+| products | browsing_history | 1:N | products.id = browsing_history.product_id | ON DELETE CASCADE |
+| users | operation_logs | 1:N | users.id = operation_logs.user_id | - |
+| users | risk_control_records | 1:N | users.id = risk_control_records.user_id | - |
 
 ---
 
 
 
-*文档版本：3.1*
-*最后更新：2026-03-03*
-*更新内容：新增 product_discussions 表（商品讨论表），修正 users.role 字段说明（包含 admin 角色），修正 product_reviews 表索引说明，更新 ER 关系图和关系说明，新增商品讨论相关查询示例*
+*文档版本：4.0*
+*最后更新：2026-03-12*
+*更新内容：新增 browsing_history（浏览记录表）、logistics_info（物流信息表）、operation_logs（操作日志表）、risk_control_records（风控记录表）四个表结构；更新 products 表字段，新增 features、description_content、need_regenerate_tags 字段；更新 ER 关系图和关系说明以包含新增表*

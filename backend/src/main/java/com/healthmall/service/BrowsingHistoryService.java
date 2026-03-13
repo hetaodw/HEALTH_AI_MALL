@@ -12,8 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,15 +30,22 @@ public class BrowsingHistoryService {
 
     private static final int MAX_HISTORY_SIZE = 100;
 
+    @Transactional
     public void addBrowsingHistory(Integer userId, Integer productId) {
+        BrowsingHistory existing = browsingHistoryRepository
+            .findByUserIdAndProductId(userId, productId)
+            .orElse(null);
+
+        if (existing != null) {
+            existing.setViewedAt(java.time.LocalDateTime.now());
+            browsingHistoryRepository.save(existing);
+            return;
+        }
+
         Long count = browsingHistoryRepository.countByUserId(userId);
 
         if (count >= MAX_HISTORY_SIZE) {
-            Pageable pageable = PageRequest.of(0, 1, Sort.by("viewed_at").ascending());
-            Page<BrowsingHistory> oldestPage = browsingHistoryRepository.findByUserIdOrderByViewedAtDesc(userId, pageable);
-            if (!oldestPage.isEmpty()) {
-                browsingHistoryRepository.delete(oldestPage.getContent().get(0));
-            }
+            browsingHistoryRepository.deleteOldestByUserId(userId, 1);
         }
 
         BrowsingHistory history = new BrowsingHistory();
@@ -48,20 +58,28 @@ public class BrowsingHistoryService {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("viewedAt").descending());
         Page<BrowsingHistory> historyPage = browsingHistoryRepository.findByUserIdOrderByViewedAtDesc(userId, pageable);
 
+        Set<Integer> productIds = historyPage.getContent().stream()
+            .map(BrowsingHistory::getProductId)
+            .collect(Collectors.toSet());
+
+        Map<Integer, Product> productMap = productRepository.findAllById(productIds)
+            .stream()
+            .collect(Collectors.toMap(Product::getId, p -> p));
+
         List<BrowsingHistoryItem> items = historyPage.getContent().stream()
-            .map(bh -> {
-                Product product = productRepository.findById(bh.getProductId()).orElse(null);
-                return new BrowsingHistoryItem(bh, product);
-            })
+            .map(bh -> new BrowsingHistoryItem(bh, productMap.get(bh.getProductId())))
+            .filter(item -> item.getProductTitle() != null)
             .collect(Collectors.toList());
 
         return new PageResponse<>(items, historyPage.getTotalElements());
     }
 
+    @Transactional
     public void deleteBrowsingHistory(Integer userId, Integer productId) {
         browsingHistoryRepository.deleteByUserIdAndProductId(userId, productId);
     }
 
+    @Transactional
     public void clearBrowsingHistory(Integer userId) {
         browsingHistoryRepository.deleteByUserId(userId);
     }
